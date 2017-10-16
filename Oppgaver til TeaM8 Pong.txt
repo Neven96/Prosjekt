@@ -1,9 +1,9 @@
 Oppgaver til TeaM8
 1.
-Endre bakgrunnsfarge, farge på rekkertene og farge på ballen.
-Splitte fargen på bakgrunnen i to.
+Endre bakgrunnsfarge, farge pÃ¥ rekkertene og farge pÃ¥ ballen.
+Splitte fargen pÃ¥ bakgrunnen i to.
 2.
-Snu spillet så ballen spretter fra side til side, og rekkertene beveger seg opp og ned.
+Snu spillet sÃ¥ ballen spretter fra side til side, og rekkertene beveger seg opp og ned.
 3.
 Lage mulighet for to spiller i stedet for spiller VS computer
 4.
@@ -14,8 +14,9 @@ Lage en meny med valg mellom
 -	2 spiller
 -	Hvordan spille
 6.
-Lage muligheten til å bytte farge på ballen, banen og rekkerten i menyen og legge til et nytt valg på menyen (kall denne options eller settings)
+Lage muligheten til Ã¥ bytte farge pÃ¥ ballen, banen og rekkerten i menyen og legge til et nytt valg pÃ¥ menyen (kall denne options eller settings)
 7. 
+a)
 Legge inn lyd og muligens musikk
-8.
-Lage muligheten for å senke/slå av lyd og musikk i options/settings-menyen
+b)
+Lage muligheten for Ã¥ senke/slÃ¥ av lyd og musikk i options/settings-menyen
