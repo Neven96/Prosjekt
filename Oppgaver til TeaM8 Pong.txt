@@ -12,7 +12,8 @@ Sette opp poengsystem med seiersvarsel og restarting av spillet.
 Lage en meny med valg mellom
 -	1 spiller
 -	2 spiller
--	Hvordan spille
+-	Hvordan spille spillet
+(Hint: https://code.tutsplus.com/tutorials/animating-game-menus-and-screen-transitions-in-html5-a-guide-for-flash-developers--active-11183)
 6.
 Lage muligheten til å bytte farge på ballen, banen og rekkerten i menyen og legge til et nytt valg på menyen (kall denne options eller settings)
 7. 
