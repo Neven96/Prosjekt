@@ -191,6 +191,7 @@ Computer.prototype.update = function(ball) {
   }
 };
 
+//Aktiverer spilleren, computeren og ballen
 var player = new Player();
 var computer = new Computer();
 var ball = new Ball(200, 300);
