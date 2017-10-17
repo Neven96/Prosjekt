@@ -4,6 +4,7 @@ Endre bakgrunnsfarge, farge på rekkertene og farge på ballen.
 Splitte fargen på bakgrunnen i to.
 2.
 Snu spillet så ballen spretter fra side til side, og rekkertene beveger seg opp og ned.
+(Tips: 38 = oppover og 40 = oppover)
 3.
 Lage mulighet for to spiller i stedet for spiller VS computer
 4.
