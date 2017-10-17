@@ -1,3 +1,75 @@
+/*
+
+
+IKKE RØR!!!!!!!!!!!!!!!!!!!!!!!!!!!
+IKKE RØR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+IKKE RØR!!!!!!!!!!!!!!!!!!!
+SÅNN SERR IKKE RØR!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+IKKE RØR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
 //Lager animasjon som går i 60 rammer per sekund
 var animate = window.requestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
