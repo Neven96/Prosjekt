@@ -183,7 +183,7 @@ Computer.prototype.update = function(ball) {
   } else if (diff > 0 && diff > 4) {
     diff = 4;
   }
-  this.paddle.move(diff, 0);
+  this.paddle.move(0, diff);
   if (this.paddle.y < 0) {
     this.paddle.y = 0;
   } else if (this.paddle.y + this.paddle.height > 600) {
