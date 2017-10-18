@@ -35,7 +35,9 @@ var update = function(){
 //Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
 var render = function(){
   context.fillStyle = "#FF394F";
-  context.fillRect(0,0,width,height);
+  context.fillRect(0,0,300,height);
+  context.fillStyle = "#AA394F";
+  context.fillRect(300,0,300,height);
   player.render();
   computer.render();
   ball.render();
@@ -174,22 +176,37 @@ Player.prototype.update = function() {
   }
 };
 
-//Hva som skjer når computeren beveger på seg
-Computer.prototype.update = function(ball) {
-  var y_pos = ball.y;
-  var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
-  if (diff < 0 && diff < -4) {
-    diff = -4;
-  } else if (diff > 0 && diff > 4) {
-    diff = 4;
-  }
-  this.paddle.move(0, diff);
-  if (this.paddle.y < 0) {
-    this.paddle.y = 0;
-  } else if (this.paddle.y + this.paddle.height > 600) {
-    this.paddle.y = 600 - this.paddle.height;
+Computer.prototype.update = function() {
+  for(var key in keysDown) {
+    var value = Number(key);
+    if (value == 87) {
+      this.paddle.move(0, -4);
+    } else if (value == 83) {
+      this.paddle.move(0, 4);
+    } else {
+      this.paddle.move(0, 0);
+    }
   }
 };
+
+
+
+//Hva som skjer når computeren beveger på seg
+// Computer.prototype.update = function(ball) {
+//   var y_pos = ball.y;
+//   var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
+//   if (diff < 0 && diff < -4) {
+//     diff = -4;
+//   } else if (diff > 0 && diff > 4) {
+//     diff = 4;
+//   }
+//   this.paddle.move(0, diff);
+//   if (this.paddle.y < 0) {
+//     this.paddle.y = 0;
+//   } else if (this.paddle.y + this.paddle.height > 600) {
+//     this.paddle.y = 600 - this.paddle.height;
+//   }
+// };
 
 //Aktiverer spilleren, computeren og ballen
 var player = new Player();
