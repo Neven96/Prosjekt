@@ -174,8 +174,21 @@ Player.prototype.update = function() {
   }
 };
 
-//Hva som skjer når computeren beveger på seg
 Computer.prototype.update = function(ball) {
+  for(var key in keysDown) {
+    var value = Number(key);
+    if (value == 87) {
+      this.paddle.move(0, -4);
+    } else if (value == 83) {
+      this.paddle.move(0, 4);
+    } else {
+      this.paddle.move(0, 0);
+    }
+  }
+};
+
+//Hva som skjer når computeren beveger på seg
+/*Computer.prototype.update = function(ball) {
   var y_pos = ball.y;
   var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
   if (diff < 0 && diff < -4) {
@@ -189,7 +202,7 @@ Computer.prototype.update = function(ball) {
   } else if (this.paddle.y + this.paddle.height > 600) {
     this.paddle.y = 600 - this.paddle.height;
   }
-};
+};*/
 
 //Aktiverer spilleren, computeren og ballen
 var player = new Player();
