@@ -6,8 +6,8 @@ var animate = window.requestAnimationFrame ||
 
 //Lager rammen og gir den bredde og høyde
 var canvas = document.createElement("canvas");
-var width = 600;
-var height = 400;
+var width = 1000;
+var height = 500;
 canvas.width = width;
 canvas.height = height;
 var context = canvas.getContext("2d");
@@ -18,11 +18,15 @@ window.onload = function(){
   animate(step);
 };
 
-//Oppdaterer hver ramme
-var step = function(){
-  update();
-  render();
-  animate(step);
+//Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
+var render = function(){
+  context.fillStyle = "#FF0000";
+  context.fillRect(0,0,width,height);
+  context.fillStyle = "#00FF00";
+  context.fillRect(500,0,width,height);
+  player.render();
+  computer.render();
+  ball.render();
 };
 
 //Oppdaterer rekkertene og ballen
@@ -32,13 +36,11 @@ var update = function(){
   ball.update(player.paddle, computer.paddle);
 };
 
-//Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
-var render = function(){
-  context.fillStyle = "#FF00FF";
-  context.fillRect(0,0,width,height);
-  player.render();
-  computer.render();
-  ball.render();
+//Oppdaterer hver ramme
+var step = function(){
+  render();
+  update();
+  animate(step);
 };
 
 //Lager et rekkert-"objekt" med størrelse og mulighet til fart
@@ -59,20 +61,25 @@ Paddle.prototype.render = function(){
 
 //Lager spillerrekkerten
 function Player() {
-  this.paddle = new Paddle(580, 175, 10, 50);
+  this.paddle = new Paddle(980, 225, 10, 50);
 }
 
 //Lager computerrekkerten
 function Computer() {
-  this.paddle = new Paddle(10, 175, 10, 50);
+  this.paddle = new Paddle(10, 225, 10, 50);
 }
+
+var x_speed_array = [-3,3];
+var y_speed_array = [-0.5,0,0.5];
+var random_speed_x = Math.floor(Math.random()*x_speed_array.length);
+var random_speed_y = Math.floor(Math.random()*y_speed_array.length);
 
 //Lager ballen
 function Ball(x, y) {
   this.x = x;
   this.y = y;
-  this.x_speed = 3;
-  this.y_speed = 0;
+  this.x_speed = x_speed_array[random_speed_x];
+  this.y_speed = y_speed_array[random_speed_y];
   this.radius = 5;
 }
 
@@ -94,6 +101,9 @@ Ball.prototype.render = function() {
   context.fill();
 };
 
+var poeng_spiller_1 = 0;
+var poeng_spiller_2 = 0;
+
 //Gir ballen fart og oppdaterer farten for hver ramme, og når rekkertene treffer den
 Ball.prototype.update = function(paddle1, paddle2){
   this.x += this.x_speed;
@@ -102,20 +112,44 @@ Ball.prototype.update = function(paddle1, paddle2){
   var top_y = this.y -5;
   var bottom_x = this.x + 5;
   var bottom_y = this.y + 5;
+  var poeng_spiller_1_ut = document.getElementById("poengSpiller1");
+  var poeng_spiller_2_ut = document.getElementById("poengSpiller2");
 
   if (this.y - 5 < 0) {
     this.y = 5;
     this.y_speed = -this.y_speed;
-  } else if (this.y + 5 > 400) {
-    this.y = 395;
+  } else if (this.y + 5 > 500) {
+    this.y = 495;
     this.y_speed = -this.y_speed;
   }
 
-  if (this.x < 0 || this.x > 600) {
+  if (this.x < 0) {
+    this.x_speed = -3;
+    random_speed_y = Math.floor(Math.random()*y_speed_array.length);
+    this.y_speed = y_speed_array[random_speed_y];
+    this.x = 500;
+    this.y = 250;
+    poeng_spiller_1++;
+    poeng_spiller_1_ut.textContent = poeng_spiller_1;
+  } else if (this.x > 1000) {
     this.x_speed = 3;
-    this.y_speed = 0;
-    this.x = 300;
-    this.y = 200;
+    random_speed_y = Math.floor(Math.random()*y_speed_array.length);
+    this.y_speed = y_speed_array[random_speed_y];
+    this.x = 500;
+    this.y = 250;
+    poeng_spiller_2++;
+    poeng_spiller_2_ut.textContent = poeng_spiller_2;
+  }
+  if (poeng_spiller_1 === 7) {
+    poeng_spiller_1 = 0;
+    alert("Gratulerer, spiller 1 vant!");
+    poeng_spiller_1_ut.textContent = poeng_spiller_1;
+    restartSpill();
+  } else if (poeng_spiller_2 === 7) {
+    poeng_spiller_2 = 0;
+    alert("Gratulerer, spiller 2 vant!");
+    poeng_spiller_2_ut.textContent = poeng_spiller_2;
+    restartSpill();
   }
 
   if (top_x > 300) {
@@ -142,8 +176,8 @@ Paddle.prototype.move = function(x, y) {
   if (this.y < 0) {
     this.y = 0;
     this.y_speed = 0;
-  } else if (this.y + this.height > 400) {
-    this.y = 400 - this.height;
+  } else if (this.y + this.height > 500) {
+    this.y = 500 - this.height;
     this.y_speed = 0;
   }
 };
@@ -174,7 +208,8 @@ Player.prototype.update = function() {
   }
 };
 
-Computer.prototype.update = function(ball) {
+//Forteller hvordan spiller 2 skal bevege seg(computer er spiller 2)
+/*Computer.prototype.update = function(ball) {
   for(var key in keysDown) {
     var value = Number(key);
     if (value == 87) {
@@ -185,26 +220,32 @@ Computer.prototype.update = function(ball) {
       this.paddle.move(0, 0);
     }
   }
-};
+};*/
 
 //Hva som skjer når computeren beveger på seg
-/*Computer.prototype.update = function(ball) {
+Computer.prototype.update = function(ball) {
   var y_pos = ball.y;
   var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
-  if (diff < 0 && diff < -4) {
-    diff = -4;
-  } else if (diff > 0 && diff > 4) {
-    diff = 4;
+  if (diff < 0 && diff < -2) {
+    diff = -2;
+  } else if (diff > 0 && diff > 2) {
+    diff = 2;
   }
   this.paddle.move(0, diff);
   if (this.paddle.y < 0) {
     this.paddle.y = 0;
-  } else if (this.paddle.y + this.paddle.height > 600) {
-    this.paddle.y = 600 - this.paddle.height;
+  } else if (this.paddle.y + this.paddle.height > 1000) {
+    this.paddle.y = 1000 - this.paddle.height;
   }
-};*/
+};
+
+function restartSpill() {
+  player = new Player();
+  computer = new Computer();
+  ball = new Ball(500, 250);
+}
 
 //Aktiverer spilleren, computeren og ballen
 var player = new Player();
 var computer = new Computer();
-var ball = new Ball(300, 200);
+var ball = new Ball(500, 250);
