@@ -5,16 +5,16 @@ var animate = window.requestAnimationFrame ||
   function(callback) {window.setTimeout(callback, 1000/60);};
 
 //Lager rammen og gir den bredde og høyde
-var canvas = document.createElement("canvas");
+var bane = document.createElement("canvas");
 var width = 1000;
 var height = 500;
-canvas.width = width;
-canvas.height = height;
-var context = canvas.getContext("2d");
+bane.width = width;
+bane.height = height;
+var context = bane.getContext("2d");
 
 //Aktiverer animasjonen i rammen
 window.onload = function(){
-  document.body.appendChild(canvas);
+  document.getElementById("spillDiv").appendChild(bane);
   animate(step);
 };
 
@@ -69,12 +69,15 @@ function Computer() {
   this.paddle = new Paddle(10, 225, 10, 50);
 }
 
+//Variabler for senere ting og poeng
 var x_speed_array = [-3,3];
 var y_speed_array = [-0.5,0,0.5];
 var random_speed_x = Math.floor(Math.random()*x_speed_array.length);
 var random_speed_y = Math.floor(Math.random()*y_speed_array.length);
+var poeng_spiller_1 = 0;
+var poeng_spiller_2 = 0;
 
-//Lager ballen
+//Lager ballen og gir den fart
 function Ball(x, y) {
   this.x = x;
   this.y = y;
@@ -100,9 +103,6 @@ Ball.prototype.render = function() {
   context.fillStyle = "#000000";
   context.fill();
 };
-
-var poeng_spiller_1 = 0;
-var poeng_spiller_2 = 0;
 
 //Gir ballen fart og oppdaterer farten for hver ramme, og når rekkertene treffer den
 Ball.prototype.update = function(paddle1, paddle2){
