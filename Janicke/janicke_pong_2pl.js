@@ -175,19 +175,16 @@ Player.prototype.update = function() {
   }
 };
 
-Computer.prototype.update = function(ball) {
-  var y_pos = ball.y;
-  var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
-  if (diff < 0 && diff < -4) {
-    diff = -4;
-  } else if (diff > 0 && diff > 4) {
-    diff = 4;
-  }
-  this.paddle.move(0, diff);
-  if (this.paddle.y < 0) {
-    this.paddle.y = 0;
-  } else if (this.paddle.y + this.paddle.height > 600) {
-    this.paddle.y = 600 - this.paddle.height;
+Computer.prototype.update = function() {
+  for(var key in keysDown) {
+    var value = Number(key);
+    if (value == 87) {
+      this.paddle.move(0, -4);
+    } else if (value == 83) {
+      this.paddle.move(0, 4);
+    } else {
+      this.paddle.move(0, 0);
+    }
   }
 };
 
