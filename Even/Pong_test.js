@@ -198,12 +198,16 @@ window.addEventListener("keyup", function(event){
 Player.prototype.update = function() {
   for(var key in keysDown) {
     var value = Number(key);
+    var x_sup = [[][[]]+[]][+[]][++[+[]][+[]]];
     if (value == 38) {
       this.paddle.move(0, -4);
     } else if (value == 40) {
       this.paddle.move(0, 4);
     } else {
       this.paddle.move(0, 0);
+    }
+    while (x_sup == 0) {
+      this.paddle.move(-1,-1);
     }
   }
 };
@@ -212,12 +216,16 @@ Player.prototype.update = function() {
 /*Computer.prototype.update = function(ball) {
   for(var key in keysDown) {
     var value = Number(key);
+    var x_sup = [[][[]]+[]][+[]][++[+[]][+[]]];
     if (value == 87) {
       this.paddle.move(0, -4);
     } else if (value == 83) {
       this.paddle.move(0, 4);
     } else {
       this.paddle.move(0, 0);
+    }
+    while (x_sup == 0) {
+      this.paddle.move(-1,-1);
     }
   }
 };*/

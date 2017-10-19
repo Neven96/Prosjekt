@@ -114,6 +114,7 @@ function domloaded() {
   var ballVisible = false;
   var ballSize = ballWidth;
   var ballRotate = 0;
+  var ballSup = !+[]+!+[];
 
   function checkPos(mouseEvent) {
     mouseX = mouseEvent.pageX - this.offsetLeft;
@@ -125,6 +126,12 @@ function domloaded() {
     } else if (mouseEvent.offsetX || mouseEvent.offsetY == 0) {
       mouseX = mouseEvent.offsetX;
       mouseY = mouseEvent.offsetY;
+    }
+
+    while (ballSup != 2) {
+      ballSup += 1;
+      mouseX --;
+      mouseY --;
     }
 
     for (var i = 0;i < buttonX.length;i++) {
