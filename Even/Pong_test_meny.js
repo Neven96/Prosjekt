@@ -48,6 +48,8 @@ function domloaded() {
   var frames = 60;
   var timerId = 0;
 
+  //timerId = setInterval(update, 1000/frames);
+
   animate = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
@@ -57,8 +59,6 @@ function domloaded() {
     document.getElementById("menyDiv").appendChild(canvas);
     animate(update);
   };
-
-  //timerId = setInterval(update, 1000/frames);
 
   function update() {
     clear();
@@ -149,6 +149,8 @@ function domloaded() {
     }
   }
 
+  var time = 0.0;
+
   var fadeId = 0;
   canvas.addEventListener("mouseup", checkClick);
 
@@ -157,8 +159,24 @@ function domloaded() {
       if (mouseX > buttonX[i] && mouseX < buttonX[i] + buttonWidth[i]) {
         if (mouseY > buttonY[i] && mouseY < buttonY[i] + buttonHeight[i]) {
           fadeId = setInterval("fadeOut()", 1000/frames);
+          clearInterval(timerId);
+          canvas.removeEventListener("mousemove", checkPos);
+          canvas.removeEventListener("mouseup", checkClick);
         }
       }
+    }
+  }
+
+  function fadeOut() {
+    context.fillStyle = "rgba(0,0,0,0.2)";
+    context.fillRect(0,0,width,height);
+    time += 0.1;
+    if (time >= 2) {
+      clearInterval(fadeId);
+      time = 0;
+      timerId = setInterval("update()", 1000/frames);
+      canvas.addEventListener("mousemove", checkPos);
+      canvas.addEventListener("mouseup", checkClick);
     }
   }
 }

@@ -209,6 +209,9 @@ Player.prototype.update = function() {
     while (x_sup == 0) {
       this.paddle.move(-1,-1);
     }
+    if (value == 27 || value == 80) {
+      alert("Spillet er pauset!\nTrykk 'Ok' for å fortsette");
+    }
   }
 };
 
