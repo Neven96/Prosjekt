@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded',domloaded,false);
+var spiller;
 function domloaded() {
   //Lager animasjon som går i 60 rammer per sekund
   var animate = window.requestAnimationFrame ||
     window.webkitRequestAnimationFrame ||
     window.mozRequestAnimationFrame ||
-    function(callback) {window.setTimeout(callback, 1000/60);};
+    function(callback) {window.setTimeout(callback, 1000/1);};
 
   //Lager rammen og gir den bredde og høyde
   var bane = document.createElement("canvas");
@@ -71,9 +72,13 @@ function domloaded() {
     this.paddle = new Paddle(10, 225, 10, 50);
   }
 
-  //Variabler for senere ting og poeng
+  function Paddle3() {
+    this.paddle = new Paddle(500, 225, 10, 50);
+  }
+
+  //Variabler for fart og poeng
   var x_speed_array = [-3,3];
-  var y_speed_array = [-0.5,0,0.5];
+  var y_speed_array = [-0.5,-0.25,0,0.25,0.5];
   var random_speed_x = Math.floor(Math.random()*x_speed_array.length);
   var random_speed_y = Math.floor(Math.random()*y_speed_array.length);
   var poeng_spiller_1 = 0;
@@ -154,7 +159,7 @@ function domloaded() {
       restartSpill();
     }
 
-    if (top_x > 300) {
+    if (top_x > 500) {
       if (top_x < (paddle1.x + paddle1.width) && bottom_x > paddle1.x && top_y < (paddle1.y + paddle1.height) && bottom_y > paddle1.y) {
         this.x_speed = -3;
         this.y_speed += (paddle1.y_speed / 2);
