@@ -9,7 +9,8 @@ Snu spillet så ballen spretter fra side til side, og rekkertene beveger seg opp
 Lage mulighet for to spiller i stedet for spiller VS computer
 (Tips: 83 = s og 87 = w)
 4.
-Sette opp poengsystem med seiersvarsel og restarting av spillet.
+Sette opp poengsystem med seiersvarsel og restarting av spillet, legg også inn muligheten for å pause spillet.
+(Tips: 27 = ESC og 80 = p)
 5. 
 Lage en meny med valg mellom
 -	1 spiller
