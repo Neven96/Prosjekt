@@ -1,11 +1,20 @@
-document.addEventListener('DOMContentLoaded',domloaded,false);
-var spiller;
-function domloaded() {
+function spiller_tall(spiller) {
+  var spillere = spiller;
+  var knapper = document.getElementById("knappeDiv");
+  knapper.style.display = "none";
+  pong(spillere);
+}
+
+function pong(spillere) {
+  var spillDiv = document.createElement("div");
+  spillDiv.id = "spillDiv";
+  document.body.appendChild(spillDiv);
+
   //Lager animasjon som går i 60 rammer per sekund
-  var animate = window.requestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.oRequestAnimationFrame ||
+  var animate = spillDiv.requestAnimationFrame ||
+    spillDiv.webkitRequestAnimationFrame ||
+    spillDiv.mozRequestAnimationFrame ||
+    spillDiv.oRequestAnimationFrame ||
     function(callback) {window.setTimeout(callback, 1000/60);};
 
   //Lager rammen og gir den bredde og høyde
@@ -15,12 +24,21 @@ function domloaded() {
   bane.width = width;
   bane.height = height;
   var context = bane.getContext("2d");
+  document.getElementById("spillDiv").appendChild(bane);
 
-  //Aktiverer animasjonen i rammen
-  window.onload = function(){
-    document.getElementById("spillDiv").appendChild(bane);
-    animate(step);
-  };
+  //Variabler for fart og poeng
+  var x_speed_array = [-3,3];
+  var y_speed_array = [-0.5,-0.25,0,0.25,0.5];
+  var random_speed_x = Math.floor(Math.random()*x_speed_array.length);
+  var random_speed_y = Math.floor(Math.random()*y_speed_array.length);
+  var poeng_spiller_1 = 0;
+  var poeng_spiller_2 = 0;
+  var poeng_spiller_1_ut = document.getElementById("poengSpiller1");
+  var poeng_spiller_2_ut = document.getElementById("poengSpiller2");
+  poeng_spiller_1_ut.textContent = poeng_spiller_1;
+  poeng_spiller_2_ut.textContent = poeng_spiller_2;
+  var pauset = false;
+  var spillere;
 
   //Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
@@ -41,11 +59,15 @@ function domloaded() {
   };
 
   //Oppdaterer hver ramme
-  var step = function(){
+  this.step = function(){
     render();
-    update();
+    if (!pauset) {
+      update();
+    }
     animate(step);
   };
+
+  animate(this.step.bind(this));
 
   //Lager et rekkert-"objekt" med størrelse og mulighet til fart
   function Paddle(x, y, width, height){
@@ -72,16 +94,6 @@ function domloaded() {
   function Computer() {
     this.paddle = new Paddle(10, 225, 10, 50);
   }
-
-  //Variabler for fart og poeng
-  var x_speed_array = [-3,3];
-  var y_speed_array = [-0.5,-0.25,0,0.25,0.5];
-  var random_speed_x = Math.floor(Math.random()*x_speed_array.length);
-  var random_speed_y = Math.floor(Math.random()*y_speed_array.length);
-  var poeng_spiller_1 = 0;
-  var poeng_spiller_2 = 0;
-  var poeng_spiller_1_ut = document.getElementById("poengSpiller1");
-  var poeng_spiller_2_ut = document.getElementById("poengSpiller2");
 
   //Lager ballen og gir den fart
   function Ball(x, y) {
@@ -148,12 +160,14 @@ function domloaded() {
       poeng_spiller_1 = 0;
       alert("Gratulerer, spiller 1 vant!");
       poeng_spiller_1_ut.textContent = poeng_spiller_1;
-      restartSpill();
+      //restartSpill();
+      sluttSpill();
     } else if (poeng_spiller_2 === 7) {
       poeng_spiller_2 = 0;
       alert("Gratulerer, spiller 2 vant!");
       poeng_spiller_2_ut.textContent = poeng_spiller_2;
-      restartSpill();
+      //restartSpill();
+      sluttSpill();
     }
 
     if (top_x > 500) {
@@ -213,18 +227,8 @@ function domloaded() {
       while (x_sup == 0) {
         this.paddle.move(-1,-1);
       }
-      if (value == 20 || value == 27 || value == 80) {
-        alert("Spillet er pauset!\nTrykk 'Ok' for å fortsette");
-      }
     }
   };
-
-  var spillerTall = document.getElementById("spillerTall");
-
-  var antallSpillere = {'En': '1',
-                        'To': '2'};
-
-  spillere = antallSpillere[spillerTall.value];
 
   if (spillere == 2) {
     //Forteller hvordan spiller 2 skal bevege seg(computer er spiller 2)
@@ -263,10 +267,37 @@ function domloaded() {
     };
   }
 
+  //Lager en lytter og en pausefunksjon som stopper update()
+  window.addEventListener("keydown", function(event) {
+    var value = event.keyCode;
+    if (value === 20 || value === 27 || value === 80) {
+      pauseSpill();
+    }
+  });
+
+  function pauseSpill() {
+    if (!pauset) {
+      pauset = true;
+    } else if (pauset) {
+      pauset = false;
+    }
+  }
+
+  //Restarter spillet i orginale posisjoner med 0 i poeng
   function restartSpill() {
     player = new Player();
     computer = new Computer();
     ball = new Ball(500, 250);
+  }
+
+  function sluttSpill() {
+    delete Player.prototype.move;
+    delete Computer.prototype.move;
+    delete Ball.prototype.update;
+    var spill = document.getElementById("spillDiv").outerHTML = "";
+    delete spill;
+    var knapper = document.getElementById("knappeDiv");
+    knapper.style.display = "initial";
   }
 
   //Aktiverer spilleren, computeren og ballen
