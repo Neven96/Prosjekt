@@ -294,6 +294,7 @@ function pong(spillere) {
     delete Player.prototype.move;
     delete Computer.prototype.move;
     delete Ball.prototype.update;
+    console.log("\\|/Dette er en hyggelig error, bare ignorer")
     var spill = document.getElementById("spillDiv").outerHTML = "";
     delete spill;
     var knapper = document.getElementById("knappeDiv");
