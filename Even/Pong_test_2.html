@@ -7,9 +7,20 @@
   </head>
   <body>
     <p><span id="poengSpiller2">0</span>-<span id="poengSpiller1">0</span></p>
-    <div id="knappeDiv">
-      <button onclick="spiller_tall(1)">Én spiller</button>
-      <button onclick="spiller_tall(2)">To spiller</button>
+    <div id="menyDiv">
+      <div id="knappeDiv" class="meny">
+        <button id="enSpiller">Én spiller</button>
+        <button id="toSpiller">To spiller</button>
+        <button id="instruksjonKnapp">Hvordan spille</button>
+        <button id="innstillingKnapp">Innstillinger</button>
+      </div>
+      <div id="instruksjonDiv" class="meny" style="display:none">
+        <p><div>Spiller 1: <br> &uarr; <br> &darr;</div><div>Spiller 2: <br> W <br> S </div></p>
+        <button id="instruksjonTilbakeMeny">Tilbake</button>
+      </div>
+      <div id="innstillingDiv" class="meny" style="display:none">
+        <button id="innstillingTilbakeMeny">Tilbake</button>
+      </div>
     </div>
   </body>
 </html>

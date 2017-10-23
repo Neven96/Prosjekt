@@ -1,8 +1,42 @@
-function spiller_tall(spiller) {
-  var spillere = spiller;
-  var knapper = document.getElementById("knappeDiv");
-  knapper.style.display = "none";
-  pong(spillere);
+//Funksjoner for å gjemme og vise menyer
+function gjemDiv(divId) {
+  var div = document.getElementById(divId);
+  div.style.display = "none";
+}
+function visDiv(divId) {
+  var div = document.getElementById(divId);
+  div.style.display = "initial";
+}
+
+document.addEventListener('DOMContentLoaded',domloaded,false);
+function domloaded() {
+  document.getElementById("enSpiller").onclick = function() {spiller_tall(1);}
+  document.getElementById("toSpiller").onclick = function() {spiller_tall(2);}
+  function spiller_tall(spiller) {
+    var spillere = spiller;
+    gjemDiv("menyDiv");
+    pong(spillere);
+  }
+
+  //Instruksjonsmenyen
+  document.getElementById("instruksjonKnapp").onclick = function() {
+    gjemDiv("knappeDiv");
+    visDiv("instruksjonDiv");
+  }
+  document.getElementById("instruksjonTilbakeMeny").onclick = function() {
+    gjemDiv("instruksjonDiv");
+    visDiv("knappeDiv");
+  }
+
+  //Innstillingsmenyen
+  document.getElementById("innstillingKnapp").onclick = function() {
+    gjemDiv("knappeDiv");
+    visDiv("innstillingDiv");
+  }
+  document.getElementById("innstillingTilbakeMeny").onclick = function() {
+    gjemDiv("innstillingDiv");
+    visDiv("knappeDiv");
+  }
 }
 
 function pong(spillere) {
@@ -19,10 +53,10 @@ function pong(spillere) {
 
   //Lager rammen og gir den bredde og høyde
   var bane = document.createElement("canvas");
-  var width = 1000;
-  var height = 500;
-  bane.width = width;
-  bane.height = height;
+  var bredde = 1000;
+  var hoyde = 500;
+  bane.width = bredde;
+  bane.height = hoyde;
   var context = bane.getContext("2d");
   document.getElementById("spillDiv").appendChild(bane);
 
@@ -39,13 +73,14 @@ function pong(spillere) {
   poeng_spiller_2_ut.textContent = poeng_spiller_2;
   var pauset = false;
   var spillere;
+  var radius = 5;
 
   //Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
     context.fillStyle = "#FF0000";
-    context.fillRect(0,0,width,height);
+    context.fillRect(0,0,bredde,hoyde);
     context.fillStyle = "#00FF00";
-    context.fillRect(500,0,width,height);
+    context.fillRect(500,0,bredde,hoyde);
     player.render();
     computer.render();
     ball.render();
@@ -70,11 +105,11 @@ function pong(spillere) {
   animate(this.step.bind(this));
 
   //Lager et rekkert-"objekt" med størrelse og mulighet til fart
-  function Paddle(x, y, width, height){
+  function Paddle(x, y, bredde, hoyde){
     this.x = x;
     this.y = y;
-    this.width = width;
-    this.height = height;
+    this.width = bredde;
+    this.height = hoyde;
     this.x_speed = 0;
     this.y_speed = 0;
   }
@@ -101,7 +136,7 @@ function pong(spillere) {
     this.y = y;
     this.x_speed = x_speed_array[random_speed_x];
     this.y_speed = y_speed_array[random_speed_y];
-    this.radius = 5;
+    this.radius = radius;
   }
 
   //Plasserer spillerrekkerten innenfor rammen
@@ -126,16 +161,16 @@ function pong(spillere) {
   Ball.prototype.update = function(paddle1, paddle2){
     this.x += this.x_speed;
     this.y += this.y_speed;
-    var top_x = this.x -5;
-    var top_y = this.y -5;
-    var bottom_x = this.x + 5;
-    var bottom_y = this.y + 5;
+    var top_x = this.x -radius;
+    var top_y = this.y -radius;
+    var bottom_x = this.x + radius;
+    var bottom_y = this.y + radius;
 
-    if (this.y - 5 < 0) {
-      this.y = 5;
+    if (this.y - radius < 0) {
+      this.y = radius;
       this.y_speed = -this.y_speed;
-    } else if (this.y + 5 > 500) {
-      this.y = 495;
+    } else if (this.y + radius > hoyde) {
+      this.y = hoyde-radius;
       this.y_speed = -this.y_speed;
     }
 
@@ -143,34 +178,30 @@ function pong(spillere) {
       this.x_speed = -3;
       random_speed_y = Math.floor(Math.random()*y_speed_array.length);
       this.y_speed = y_speed_array[random_speed_y];
-      this.x = 500;
-      this.y = 250;
+      this.x = bredde/2;
+      this.y = hoydde/2;
       poeng_spiller_1++;
       poeng_spiller_1_ut.textContent = poeng_spiller_1;
-    } else if (this.x > 1000) {
+    } else if (this.x > bredde) {
       this.x_speed = 3;
       random_speed_y = Math.floor(Math.random()*y_speed_array.length);
       this.y_speed = y_speed_array[random_speed_y];
-      this.x = 500;
-      this.y = 250;
+      this.x = bredde/2;
+      this.y = hoyde/2;
       poeng_spiller_2++;
       poeng_spiller_2_ut.textContent = poeng_spiller_2;
     }
-    if (poeng_spiller_1 === 7) {
-      poeng_spiller_1 = 0;
+    if (poeng_spiller_1_ut.textContent == 7) {
       alert("Gratulerer, spiller 1 vant!");
-      poeng_spiller_1_ut.textContent = poeng_spiller_1;
       //restartSpill();
       sluttSpill();
-    } else if (poeng_spiller_2 === 7) {
-      poeng_spiller_2 = 0;
+    } else if (poeng_spiller_2_ut.textContent == 7) {
       alert("Gratulerer, spiller 2 vant!");
-      poeng_spiller_2_ut.textContent = poeng_spiller_2;
       //restartSpill();
       sluttSpill();
     }
 
-    if (top_x > 500) {
+    if (top_x > bredde/2) {
       if (top_x < (paddle1.x + paddle1.width) && bottom_x > paddle1.x && top_y < (paddle1.y + paddle1.height) && bottom_y > paddle1.y) {
         this.x_speed = -3;
         this.y_speed += (paddle1.y_speed / 2);
@@ -194,8 +225,8 @@ function pong(spillere) {
     if (this.y < 0) {
       this.y = 0;
       this.y_speed = 0;
-    } else if (this.y + this.height > 500) {
-      this.y = 500 - this.height;
+    } else if (this.y + this.height > hoyde) {
+      this.y = hoyde - this.height;
       this.y_speed = 0;
     }
   };
@@ -261,8 +292,8 @@ function pong(spillere) {
       this.paddle.move(0, diff);
       if (this.paddle.y < 0) {
         this.paddle.y = 0;
-      } else if (this.paddle.y + this.paddle.height > 1000) {
-        this.paddle.y = 1000 - this.paddle.height;
+      } else if (this.paddle.y + this.paddle.width > width) {
+        this.paddle.y = width - this.paddle.width;
       }
     };
   }
@@ -285,20 +316,29 @@ function pong(spillere) {
 
   //Restarter spillet i orginale posisjoner med 0 i poeng
   function restartSpill() {
+    pauset = false;
+    poeng_spiller_1 = 0;
+    poeng_spiller_2 = 0;
+    poeng_spiller_1_ut.textContent = poeng_spiller_1;
+    poeng_spiller_2_ut.textContent = poeng_spiller_2;
     player = new Player();
     computer = new Computer();
     ball = new Ball(500, 250);
   }
 
   function sluttSpill() {
+    pauset = false;
+    poeng = 0;
+    poeng_spiller_1_ut.textContent = poeng;
+    poeng_spiller_2_ut.textContent = poeng;
     delete Player.prototype.move;
     delete Computer.prototype.move;
     delete Ball.prototype.update;
-    console.log("\\|/Dette er en hyggelig error, bare ignorer")
+    console.log("\\|/Dette er en hyggelig error, bare ignorer :)")
+    //Enten en error i koden som ikke ødelegger for noe, eller at spillet ikke fungerer ordentlig
     var spill = document.getElementById("spillDiv").outerHTML = "";
     delete spill;
-    var knapper = document.getElementById("knappeDiv");
-    knapper.style.display = "initial";
+    visDiv("menyDiv");
   }
 
   //Aktiverer spilleren, computeren og ballen
