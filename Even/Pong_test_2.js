@@ -62,7 +62,7 @@ function pong(spillere) {
 
   //Variabler for fart og poeng
   var x_speed_array = [-3,3];
-  var y_speed_array = [-0.5,-0.25,0,0.25,0.5];
+  var y_speed_array = [-1,-0.75,-0.5,-0.25,0,0,0.25,0.5,0.75,1];
   var random_speed_x = Math.floor(Math.random()*x_speed_array.length);
   var random_speed_y = Math.floor(Math.random()*y_speed_array.length);
   var poeng_spiller_1 = 0;
@@ -80,7 +80,7 @@ function pong(spillere) {
     context.fillStyle = "#FF0000";
     context.fillRect(0,0,bredde,hoyde);
     context.fillStyle = "#00FF00";
-    context.fillRect(500,0,bredde,hoyde);
+    context.fillRect(bredde/2,0,bredde,hoyde);
     player.render();
     computer.render();
     ball.render();
@@ -179,7 +179,7 @@ function pong(spillere) {
       random_speed_y = Math.floor(Math.random()*y_speed_array.length);
       this.y_speed = y_speed_array[random_speed_y];
       this.x = bredde/2;
-      this.y = hoydde/2;
+      this.y = hoyde/2;
       poeng_spiller_1++;
       poeng_spiller_1_ut.textContent = poeng_spiller_1;
     } else if (this.x > bredde) {
@@ -193,12 +193,12 @@ function pong(spillere) {
     }
     if (poeng_spiller_1_ut.textContent == 7) {
       alert("Gratulerer, spiller 1 vant!");
-      //restartSpill();
-      sluttSpill();
+      restartSpill();
+      //sluttSpill();
     } else if (poeng_spiller_2_ut.textContent == 7) {
       alert("Gratulerer, spiller 2 vant!");
-      //restartSpill();
-      sluttSpill();
+      restartSpill();
+      //sluttSpill();
     }
 
     if (top_x > bredde/2) {
@@ -236,6 +236,10 @@ function pong(spillere) {
   //Når man trykker på en knapp
   window.addEventListener("keydown", function(event){
     keysDown[event.keyCode] = true;
+    var value = event.keyCode;
+    if (value === 20 || value === 27 || value === 80) {
+      pauseSpill();
+    }
   });
 
   //Når man slipper knappen
@@ -292,19 +296,11 @@ function pong(spillere) {
       this.paddle.move(0, diff);
       if (this.paddle.y < 0) {
         this.paddle.y = 0;
-      } else if (this.paddle.y + this.paddle.width > width) {
-        this.paddle.y = width - this.paddle.width;
+      } else if (this.paddle.y + this.paddle.width > bredde) {
+        this.paddle.y = bredde - this.paddle.width;
       }
     };
   }
-
-  //Lager en lytter og en pausefunksjon som stopper update()
-  window.addEventListener("keydown", function(event) {
-    var value = event.keyCode;
-    if (value === 20 || value === 27 || value === 80) {
-      pauseSpill();
-    }
-  });
 
   function pauseSpill() {
     if (!pauset) {
@@ -326,6 +322,7 @@ function pong(spillere) {
     ball = new Ball(500, 250);
   }
 
+  //Avslutter spillet og returnerer til menyen
   function sluttSpill() {
     pauset = false;
     poeng = 0;
