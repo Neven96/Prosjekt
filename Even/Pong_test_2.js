@@ -19,16 +19,21 @@ function pong(spillere) {
   var context = bane.getContext("2d");
   document.getElementById("spillDiv").appendChild(bane);
 
-  //Variabler
-  var x_fart_array = [-5,5];
+  //Variabler for fart, størrelse og bevegelse
+  var ball_fart_x = 5;
+  var spiller_fart = 4;
+  var computer_fart = 3;
+  var x_fart_array = [-ball_fart_x,ball_fart_x];
   var y_fart_array = [-1,-0.75,-0.5,-0.25,0,0,0.25,0.5,0.75,1];
   var random_fart_x = Math.floor(Math.random()*x_fart_array.length);
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
   var poeng_spiller_1 = 0;
   var poeng_spiller_2 = 0;
+  var rekkert_bredde = 20;
+  var rekkert_hoyde = 100;
+  var radius = 10;
   var pauset = false;
   var spillere;
-  var radius = 10;
   var musX;
   var musY;
 
@@ -92,12 +97,12 @@ function pong(spillere) {
 
   //Lager spillerrekkerten
   function Player() {
-    this.paddle = new Paddle(970, 200, 20, 100);
+    this.paddle = new Paddle(bredde-rekkert_bredde-10, hoyde/2-rekkert_hoyde/2, rekkert_bredde, rekkert_hoyde);
   }
 
   //Lager computerrekkerten
   function Computer() {
-    this.paddle = new Paddle(10, 200, 20, 100);
+    this.paddle = new Paddle(10, hoyde/2-rekkert_hoyde/2, rekkert_bredde, rekkert_hoyde);
   }
 
   //Lager ballen og gir den fart
@@ -145,14 +150,14 @@ function pong(spillere) {
     }
 
     if (this.x < 0) {
-      this.x_fart = -3;
+      this.x_fart = -ball_fart_x;
       random_fart_y = Math.floor(Math.random()*y_fart_array.length);
       this.y_fart = y_fart_array[random_fart_y];
       this.x = bredde/2;
       this.y = hoyde/2;
       poeng_spiller_1++;
     } else if (this.x > bredde) {
-      this.x_fart = 3;
+      this.x_fart = ball_fart_x;
       random_fart_y = Math.floor(Math.random()*y_fart_array.length);
       this.y_fart = y_fart_array[random_fart_y];
       this.x = bredde/2;
@@ -165,13 +170,13 @@ function pong(spillere) {
 
     if (topp_x > bredde/2) {
       if (topp_x < (paddle1.x + paddle1.width) && bunn_x > paddle1.x && topp_y < (paddle1.y + paddle1.height) && bunn_y > paddle1.y) {
-        this.x_fart = -3;
+        this.x_fart = -ball_fart_x;
         this.y_fart += (paddle1.y_fart / 2);
         this.x += this.x_fart;
       }
     } else {
       if (topp_x < (paddle2.x + paddle2.width) && bunn_x > paddle2.x && topp_y < (paddle2.y + paddle2.height) && bunn_y > paddle2.y) {
-        this.x_fart = 3;
+        this.x_fart = ball_fart_x;
         this.y_fart += (paddle2.y_fart / 2);
         this.x += this.x_fart;
       }
@@ -215,9 +220,9 @@ function pong(spillere) {
       var value = Number(key);
       var x_sup = [[][[]]+[]][+[]][++[+[]][+[]]];
       if (value == 38) {
-        this.paddle.move(0, -4);
+        this.paddle.move(0, -spiller_fart);
       } else if (value == 40) {
-        this.paddle.move(0, 4);
+        this.paddle.move(0, spiller_fart);
       } else {
         this.paddle.move(0, 0);
       }
@@ -234,9 +239,9 @@ function pong(spillere) {
         var value = Number(key);
         var x_sup = [[][[]]+[]][+[]][++[+[]][+[]]];
         if (value == 87) {
-          this.paddle.move(0, -4);
+          this.paddle.move(0, -spiller_fart);
         } else if (value == 83) {
-          this.paddle.move(0, 4);
+          this.paddle.move(0, spiller_fart);
         } else {
           this.paddle.move(0, 0);
         }
@@ -250,10 +255,10 @@ function pong(spillere) {
     Computer.prototype.update = function(ball) {
       var y_pos = ball.y;
       var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
-      if (diff < 0 && diff < -2) {
-        diff = -2;
-      } else if (diff > 0 && diff > 2) {
-        diff = 2;
+      if (diff < 0 && diff < -computer_fart) {
+        diff = -computer_fart;
+      } else if (diff > 0 && diff > computer_fart) {
+        diff = computer_fart;
       }
       this.paddle.move(0, diff);
       if (this.paddle.y < 0) {
