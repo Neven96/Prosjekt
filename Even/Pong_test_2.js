@@ -1,4 +1,5 @@
 function pong(spillere) {
+  //Lager en div for å holde canvas i
   var spillDiv = document.createElement("div");
   spillDiv.id = "spillDiv";
   document.body.appendChild(spillDiv);
@@ -20,9 +21,9 @@ function pong(spillere) {
   document.getElementById("spillDiv").appendChild(bane);
 
   //Variabler for fart, størrelse og bevegelse
-  var ball_fart_x = 5;
   var spiller_fart = 4;
   var computer_fart = 3;
+  var ball_fart_x = 5;
   var x_fart_array = [-ball_fart_x,ball_fart_x];
   var y_fart_array = [-1,-0.75,-0.5,-0.25,0,0,0.25,0.5,0.75,1];
   var random_fart_x = Math.floor(Math.random()*x_fart_array.length);
@@ -33,7 +34,6 @@ function pong(spillere) {
   var rekkert_hoyde = 100;
   var radius = 10;
   var pauset = false;
-  var spillere;
   var musX;
   var musY;
 
@@ -207,6 +207,9 @@ function pong(spillere) {
     if (value === 20 || value === 27 || value === 80) {
       pauseSpill();
     }
+    if (value === 77) {
+      pauseMusikk();
+    }
   });
 
   //Når man slipper knappen
@@ -214,7 +217,7 @@ function pong(spillere) {
     delete keysDown[event.keyCode];
   });
 
-  //Forteller hvordan spilleren skal bevege seg hvis knappen er trykket (37 = venstre pil, og 39 = høyre pil )
+  //Forteller hvordan spilleren skal bevege seg
   Player.prototype.update = function() {
     for(var key in keysDown) {
       var value = Number(key);
@@ -232,7 +235,24 @@ function pong(spillere) {
     }
   };
 
-  if (spillere == 2) {
+  if (spillere == 1) {
+    //Hva som skjer når computeren beveger på seg
+    Computer.prototype.update = function(ball) {
+      var y_pos = ball.y;
+      var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
+      if (diff < 0 && diff < -computer_fart) {
+        diff = -computer_fart;
+      } else if (diff > 0 && diff > computer_fart) {
+        diff = computer_fart;
+      }
+      this.paddle.move(0, diff);
+      if (this.paddle.y < 0) {
+        this.paddle.y = 0;
+      } else if (this.paddle.y + this.paddle.width > bredde) {
+        this.paddle.y = bredde - this.paddle.width;
+      }
+    };
+  } else if (spillere == 2) {
     //Forteller hvordan spiller 2 skal bevege seg(computer er spiller 2)
     Computer.prototype.update = function(ball) {
       for(var key in keysDown) {
@@ -250,23 +270,6 @@ function pong(spillere) {
         }
       }
     };
-  } else if (spillere == 1) {
-    //Hva som skjer når computeren beveger på seg
-    Computer.prototype.update = function(ball) {
-      var y_pos = ball.y;
-      var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
-      if (diff < 0 && diff < -computer_fart) {
-        diff = -computer_fart;
-      } else if (diff > 0 && diff > computer_fart) {
-        diff = computer_fart;
-      }
-      this.paddle.move(0, diff);
-      if (this.paddle.y < 0) {
-        this.paddle.y = 0;
-      } else if (this.paddle.y + this.paddle.width > bredde) {
-        this.paddle.y = bredde - this.paddle.width;
-      }
-    };
   }
 
   function pauseSpill() {
@@ -274,6 +277,14 @@ function pong(spillere) {
       pauset = true;
     } else if (pauset) {
       pauset = false;
+    }
+  }
+
+  function pauseMusikk() {
+    if (musikk.play()) {
+      musikk.stop();
+    } else if (!musikk.play()) {
+      musikk.play();
     }
   }
 
@@ -317,7 +328,7 @@ function pong(spillere) {
     poeng_spiller_2 = 0;
     player = new Player();
     computer = new Computer();
-    ball = new Ball(500, 250);
+    ball = new Ball(bredde/2, hoyde/2);
     bane.removeEventListener("mousemove", sjekkPos);
     bane.removeEventListener("mouseup", sjekkKlikk);
   }
@@ -330,15 +341,14 @@ function pong(spillere) {
     delete Player.prototype.move;
     delete Computer.prototype.move;
     delete Ball.prototype.update;
-    console.log("\\|/Dette er en hyggelig error, bare ignorer :)")
+    console.log("\\|/Dette er en hyggelig error, bare ignorer :)");
     //Enten en error i koden som ikke ødelegger for noe, eller at spillet ikke fungerer ordentlig
-    var spill = document.getElementById("spillDiv").outerHTML = "";
-    delete spill;
+    document.getElementById("spillDiv").outerHTML = "";
     visDiv("menyDiv");
   }
 
   //Aktiverer spilleren, computeren og ballen
   var player = new Player();
   var computer = new Computer();
-  var ball = new Ball(500, 250);
+  var ball = new Ball(bredde/2, hoyde/2);
 }

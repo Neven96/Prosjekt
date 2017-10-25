@@ -11,8 +11,8 @@ function visDiv(divId) {
 //Menyfunksjonene
 document.addEventListener('DOMContentLoaded',domloaded,false);
 function domloaded() {
-  document.getElementById("enSpiller").onclick = function() {spiller_tall(1);}
-  document.getElementById("toSpiller").onclick = function() {spiller_tall(2);}
+  document.getElementById("enSpiller").onclick = function() {spiller_tall(1);};
+  document.getElementById("toSpiller").onclick = function() {spiller_tall(2);};
   function spiller_tall(spiller) {
     var spillere = spiller;
     gjemDiv("menyDiv");
@@ -23,19 +23,19 @@ function domloaded() {
   document.getElementById("instruksjonKnapp").onclick = function() {
     gjemDiv("knappeDiv");
     visDiv("instruksjonDiv");
-  }
+  };
   document.getElementById("instruksjonTilbakeMeny").onclick = function() {
     gjemDiv("instruksjonDiv");
     visDiv("knappeDiv");
-  }
+  };
 
   //Innstillingsmenyen
   document.getElementById("innstillingKnapp").onclick = function() {
     gjemDiv("knappeDiv");
     visDiv("innstillingDiv");
-  }
+  };
   document.getElementById("innstillingTilbakeMeny").onclick = function() {
     gjemDiv("innstillingDiv");
     visDiv("knappeDiv");
-  }
+  };
 }
