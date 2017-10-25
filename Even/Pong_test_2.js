@@ -1,44 +1,3 @@
-//Funksjoner for å gjemme og vise menyer
-function gjemDiv(divId) {
-  var div = document.getElementById(divId);
-  div.style.display = "none";
-}
-function visDiv(divId) {
-  var div = document.getElementById(divId);
-  div.style.display = "initial";
-}
-
-document.addEventListener('DOMContentLoaded',domloaded,false);
-function domloaded() {
-  document.getElementById("enSpiller").onclick = function() {spiller_tall(1);}
-  document.getElementById("toSpiller").onclick = function() {spiller_tall(2);}
-  function spiller_tall(spiller) {
-    var spillere = spiller;
-    gjemDiv("menyDiv");
-    pong(spillere);
-  }
-
-  //Instruksjonsmenyen
-  document.getElementById("instruksjonKnapp").onclick = function() {
-    gjemDiv("knappeDiv");
-    visDiv("instruksjonDiv");
-  }
-  document.getElementById("instruksjonTilbakeMeny").onclick = function() {
-    gjemDiv("instruksjonDiv");
-    visDiv("knappeDiv");
-  }
-
-  //Innstillingsmenyen
-  document.getElementById("innstillingKnapp").onclick = function() {
-    gjemDiv("knappeDiv");
-    visDiv("innstillingDiv");
-  }
-  document.getElementById("innstillingTilbakeMeny").onclick = function() {
-    gjemDiv("innstillingDiv");
-    visDiv("knappeDiv");
-  }
-}
-
 function pong(spillere) {
   var spillDiv = document.createElement("div");
   spillDiv.id = "spillDiv";
@@ -61,7 +20,7 @@ function pong(spillere) {
   document.getElementById("spillDiv").appendChild(bane);
 
   //Variabler
-  var x_fart_array = [-3,3];
+  var x_fart_array = [-5,5];
   var y_fart_array = [-1,-0.75,-0.5,-0.25,0,0,0.25,0.5,0.75,1];
   var random_fart_x = Math.floor(Math.random()*x_fart_array.length);
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
@@ -69,7 +28,7 @@ function pong(spillere) {
   var poeng_spiller_2 = 0;
   var pauset = false;
   var spillere;
-  var radius = 5;
+  var radius = 10;
   var musX;
   var musY;
 
@@ -82,7 +41,6 @@ function pong(spillere) {
     context.fillStyle = "#000000";
     context.font = "30px Comic Sans MS";
     context.fillText(poeng_spiller_2,(bredde/2)-25,25);
-    context.font = "30px Comic Sans MS";
     context.fillText(poeng_spiller_1,(bredde/2)+5,25);
     if (poeng_spiller_1 == 7 || poeng_spiller_2 == 7) {
       context.fillStyle = "#6495ED";
@@ -134,12 +92,12 @@ function pong(spillere) {
 
   //Lager spillerrekkerten
   function Player() {
-    this.paddle = new Paddle(980, 225, 10, 50);
+    this.paddle = new Paddle(970, 200, 20, 100);
   }
 
   //Lager computerrekkerten
   function Computer() {
-    this.paddle = new Paddle(10, 225, 10, 50);
+    this.paddle = new Paddle(10, 200, 20, 100);
   }
 
   //Lager ballen og gir den fart
@@ -315,7 +273,6 @@ function pong(spillere) {
   }
 
   function vinnSpill() {
-    restartet = false;
     render();
     pauseSpill();
     bane.addEventListener("mousemove", sjekkPos);
