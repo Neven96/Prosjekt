@@ -22,5 +22,6 @@ Lage muligheten til å bytte farge på ballen, banen og rekkerten i menyen og le
 7. 
 a)
 Legge inn lyd og muligens musikk
+(Tips: https://www.w3schools.com/graphics/game_sound.asp)
 b)
 Lage muligheten for å senke/slå av lyd og musikk i options/settings-menyen
