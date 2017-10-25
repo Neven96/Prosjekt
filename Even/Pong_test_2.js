@@ -17,7 +17,7 @@ function pong(spillere) {
   var hoyde = 500;
   bane.width = bredde;
   bane.height = hoyde;
-  var context = bane.getContext("2d");
+  var innhold = bane.getContext("2d");
   document.getElementById("spillDiv").appendChild(bane);
 
   //Variabler for fart, størrelse og bevegelse
@@ -30,31 +30,25 @@ function pong(spillere) {
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
   var poeng_spiller_1 = 0;
   var poeng_spiller_2 = 0;
-  var rekkert_bredde = 20;
-  var rekkert_hoyde = 100;
-  var radius = 10;
+  var rekkert_bredde = 15;
+  var rekkert_hoyde = 75;
+  var radius = 7.5;
   var pauset = false;
   var musX;
   var musY;
 
   //Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
-    context.fillStyle = "#FF0000";
-    context.fillRect(0,0,bredde,hoyde);
-    context.fillStyle = "#00FF00";
-    context.fillRect(bredde/2,0,bredde,hoyde);
-    context.fillStyle = "#000000";
-    context.font = "30px Comic Sans MS";
-    context.fillText(poeng_spiller_2,(bredde/2)-25,25);
-    context.fillText(poeng_spiller_1,(bredde/2)+5,25);
+    innhold.fillStyle = "#FF0000";
+    innhold.fillRect(0,0,bredde,hoyde);
+    innhold.fillStyle = "#00FF00";
+    innhold.fillRect(bredde/2,0,bredde,hoyde);
+    innhold.fillStyle = "#000000";
+    innhold.font = "30px Comic Sans MS";
+    innhold.fillText(poeng_spiller_2,(bredde/2)-25,25);
+    innhold.fillText(poeng_spiller_1,(bredde/2)+5,25);
     if (poeng_spiller_1 == 7 || poeng_spiller_2 == 7) {
-      context.fillStyle = "#6495ED";
-      context.fillRect(bredde/4,hoyde*1/2,bredde/5,hoyde/5);
-      context.fillRect(bredde*3/4-bredde/5,hoyde*1/2,bredde/5,hoyde/5);
-      context.fillStyle = "#000000";
-      context.font = "30px Comic Sans MS";
-      context.fillText("Start på nytt", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
-      context.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde*1/2+hoyde/9);
+      sluttKnapper();
     }
     player.render();
     computer.render();
@@ -91,8 +85,8 @@ function pong(spillere) {
 
   //Gir rekkertene farge og mulighet til en plassering
   Paddle.prototype.render = function(){
-    context.fillStyle = "#0000FF";
-    context.fillRect(this.x, this.y, this.width, this.height);
+    innhold.fillStyle = "#0000FF";
+    innhold.fillRect(this.x, this.y, this.width, this.height);
   };
 
   //Lager spillerrekkerten
@@ -126,10 +120,10 @@ function pong(spillere) {
 
   //Lager ballen og gir den farge og mulighet til plassering
   Ball.prototype.render = function() {
-    context.beginPath();
-    context.arc(this.x, this.y, this.radius, 2*Math.PI, false);
-    context.fillStyle = "#000000";
-    context.fill();
+    innhold.beginPath();
+    innhold.arc(this.x, this.y, this.radius, 2*Math.PI, false);
+    innhold.fillStyle = "#000000";
+    innhold.fill();
   };
 
   //Gir ballen fart og oppdaterer farten for hver ramme, og når rekkertene treffer den
@@ -208,7 +202,10 @@ function pong(spillere) {
       pauseSpill();
     }
     if (value === 77) {
-      pauseMusikk();
+      pauseMusikk(musikk);
+    }
+    if (value === 78) {
+      pauseMusikk(effekter);
     }
   });
 
@@ -280,11 +277,11 @@ function pong(spillere) {
     }
   }
 
-  function pauseMusikk() {
-    if (musikk.play()) {
-      musikk.stop();
-    } else if (!musikk.play()) {
-      musikk.play();
+  function pauseMusikk(lyd) {
+    if (lyd.play()) {
+      lyd.pause();
+    } else if (lyd.pause()) {
+      lyd.play();
     }
   }
 
@@ -293,6 +290,30 @@ function pong(spillere) {
     pauseSpill();
     bane.addEventListener("mousemove", sjekkPos);
     bane.addEventListener("mouseup", sjekkKlikk);
+  }
+
+  function sluttKnapper() {
+    innhold.fillStyle = "#6495ED";
+    innhold.fillRect(bredde/4,hoyde*1/2,bredde/5,hoyde/5);
+    innhold.fillRect(bredde*3/4-bredde/5,hoyde*1/2,bredde/5,hoyde/5);
+    innhold.fillStyle = "#000000";
+    innhold.font = "30px Comic Sans MS";
+    innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
+    innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde*1/2+hoyde/9);
+    innhold.font = "50px Comic Sans MS";
+    if (spillere == 1) {
+      if (poeng_spiller_1 == 7) {
+        innhold.fillText("Gratulerer du vant!", bredde*1/4, hoyde*1/3);
+      } else if (poeng_spiller_2 == 7) {
+        innhold.fillText("Du tapte...", bredde*2/5, hoyde*1/3);
+      }
+    } else if (spillere == 2) {
+      if (poeng_spiller_1 == 7) {
+        innhold.fillText("Gratulerer spiller 1 vant!", bredde*1/4, hoyde*1/3);
+      } else if (poeng_spiller_2 == 7) {
+        innhold.fillText("Gratulerer spiller 2 vant!", bredde*1/4, hoyde*1/3);
+      }
+    }
   }
 
   function sjekkPos(mouseEvent) {
