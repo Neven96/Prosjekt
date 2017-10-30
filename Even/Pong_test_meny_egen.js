@@ -1,4 +1,4 @@
-//Funksjoner for å gjemme og vise menyer
+//Funksjoner for å gjemme og vise menydiver
 function gjemDiv(divId) {
   var div = document.getElementById(divId);
   div.style.display = "none";
@@ -15,7 +15,7 @@ function domloaded() {
   document.getElementById("toSpiller").onclick = function() {spiller_tall(2);};
   function spiller_tall(spiller) {
     var spillere = spiller;
-    gjemDiv("menyDiv");
+    gjemDiv("knappeDiv");
     pong(spillere);
   }
 

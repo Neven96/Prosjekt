@@ -1,0 +1,20 @@
+canvas{
+  border:inset;
+  border-width:10px;
+}
+
+div#menyDiv{
+  text-align:center;
+}
+
+div#instruksjonDiv{
+  display:none;
+}
+
+div#innstillingDiv{
+  display:none;
+}
+
+div#spillDiv{
+  text-align:center;
+}

@@ -24,7 +24,9 @@ function pong(spillere) {
   var spiller_fart = 4;
   var computer_fart = 3;
   var ball_fart_x = 5;
-  var x_fart_array = [-ball_fart_x,ball_fart_x];
+  var bonus = 0;
+  var bonus_fart = 0;
+  var x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
   var y_fart_array = [-1,-0.75,-0.5,-0.25,0,0,0.25,0.5,0.75,1];
   var random_fart_x = Math.floor(Math.random()*x_fart_array.length);
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
@@ -32,6 +34,9 @@ function pong(spillere) {
   var poeng_spiller_2 = 0;
   var rekkert_bredde = 15;
   var rekkert_hoyde = 75;
+  var rekkert_pos_y = hoyde/2-rekkert_hoyde/2;
+  var s1_rekkert_pos_x = bredde-rekkert_bredde-10;
+  var s2_rekkert_pos_x = 10;
   var radius = 7.5;
   var pauset = false;
   var musX;
@@ -39,27 +44,33 @@ function pong(spillere) {
 
   //Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
-    innhold.fillStyle = "#FF0000";
+    var gradientVenstre = innhold.createLinearGradient(-bredde/10, hoyde/2, bredde/2, hoyde/2);
+    gradientVenstre.addColorStop(0, "#FFFFFF");
+    gradientVenstre.addColorStop(1, "#FF0000");
+    innhold.fillStyle = gradientVenstre;
     innhold.fillRect(0,0,bredde,hoyde);
-    innhold.fillStyle = "#00FF00";
+    var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/10, hoyde/2);
+    gradientHoyre.addColorStop(0, "#00FF00");
+    gradientHoyre.addColorStop(1, "#FFFFFF");
+    innhold.fillStyle = gradientHoyre;
     innhold.fillRect(bredde/2,0,bredde,hoyde);
     innhold.fillStyle = "#000000";
     innhold.font = "30px Comic Sans MS";
     innhold.fillText(poeng_spiller_2,(bredde/2)-25,25);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,25);
-    if (poeng_spiller_1 == 7 || poeng_spiller_2 == 7) {
+    if (poeng_spiller_1 == 7 || poeng_spiller_2 == 7 || pauset) {
       sluttKnapper();
     }
-    player.render();
-    computer.render();
+    spiller1.render();
+    spiller2.render();
     ball.render();
   };
 
   //Oppdaterer rekkertene og ballen
   var update = function(){
-    player.update();
-    computer.update(ball);
-    ball.update(player.paddle, computer.paddle);
+    spiller1.update();
+    spiller2.update(ball);
+    ball.update(spiller1.paddle, spiller2.paddle);
   };
 
   //Oppdaterer hver ramme
@@ -90,13 +101,13 @@ function pong(spillere) {
   };
 
   //Lager spillerrekkerten
-  function Player() {
-    this.paddle = new Paddle(bredde-rekkert_bredde-10, hoyde/2-rekkert_hoyde/2, rekkert_bredde, rekkert_hoyde);
+  function Spiller1() {
+    this.paddle = new Paddle(s1_rekkert_pos_x, rekkert_pos_y, rekkert_bredde, rekkert_hoyde);
   }
 
   //Lager computerrekkerten
-  function Computer() {
-    this.paddle = new Paddle(10, hoyde/2-rekkert_hoyde/2, rekkert_bredde, rekkert_hoyde);
+  function Spiller2() {
+    this.paddle = new Paddle(s2_rekkert_pos_x, rekkert_pos_y, rekkert_bredde, rekkert_hoyde);
   }
 
   //Lager ballen og gir den fart
@@ -109,12 +120,12 @@ function pong(spillere) {
   }
 
   //Plasserer spillerrekkerten innenfor rammen
-  Player.prototype.render = function() {
+  Spiller1.prototype.render = function() {
     this.paddle.render();
   };
 
   //Plasserer computerrekkerten innenfor rammen
-  Computer.prototype.render = function() {
+  Spiller2.prototype.render = function() {
     this.paddle.render();
   };
 
@@ -144,14 +155,14 @@ function pong(spillere) {
     }
 
     if (this.x < 0) {
-      this.x_fart = -ball_fart_x;
+      this.x_fart = -ball_fart_x-bonus_fart;
       random_fart_y = Math.floor(Math.random()*y_fart_array.length);
       this.y_fart = y_fart_array[random_fart_y];
       this.x = bredde/2;
       this.y = hoyde/2;
       poeng_spiller_1++;
     } else if (this.x > bredde) {
-      this.x_fart = ball_fart_x;
+      this.x_fart = ball_fart_x+bonus_fart;
       random_fart_y = Math.floor(Math.random()*y_fart_array.length);
       this.y_fart = y_fart_array[random_fart_y];
       this.x = bredde/2;
@@ -164,13 +175,13 @@ function pong(spillere) {
 
     if (topp_x > bredde/2) {
       if (topp_x < (paddle1.x + paddle1.width) && bunn_x > paddle1.x && topp_y < (paddle1.y + paddle1.height) && bunn_y > paddle1.y) {
-        this.x_fart = -ball_fart_x;
+        this.x_fart = -ball_fart_x-bonus_fart;
         this.y_fart += (paddle1.y_fart / 2);
         this.x += this.x_fart;
       }
     } else {
       if (topp_x < (paddle2.x + paddle2.width) && bunn_x > paddle2.x && topp_y < (paddle2.y + paddle2.height) && bunn_y > paddle2.y) {
-        this.x_fart = ball_fart_x;
+        this.x_fart = ball_fart_x+bonus_fart;
         this.y_fart += (paddle2.y_fart / 2);
         this.x += this.x_fart;
       }
@@ -215,32 +226,28 @@ function pong(spillere) {
   });
 
   //Forteller hvordan spilleren skal bevege seg
-  Player.prototype.update = function() {
+  Spiller1.prototype.update = function() {
     for(var key in keysDown) {
       var value = Number(key);
-      var x_sup = [[][[]]+[]][+[]][++[+[]][+[]]];
       if (value == 38) {
-        this.paddle.move(0, -spiller_fart);
+        this.paddle.move(0, -spiller_fart-bonus_fart);
       } else if (value == 40) {
-        this.paddle.move(0, spiller_fart);
+        this.paddle.move(0, spiller_fart+bonus_fart);
       } else {
         this.paddle.move(0, 0);
-      }
-      while (x_sup == 0) {
-        this.paddle.move(-1,-1);
       }
     }
   };
 
   if (spillere == 1) {
     //Hva som skjer når computeren beveger på seg
-    Computer.prototype.update = function(ball) {
+    Spiller2.prototype.update = function(ball) {
       var y_pos = ball.y;
       var diff = -((this.paddle.y + (this.paddle.height/ 2)) - y_pos);
-      if (diff < 0 && diff < -computer_fart) {
-        diff = -computer_fart;
-      } else if (diff > 0 && diff > computer_fart) {
-        diff = computer_fart;
+      if (diff < 0 && diff < -computer_fart-bonus_fart) {
+        diff = -computer_fart-bonus_fart;
+      } else if (diff > 0 && diff > computer_fart+bonus_fart) {
+        diff = computer_fart+bonus_fart;
       }
       this.paddle.move(0, diff);
       if (this.paddle.y < 0) {
@@ -250,20 +257,16 @@ function pong(spillere) {
       }
     };
   } else if (spillere == 2) {
-    //Forteller hvordan spiller 2 skal bevege seg(computer er spiller 2)
-    Computer.prototype.update = function(ball) {
+    //Forteller hvordan spiller 2 skal bevege seg
+    Spiller2.prototype.update = function(ball) {
       for(var key in keysDown) {
         var value = Number(key);
-        var x_sup = [[][[]]+[]][+[]][++[+[]][+[]]];
         if (value == 87) {
-          this.paddle.move(0, -spiller_fart);
+          this.paddle.move(0, -spiller_fart-bonus_fart);
         } else if (value == 83) {
-          this.paddle.move(0, spiller_fart);
+          this.paddle.move(0, spiller_fart+bonus_fart);
         } else {
           this.paddle.move(0, 0);
-        }
-        while (x_sup == 0) {
-          this.paddle.move(-1,-1);
         }
       }
     };
@@ -272,7 +275,11 @@ function pong(spillere) {
   function pauseSpill() {
     if (!pauset) {
       pauset = true;
+      bane.addEventListener("mousemove", sjekkPos);
+      bane.addEventListener("mouseup", sjekkKlikk);
     } else if (pauset) {
+      bane.removeEventListener("mousemove", sjekkPos);
+      bane.removeEventListener("mouseup", sjekkKlikk);
       pauset = false;
     }
   }
@@ -293,12 +300,21 @@ function pong(spillere) {
   }
 
   function sluttKnapper() {
+    innhold.lineWidth = "4";
+    innhold.strokeStyle = "#000000";
+    innhold.rect(bredde/4-2,hoyde*1/2-2,bredde/5+4,hoyde/5+4);
+    innhold.rect(bredde*3/4-bredde/5-2,hoyde*1/2-2,bredde/5+4,hoyde/5+4);
+    innhold.stroke();
     innhold.fillStyle = "#6495ED";
     innhold.fillRect(bredde/4,hoyde*1/2,bredde/5,hoyde/5);
     innhold.fillRect(bredde*3/4-bredde/5,hoyde*1/2,bredde/5,hoyde/5);
     innhold.fillStyle = "#000000";
     innhold.font = "30px Comic Sans MS";
-    innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
+    if (spillere == 1 && poeng_spiller_1 == 7) {
+      innhold.fillText("Videre", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
+    } else if (spillere == 2 || pauset) {
+      innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
+    }
     innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde*1/2+hoyde/9);
     innhold.font = "50px Comic Sans MS";
     if (spillere == 1) {
@@ -347,8 +363,14 @@ function pong(spillere) {
     pauseSpill();
     poeng_spiller_1 = 0;
     poeng_spiller_2 = 0;
-    player = new Player();
-    computer = new Computer();
+    if (spillere == 1 && poeng_spiller_1 == 7) {
+      bonus += 2.5;
+      bonus_fart += Math.pow(bonus,2)/100;
+    }
+    x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
+    random_fart_x = Math.floor(Math.random()*x_fart_array.length);
+    spiller1 = new Spiller1();
+    spiller2 = new Spiller2();
     ball = new Ball(bredde/2, hoyde/2);
     bane.removeEventListener("mousemove", sjekkPos);
     bane.removeEventListener("mouseup", sjekkKlikk);
@@ -359,17 +381,17 @@ function pong(spillere) {
     pauseSpill();
     poeng_spiller_1 = 0;
     poeng_spiller_2 = 0;
-    delete Player.prototype.move;
-    delete Computer.prototype.move;
+    bonus = 0;
+    bonus_fart = 0;
     delete Ball.prototype.update;
     console.log("\\|/Dette er en hyggelig error, bare ignorer :)");
     //Enten en error i koden som ikke ødelegger for noe, eller at spillet ikke fungerer ordentlig
     document.getElementById("spillDiv").outerHTML = "";
-    visDiv("menyDiv");
+    visDiv("knappeDiv");
   }
 
   //Aktiverer spilleren, computeren og ballen
-  var player = new Player();
-  var computer = new Computer();
+  var spiller1 = new Spiller1();
+  var spiller2 = new Spiller2();
   var ball = new Ball(bredde/2, hoyde/2);
 }
