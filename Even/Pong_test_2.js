@@ -45,6 +45,13 @@ function pong(spillere) {
   var s2_farge_bane = "#FF0000";
   var radius = 7.5;
   var pauset = false;
+  var pausetMusikk = false;
+  var pausetSFX = false;
+  var spillMusikk;
+  var vinnerMusikk;
+  var taperMusikk;
+  var sprett1;
+  var sprett2;
   var musX;
   var musY;
   var keysDown = {};
@@ -184,8 +191,28 @@ function pong(spillere) {
       poeng_spiller_2++;
     }
     //Når en av spillerne/computeren vinner
-    if (poeng_spiller_1 === 7 || poeng_spiller_2 === 7) {
-      vinnSpill();
+    if (spillere == 1) {
+      if (poeng_spiller_1 === 7) {
+        vinnSpill();
+        if (!pausetMusikk) {
+          vinnerMusikk = new Audio('winner.wav');
+          vinnerMusikk.play();
+        }
+      } else if (poeng_spiller_2 === 7) {
+        vinnSpill();
+        if (!pausetMusikk) {
+          taperMusikk = new Audio('musikk/loser.wav');
+          taperMusikk.play();
+        }
+      }
+    } else if (spillere == 2) {
+        if (poeng_spiller_1 === 7 || poeng_spiller_2 === 7) {
+          vinnSpill();
+          if (!pausetMusikk) {
+            vinnerMusikk = new Audio('musikk/winner.wav');
+            vinnerMusikk.play();
+        }
+      }
     }
 
     //Hvordan ballen treffer paddlene og hva som defineres som treffområde på paddlene
@@ -195,6 +222,10 @@ function pong(spillere) {
         this.x_fart = -ball_fart_x-bonus_fart;
         this.y_fart += (paddle1.y_fart / 2);
         this.x += this.x_fart;
+        if (!pausetSFX) {
+          sprett1 = new Audio('musikk/bounce1.wav');
+          sprett1.play();
+        }
       }
     //Når ballen treffer spiller 2
     } else {
@@ -202,6 +233,10 @@ function pong(spillere) {
         this.x_fart = ball_fart_x+bonus_fart;
         this.y_fart += (paddle2.y_fart / 2);
         this.x += this.x_fart;
+        if (!pausetSFX) {
+          var sprett2 = new Audio('musikk/bounce2.wav');
+          sprett2.play();
+        }
       }
     }
   };
@@ -231,10 +266,10 @@ function pong(spillere) {
     }
     //77 = m, 78 = n
     if (value === 77) {
-      pauseMusikk(musikk);
+      pauseMusikk();
     }
     if (value === 78) {
-      pauseMusikk(effekter);
+      pauseSFX();
     }
   });
 
@@ -306,6 +341,24 @@ function pong(spillere) {
     }
   }
 
+  function pauseMusikk() {
+    if (!pausetMusikk) {
+      spillMusikk.stop();
+      pausetMusikk = true;
+  } else if (pausetMusikk) {
+      spillMusikk.play();
+      pausetMusikk = false;
+    }
+  }
+
+  function pauseSFX(){
+    if (!pausetSFX){
+      pausetSFX = true;
+    } else if (pausetSFX){
+      pausetSFX = false;
+    }
+  }
+
   //Når man vinner spillet så kommer man hit, den setter opp alt til videre,
   //enten restarte spillet eller tilbake til meny
   //render() er der en siste gang for at poengene skal oppdatere seg
@@ -313,6 +366,7 @@ function pong(spillere) {
   function vinnSpill() {
     render();
     pauseSpill();
+    spillMusikk.stop();
     bane.addEventListener("mousemove", sjekkPos);
     bane.addEventListener("mouseup", sjekkKlikk);
   }
@@ -383,6 +437,9 @@ function pong(spillere) {
   //Restarter spillet i orginale posisjoner med 0 i poeng
   function restartSpill() {
     pauseSpill();
+    if(!pausetMusikk){
+      spillMusikk.play();
+    }
     poeng_spiller_1 = 0;
     poeng_spiller_2 = 0;
     if (spillere == 1 && poeng_spiller_1 == 7) {
@@ -412,11 +469,36 @@ function pong(spillere) {
     console.log("\\|/Dette er en hyggelig error, bare ignorer :)");
     //Sletter hele diven som spillet ligger inni når du avslutter spillet
     document.getElementById("spillDiv").outerHTML = "";
+    document.getElementById("musikk").outerHTML = "";
     visDiv("knappeDiv");
+  }
+
+  function sound(src, gjenta, volum) {
+      this.sound = document.createElement("audio");
+      this.sound.id="musikk";
+      this.sound.src = src;
+      this.sound.setAttribute("preload", "auto");
+      this.sound.setAttribute("controls", "none");
+      this.sound.loop = gjenta;
+      this.sound.volume = volum;
+      this.sound.style.display = "none";
+      document.body.appendChild(this.sound);
+      this.play = function(){
+          this.sound.play();
+      };
+      this.stop = function(){
+          this.sound.pause();
+      };
+  }
+
+  function startMusikk(){
+    spillMusikk = new sound("musikk/Spillmusikk.wav", "true", 0.5);
+    spillMusikk.play();
   }
 
   //Aktiverer spiller 1, spiller 2 og ballen
   var spiller1 = new Spiller1();
   var spiller2 = new Spiller2();
   var ball = new Ball(bredde/2, hoyde/2);
+  startMusikk();
 }

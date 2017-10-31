@@ -11,6 +11,8 @@ function visDiv(divId) {
 //Menyfunksjonene
 document.addEventListener('DOMContentLoaded',domloaded,false);
 function domloaded() {
+  var historieLesing = new Audio('musikk/story.mp3');
+
   document.getElementById("enSpiller").onclick = function() {spiller_tall(1);};
   document.getElementById("toSpiller").onclick = function() {spiller_tall(2);};
   function spiller_tall(spiller) {
@@ -23,10 +25,13 @@ function domloaded() {
   document.getElementById("instruksjonKnapp").onclick = function() {
     gjemDiv("knappeDiv");
     visDiv("instruksjonDiv");
+    historieLesing.currentTime = 0;
+    historieLesing.play();
   };
   document.getElementById("instruksjonTilbakeMeny").onclick = function() {
     gjemDiv("instruksjonDiv");
     visDiv("knappeDiv");
+    historieLesing.pause();
   };
 
   //Innstillingsmenyen
