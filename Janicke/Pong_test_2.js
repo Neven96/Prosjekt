@@ -26,47 +26,38 @@ function pong(spillere) {
   var ball_fart_x = 5;
   var bonus = 0;
   var bonus_fart = 0;
-  //Arrays for å få en tilfeldig rettning på ballen ved starten av spillet
   var x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
   var y_fart_array = [-1,-0.75,-0.5,-0.25,0,0,0.25,0.5,0.75,1];
   var random_fart_x = Math.floor(Math.random()*x_fart_array.length);
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
   var poeng_spiller_1 = 0;
   var poeng_spiller_2 = 0;
-  //Størrelse- og posisjonsvariabler, endre disse for endringer på paddler og ball
   var rekkert_bredde = 15;
   var rekkert_hoyde = 75;
   var rekkert_pos_y = hoyde/2-rekkert_hoyde/2;
   var s1_rekkert_pos_x = bredde-rekkert_bredde-10;
   var s2_rekkert_pos_x = 10;
-  var s1_farge_paddle = "#FF0000";
-  var s2_farge_paddle = "#00FF00";
-  var s1_farge_bane = "#00FF00";
-  var s2_farge_bane = "#FF0000";
   var radius = 7.5;
   var pauset = false;
   var musX;
   var musY;
-  var keysDown = {};
 
-  //Gir rammen farge med gradvis overgang til hvit og plasserer rekkertene og ballen innenfor rammen
+  //Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
-    var gradientVenstre = innhold.createLinearGradient(-bredde/3, hoyde/2, bredde/2, hoyde/2);
+    var gradientVenstre = innhold.createLinearGradient(-bredde/10, hoyde/2, bredde/2, hoyde/2);
     gradientVenstre.addColorStop(0, "#FFFFFF");
-    gradientVenstre.addColorStop(1, s2_farge_bane);
+    gradientVenstre.addColorStop(1, "#FF0000");
     innhold.fillStyle = gradientVenstre;
     innhold.fillRect(0,0,bredde,hoyde);
-    var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/3, hoyde/2);
-    gradientHoyre.addColorStop(0, s1_farge_bane);
+    var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/10, hoyde/2);
+    gradientHoyre.addColorStop(0, "#00FF00");
     gradientHoyre.addColorStop(1, "#FFFFFF");
     innhold.fillStyle = gradientHoyre;
     innhold.fillRect(bredde/2,0,bredde,hoyde);
-    //Poengscore
     innhold.fillStyle = "#000000";
     innhold.font = "30px Comic Sans MS";
     innhold.fillText(poeng_spiller_2,(bredde/2)-25,25);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,25);
-    //Henter fram knapper for pausemeny, og seier/tap
     if (poeng_spiller_1 == 7 || poeng_spiller_2 == 7 || pauset) {
       sluttKnapper();
     }
@@ -91,38 +82,35 @@ function pong(spillere) {
     animate(step);
   };
 
-  //Veldig viktig linje som må stå akkurat her, og som sørger for at hele canvasen faktisk dukker opp
-  //https://stackoverflow.com/questions/6065169/requestanimationframe-with-this-keyword er hvorfor den fungerer
   animate(this.step.bind(this));
 
-  //Lager et paddle-objekt, gir det posisjon, størrelse og fart
-  function Paddle(x, y, bredde, hoyde, farge){
+  //Lager et rekkert-"objekt" med størrelse og mulighet til fart
+  function Paddle(x, y, bredde, hoyde){
     this.x = x;
     this.y = y;
     this.width = bredde;
     this.height = hoyde;
     this.x_fart = 0;
     this.y_fart = 0;
-    this.farge = farge;
   }
 
-  //Gir paddlene farge og gjør dem klare for å bli laget
+  //Gir rekkertene farge og mulighet til en plassering
   Paddle.prototype.render = function(){
-    innhold.fillStyle = this.farge;
+    innhold.fillStyle = "#0000FF";
     innhold.fillRect(this.x, this.y, this.width, this.height);
   };
 
-  //Lager paddlen til Spiller 1, som er spilleren til høyre
+  //Lager spillerrekkerten
   function Spiller1() {
-    this.paddle = new Paddle(s1_rekkert_pos_x, rekkert_pos_y, rekkert_bredde, rekkert_hoyde, s1_farge_paddle);
+    this.paddle = new Paddle(s1_rekkert_pos_x, rekkert_pos_y, rekkert_bredde, rekkert_hoyde);
   }
 
-  //Lager paddlen til Spiller 2, som er spilleren til venstre, eller computeren
+  //Lager computerrekkerten
   function Spiller2() {
-    this.paddle = new Paddle(s2_rekkert_pos_x, rekkert_pos_y, rekkert_bredde, rekkert_hoyde, s2_farge_paddle);
+    this.paddle = new Paddle(s2_rekkert_pos_x, rekkert_pos_y, rekkert_bredde, rekkert_hoyde);
   }
 
-  //Lager et ballobjekt, gir den størrelse og gir den fart
+  //Lager ballen og gir den fart
   function Ball(x, y) {
     this.x = x;
     this.y = y;
@@ -131,17 +119,17 @@ function pong(spillere) {
     this.radius = radius;
   }
 
-  //Plasserer paddlen til spiller 1 innenfor rammen
+  //Plasserer spillerrekkerten innenfor rammen
   Spiller1.prototype.render = function() {
     this.paddle.render();
   };
 
-  //Plasserer paddlen til spiller 2/computeren innenfor rammen
+  //Plasserer computerrekkerten innenfor rammen
   Spiller2.prototype.render = function() {
     this.paddle.render();
   };
 
-  //Lager ballen og gir den farge og gjør den klar for å plasseres
+  //Lager ballen og gir den farge og mulighet til plassering
   Ball.prototype.render = function() {
     innhold.beginPath();
     innhold.arc(this.x, this.y, this.radius, 2*Math.PI, false);
@@ -158,7 +146,6 @@ function pong(spillere) {
     var bunn_x = this.x + radius;
     var bunn_y = this.y + radius;
 
-    //Hva som skjer når ballen treffer en av kantene oppe og nede på banen
     if (this.y - radius < 0) {
       this.y = radius;
       this.y_fart = -this.y_fart;
@@ -167,7 +154,6 @@ function pong(spillere) {
       this.y_fart = -this.y_fart;
     }
 
-    //Hva som skjer når ballen treffer høyre eller venstre side, dvs. at en av spillerne scorer
     if (this.x < 0) {
       this.x_fart = -ball_fart_x-bonus_fart;
       random_fart_y = Math.floor(Math.random()*y_fart_array.length);
@@ -183,20 +169,16 @@ function pong(spillere) {
       this.y = hoyde/2;
       poeng_spiller_2++;
     }
-    //Når en av spillerne/computeren vinner
     if (poeng_spiller_1 === 7 || poeng_spiller_2 === 7) {
       vinnSpill();
     }
 
-    //Hvordan ballen treffer paddlene og hva som defineres som treffområde på paddlene
-    //Når ballen treffer spiller 1
     if (topp_x > bredde/2) {
       if (topp_x < (paddle1.x + paddle1.width) && bunn_x > paddle1.x && topp_y < (paddle1.y + paddle1.height) && bunn_y > paddle1.y) {
         this.x_fart = -ball_fart_x-bonus_fart;
         this.y_fart += (paddle1.y_fart / 2);
         this.x += this.x_fart;
       }
-    //Når ballen treffer spiller 2
     } else {
       if (topp_x < (paddle2.x + paddle2.width) && bunn_x > paddle2.x && topp_y < (paddle2.y + paddle2.height) && bunn_y > paddle2.y) {
         this.x_fart = ball_fart_x+bonus_fart;
@@ -206,7 +188,7 @@ function pong(spillere) {
     }
   };
 
-  //Forteller hva som skjer når en paddle beveger seg, og hvor langt den kan bevege seg(så den ikke kan gå utenfor banen)
+  //Forteller hva som skjer når en rekkert beveger seg, og hvor langt den kan bevege seg
   Paddle.prototype.move = function(x, y) {
     this.x += x;
     this.y += y;
@@ -221,15 +203,15 @@ function pong(spillere) {
     }
   };
 
-  //Når man trykker på en knapp, enten for å bevege paddlen, pause spillet eller pause musikk/lydeffekter
+  var keysDown = {};
+
+  //Når man trykker på en knapp
   window.addEventListener("keydown", function(event){
     keysDown[event.keyCode] = true;
     var value = event.keyCode;
-    //27 = ESC, 80 = p
     if (value === 20 || value === 27 || value === 80) {
       pauseSpill();
     }
-    //77 = m, 78 = n
     if (value === 77) {
       pauseMusikk(musikk);
     }
@@ -238,13 +220,12 @@ function pong(spillere) {
     }
   });
 
-  //Sletter knappetrykket så paddlene ikke fortsetter å bevege seg etter å ha sluppet knappen
+  //Når man slipper knappen
   window.addEventListener("keyup", function(event){
     delete keysDown[event.keyCode];
   });
 
-  //Forteller hvordan spiller 1 skal bevege seg og med hvilke knapper
-  //(38 = opp-pil, 40 = ned-pil)
+  //Forteller hvordan spilleren skal bevege seg
   Spiller1.prototype.update = function() {
     for(var key in keysDown) {
       var value = Number(key);
@@ -258,7 +239,6 @@ function pong(spillere) {
     }
   };
 
-  //Bestemmer om man spiller enspiller eller tospiller
   if (spillere == 1) {
     //Hva som skjer når computeren beveger på seg
     Spiller2.prototype.update = function(ball) {
@@ -277,8 +257,7 @@ function pong(spillere) {
       }
     };
   } else if (spillere == 2) {
-    //Forteller hvordan spiller 2 skal bevege seg og med hvilke knapper
-    //87 = W, 83 = S
+    //Forteller hvordan spiller 2 skal bevege seg
     Spiller2.prototype.update = function(ball) {
       for(var key in keysDown) {
         var value = Number(key);
@@ -293,7 +272,6 @@ function pong(spillere) {
     };
   }
 
-  //Pauser spillet og setter opp knapper for enten restart eller tilbake til meny
   function pauseSpill() {
     if (!pauset) {
       pauset = true;
@@ -306,7 +284,6 @@ function pong(spillere) {
     }
   }
 
-  //Pauser musikken hvis man er lei
   function pauseMusikk(lyd) {
     if (lyd.play()) {
       lyd.pause();
@@ -315,10 +292,6 @@ function pong(spillere) {
     }
   }
 
-  //Når man vinner spillet så kommer man hit, den setter opp alt til videre,
-  //enten restarte spillet eller tilbake til meny
-  //render() er der en siste gang for at poengene skal oppdatere seg
-  //ellers vil det bare stå 6 poeng, istedenfor 7 når spillet er vunnet
   function vinnSpill() {
     render();
     pauseSpill();
@@ -326,7 +299,6 @@ function pong(spillere) {
     bane.addEventListener("mouseup", sjekkKlikk);
   }
 
-  //Lager firkanter i canvas for knapper for å enten restarte spillet eller å gå tilbake til menyen
   function sluttKnapper() {
     innhold.lineWidth = "4";
     innhold.strokeStyle = "#000000";
@@ -338,9 +310,8 @@ function pong(spillere) {
     innhold.fillRect(bredde*3/4-bredde/5,hoyde*1/2,bredde/5,hoyde/5);
     innhold.fillStyle = "#000000";
     innhold.font = "30px Comic Sans MS";
-    //Hvis du spiller enspiller skal du kunne gå videre, men i tospiller skal du bare starte på nytt
     if (spillere == 1 && poeng_spiller_1 == 7) {
-      innhold.fillText("Videre", bredde/4+bredde/20, hoyde*1/2+hoyde/9);
+      innhold.fillText("Videre", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
     } else if (spillere == 2 || pauset) {
       innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
     }
@@ -361,7 +332,6 @@ function pong(spillere) {
     }
   }
 
-  //Sjekker hvor musepekeren er innenfor canvasen og gjør det mulig å trykke på knapper
   function sjekkPos(mouseEvent) {
     musX = mouseEvent.pageX - this.offsetLeft;
     musY = mouseEvent.pageY - this.offsetTop;
@@ -375,7 +345,6 @@ function pong(spillere) {
     }
   }
 
-  //Sjekker om du trykker med musa, og om du er innenfor posisjonen til knappene i canvasen
   function sjekkKlikk(mouseEvent) {
     if (musX > bredde/4 && musX < bredde/4 + bredde/5) {
       if (musY > hoyde*1/2 && musY < hoyde*1/2 + hoyde/5) {
@@ -414,17 +383,14 @@ function pong(spillere) {
     poeng_spiller_2 = 0;
     bonus = 0;
     bonus_fart = 0;
-    //Denne delete biten vil lage en error, men den erroren er ikke farlig og gjør ikke noe for videre spilling
-    //Uten denne delete biten vil alle objekter i canvasen bevege seg dobbelt så fort hver gang man går inn og ut av menyen
-    //Enten en error i koden som ikke ødelegger for noe, eller at spillet ikke fungerer ordentlig
     delete Ball.prototype.update;
     console.log("\\|/Dette er en hyggelig error, bare ignorer :)");
-    //Sletter hele diven som spillet ligger inni når du avslutter spillet
+    //Enten en error i koden som ikke ødelegger for noe, eller at spillet ikke fungerer ordentlig
     document.getElementById("spillDiv").outerHTML = "";
     visDiv("knappeDiv");
   }
 
-  //Aktiverer spiller 1, spiller 2 og ballen
+  //Aktiverer spilleren, computeren og ballen
   var spiller1 = new Spiller1();
   var spiller2 = new Spiller2();
   var ball = new Ball(bredde/2, hoyde/2);
