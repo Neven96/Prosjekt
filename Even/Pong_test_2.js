@@ -306,15 +306,6 @@ function pong(spillere) {
     }
   }
 
-  //Pauser musikken hvis man er lei
-  function pauseMusikk(lyd) {
-    if (lyd.play()) {
-      lyd.pause();
-    } else if (lyd.pause()) {
-      lyd.play();
-    }
-  }
-
   //Når man vinner spillet så kommer man hit, den setter opp alt til videre,
   //enten restarte spillet eller tilbake til meny
   //render() er der en siste gang for at poengene skal oppdatere seg
