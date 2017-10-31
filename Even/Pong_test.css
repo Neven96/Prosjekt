@@ -1,20 +1,64 @@
+@font-face{
+  font-family: font1;
+  src: url(font/PressStart2P.ttf);
+}
+body{
+  background-color: black;
+}
 canvas{
   border:inset;
   border-width:10px;
 }
+#overskrift{
+  font-family: font1;
+  font-size: 40px;
+  color: #c0c0c0;
+}
+.meny{
 
-div#menyDiv{
+}
+#menyDiv{
   text-align:center;
 }
+button{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 50px;
+  font-family: font1;
+  font-size: 14px;
+}
 
-div#instruksjonDiv{
+#instruksjonDiv{
+  display:none;
+  color: white;
+  font-family: font1;
+}
+
+#spiller1{
+  position: relative;
+  right: 150px;
+  top: 30px;
+}
+#spiller2{
+  position: relative;
+  left: 150px;
+  bottom: 30px;
+}
+#pause{
+  position: relative;
+  top: 50px;
+}
+#instruksjonTilbakeMeny{
+  position: relative;
+  top: 100px;
+}
+
+#innstillingDiv{
   display:none;
 }
 
-div#innstillingDiv{
-  display:none;
-}
-
-div#spillDiv{
+#spillDiv{
   text-align:center;
 }

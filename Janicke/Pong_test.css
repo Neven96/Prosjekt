@@ -1,0 +1,124 @@
+@font-face{
+  font-family: font1;
+  src: url(font/PressStart2P.ttf);
+}
+body{
+  background-image: url(bilde/bakgrunn.jpg);
+}
+canvas{
+  border:inset;
+  border-width:10px;
+}
+#overskrift{
+  font-family: font1;
+  font-size: 40px;
+  color: #c0c0c0;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+.meny{
+
+}
+#menyDiv{
+  text-align:center;
+}
+button{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 50px;
+  font-family: font1;
+  font-size: 14px;
+  background: none;
+  color: white;
+  border: white;
+  border-width: 1px;
+  border-style: solid;
+  margin-top: 30px;
+}
+button:hover {
+	text-decoration: none;
+	color: #c0c0c0;
+}
+
+#instruksjonDiv{
+  display:none;
+  color: white;
+  font-family: font1;
+}
+
+#spiller1{
+  position: relative;
+  right: 150px;
+  top: 30px;
+}
+#spiller2{
+  position: relative;
+  left: 150px;
+  bottom: 30px;
+}
+#pause{
+  position: relative;
+  top: 50px;
+}
+#instruksjonTilbakeMeny{
+  position: relative;
+  top: 100px;
+}
+
+#innstillingDiv{
+  display:none;
+  font-family: font1;
+  color: white;
+  font-size: 14px;
+}
+
+#venstre{
+  width: 600px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  border: white;
+  border-style: solid;
+  border-width: 1px;
+}
+#venstreBakgrunn{
+  position: relative;
+  top: 20px;
+}
+
+#venstrePaddle{
+  position: relative;
+  top: 40px;
+}
+
+#hoyre{
+  width: 600px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  border: white;
+  border-style: solid;
+  border-width: 1px;
+}
+
+#hoyreBakgrunn{
+  position: relative;
+  top: 20px;
+}
+
+#hoyrePaddle{
+  position: relative;
+  top: -40px;
+}
+
+#innstillingTilbakeMeny{
+  position: relative;
+  top: 30px;
+}
+
+#spillDiv{
+  text-align:center;
+}
