@@ -11,7 +11,7 @@ function visDiv(divId) {
 //Menyfunksjonene
 document.addEventListener('DOMContentLoaded',domloaded,false);
 function domloaded() {
-  var historieLesing = new Audio('musikk/story.mp3');
+  var historieLesing = new Audio('musikk/Historie.mp3');
 
   document.getElementById("enSpiller").onclick = function() {spiller_tall(1);};
   document.getElementById("toSpiller").onclick = function() {spiller_tall(2);};

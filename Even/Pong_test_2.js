@@ -195,13 +195,13 @@ function pong(spillere) {
       if (poeng_spiller_1 === 7) {
         vinnSpill();
         if (!pausetMusikk) {
-          vinnerMusikk = new Audio('winner.wav');
+          vinnerMusikk = new Audio('musikk/Vinner.wav');
           vinnerMusikk.play();
         }
       } else if (poeng_spiller_2 === 7) {
         vinnSpill();
         if (!pausetMusikk) {
-          taperMusikk = new Audio('musikk/loser.wav');
+          taperMusikk = new Audio('musikk/Taper.wav');
           taperMusikk.play();
         }
       }
@@ -209,7 +209,7 @@ function pong(spillere) {
         if (poeng_spiller_1 === 7 || poeng_spiller_2 === 7) {
           vinnSpill();
           if (!pausetMusikk) {
-            vinnerMusikk = new Audio('musikk/winner.wav');
+            vinnerMusikk = new Audio('musikk/Vinner.wav');
             vinnerMusikk.play();
         }
       }
@@ -223,7 +223,7 @@ function pong(spillere) {
         this.y_fart += (paddle1.y_fart / 2);
         this.x += this.x_fart;
         if (!pausetSFX) {
-          sprett1 = new Audio('musikk/bounce1.wav');
+          sprett1 = new Audio('musikk/Sprett1.wav');
           sprett1.play();
         }
       }
@@ -234,7 +234,7 @@ function pong(spillere) {
         this.y_fart += (paddle2.y_fart / 2);
         this.x += this.x_fart;
         if (!pausetSFX) {
-          var sprett2 = new Audio('musikk/bounce2.wav');
+          var sprett2 = new Audio('musikk/Sprett2.wav');
           sprett2.play();
         }
       }
