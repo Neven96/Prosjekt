@@ -52,6 +52,12 @@ function Paddle(x, y, width, height){
   this.x_speed = 0;
   this.y_speed = 0;
 }
+var myMusic
+
+function startMusic(){
+  myMusic = new sound("BeepBox-Song(2).wav");
+  myMusic.play();
+}
 
 //Gir rekkertene farge og mulighet til en plassering
 Paddle.prototype.render = function(){
