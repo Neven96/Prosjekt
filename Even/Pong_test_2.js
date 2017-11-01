@@ -48,6 +48,7 @@ function pong(spillere) {
   var taperMusikk;
   var sprett1;
   var sprett2;
+  var eksplosjonGoal;
   var musX;
   var musY;
   var keysDown = {};
@@ -196,6 +197,10 @@ function pong(spillere) {
       this.x = bredde/2;
       this.y = hoyde/2;
       poeng_spiller_1++;
+      if (!pausetSFX) {
+        eksplosjonGoal = new Audio('musikk/Eksplosjon.wav');
+        eksplosjonGoal.play();
+      }
     } else if (this.x > bredde) {
       this.x_fart = ball_fart_x+bonus_fart;
       random_fart_y = Math.floor(Math.random()*y_fart_array.length);
@@ -203,6 +208,10 @@ function pong(spillere) {
       this.x = bredde/2;
       this.y = hoyde/2;
       poeng_spiller_2++;
+      if (!pausetSFX) {
+        eksplosjonGoal = new Audio('musikk/Eksplosjon.wav');
+        eksplosjonGoal.play();
+      }
     }
     //Når en av spillerne/computeren vinner
     if (spillere == 1) {
@@ -248,7 +257,7 @@ function pong(spillere) {
         this.y_fart += (paddle2.y_fart / 2);
         this.x += this.x_fart;
         if (!pausetSFX) {
-          var sprett2 = new Audio('musikk/Sprett2.wav');
+          sprett2 = new Audio('musikk/Sprett2.wav');
           sprett2.play();
         }
       }
@@ -389,24 +398,24 @@ function pong(spillere) {
 
   //Lager firkanter i canvas for knapper for å enten restarte spillet eller å gå tilbake til menyen
   function sluttKnapper() {
-    innhold.lineWidth = "4";
+    innhold.lineWidth = "1";
     innhold.strokeStyle = "#000000";
-    innhold.rect(bredde/4-2,hoyde*1/2-2,bredde/5+4,hoyde/5+4);
-    innhold.rect(bredde*3/4-bredde/5-2,hoyde*1/2-2,bredde/5+4,hoyde/5+4);
+    innhold.rect(bredde/4-2,hoyde/2-hoyde/15-2,bredde/5+4,hoyde/10+4);
+    innhold.rect(bredde*3/4-bredde/5-2,hoyde/2-hoyde/15-2,bredde/5+4,hoyde/10+4);
     innhold.stroke();
-    innhold.fillStyle = "#6495ED";
-    innhold.fillRect(bredde/4,hoyde*1/2,bredde/5,hoyde/5);
-    innhold.fillRect(bredde*3/4-bredde/5,hoyde*1/2,bredde/5,hoyde/5);
+    innhold.fillStyle = "rgba(255, 255, 255, 0.4)";
+    innhold.fillRect(bredde/4,hoyde/2-hoyde/15,bredde/5,hoyde/10);
+    innhold.fillRect(bredde*3/4-bredde/5,hoyde/2-hoyde/15,bredde/5,hoyde/10);
     innhold.fillStyle = "#000000";
-    innhold.font = "30px Comic Sans MS";
+    innhold.font = "14px font1";
     //Hvis du spiller enspiller skal du kunne gå videre, men i tospiller skal du bare starte på nytt
     if (spillere == 1 && poeng_spiller_1 == 7) {
-      innhold.fillText("Videre", bredde/4+bredde/20, hoyde*1/2+hoyde/9);
+      innhold.fillText("Videre", bredde/4+bredde/20, hoyde/2);
     } else if (spillere == 2 || pauset) {
-      innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
+      innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde/2);
     }
-    innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde*1/2+hoyde/9);
-    innhold.font = "50px Comic Sans MS";
+    innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde/2);
+    innhold.font = "24px font1";
     if (spillere == 1) {
       if (poeng_spiller_1 == 7) {
         innhold.fillText("Gratulerer du vant!", bredde*1/4, hoyde*1/3);
@@ -438,13 +447,13 @@ function pong(spillere) {
 
   //Sjekker om du trykker med musa, og om du er innenfor posisjonen til knappene i canvasen
   function sjekkKlikk(mouseEvent) {
-    if (musX > bredde/4 && musX < bredde/4 + bredde/5) {
-      if (musY > hoyde*1/2 && musY < hoyde*1/2 + hoyde/5) {
+    if (musX >= bredde/4 && musX <= bredde/4 + bredde/5) {
+      if (musY >= hoyde/2-hoyde/15 && musY <= hoyde/2-hoyde/15 + hoyde/10) {
         restartSpill();
       }
     }
-    if (musX > bredde*3/4-bredde/5 && musX < bredde*3/4 + bredde/5) {
-      if (musY > hoyde*1/2 && musY < hoyde*1/2 + hoyde/5) {
+    if (musX >= bredde*3/4-bredde/5 && musX <= bredde*3/4 + bredde/5) {
+      if (musY >= hoyde/2-hoyde/15 && musY <= hoyde/2-hoyde/15 + hoyde/10) {
         sluttSpill();
       }
     }
