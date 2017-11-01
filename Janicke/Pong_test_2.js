@@ -55,7 +55,7 @@ function pong(spillere) {
     innhold.fillStyle = gradientHoyre;
     innhold.fillRect(bredde/2,0,bredde,hoyde);
     innhold.fillStyle = "#000000";
-    innhold.font = "30px Comic Sans MS";
+    innhold.font = "20px font1";
     innhold.fillText(poeng_spiller_2,(bredde/2)-25,25);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,25);
     if (poeng_spiller_1 == 7 || poeng_spiller_2 == 7 || pauset) {
@@ -300,23 +300,23 @@ function pong(spillere) {
   }
 
   function sluttKnapper() {
-    innhold.lineWidth = "4";
+    innhold.lineWidth = "1";
     innhold.strokeStyle = "#000000";
     innhold.rect(bredde/4-2,hoyde*1/2-2,bredde/5+4,hoyde/5+4);
     innhold.rect(bredde*3/4-bredde/5-2,hoyde*1/2-2,bredde/5+4,hoyde/5+4);
     innhold.stroke();
-    innhold.fillStyle = "#6495ED";
+    innhold.fillStyle = "rgb(255, 255, 255, 0.4)";
     innhold.fillRect(bredde/4,hoyde*1/2,bredde/5,hoyde/5);
     innhold.fillRect(bredde*3/4-bredde/5,hoyde*1/2,bredde/5,hoyde/5);
     innhold.fillStyle = "#000000";
-    innhold.font = "30px Comic Sans MS";
+    innhold.font = "14px font1";
     if (spillere == 1 && poeng_spiller_1 == 7) {
       innhold.fillText("Videre", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
     } else if (spillere == 2 || pauset) {
       innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde*1/2+hoyde/9);
     }
     innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde*1/2+hoyde/9);
-    innhold.font = "50px Comic Sans MS";
+    innhold.font = "24px font1";
     if (spillere == 1) {
       if (poeng_spiller_1 == 7) {
         innhold.fillText("Gratulerer du vant!", bredde*1/4, hoyde*1/3);
