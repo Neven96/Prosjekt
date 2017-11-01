@@ -39,11 +39,7 @@ function pong(spillere) {
   var rekkert_pos_y = hoyde/2-rekkert_hoyde/2;
   var s1_rekkert_pos_x = bredde-rekkert_bredde-10;
   var s2_rekkert_pos_x = 10;
-  var s1_farge_paddle = "#FF0000";
-  var s2_farge_paddle = "#00FF00";
-  var s1_farge_bane = "#00FF00";
-  var s2_farge_bane = "#FF0000";
-  var radius = 7.5;
+  var radius = 9;
   var pauset = false;
   var pausetMusikk = false;
   var pausetSFX = false;
@@ -55,6 +51,20 @@ function pong(spillere) {
   var musX;
   var musY;
   var keysDown = {};
+  var s1_farge_paddle_valg = document.getElementById("paddleSpiller1");
+  var s2_farge_paddle_valg = document.getElementById("paddleSpiller2");
+  var s1_farge_bane_valg = document.getElementById("baneSpiller1");
+  var s2_farge_bane_valg = document.getElementById("baneSpiller2");
+  var bane_farge = {'Red': '#FF3333',
+                    'Blue': '#3333FF',
+                    'Green': '#33FF33',};
+  var paddle_farge = {'Red': '#8B0000',
+                      'Blue': '#00008B',
+                      'Green': '#008B00',};
+  var s1_farge_paddle = paddle_farge[s1_farge_paddle_valg.value];
+  var s2_farge_paddle = paddle_farge[s2_farge_paddle_valg.value];
+  var s1_farge_bane = bane_farge[s1_farge_bane_valg.value];
+  var s2_farge_bane = bane_farge[s2_farge_bane_valg.value];
 
   //Gir rammen farge med gradvis overgang til hvit og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
@@ -152,8 +162,12 @@ function pong(spillere) {
   Ball.prototype.render = function() {
     innhold.beginPath();
     innhold.arc(this.x, this.y, this.radius, 2*Math.PI, false);
-    innhold.fillStyle = "#000000";
+    innhold.fillStyle = "#FFFFFF";
     innhold.fill();
+    innhold.lineWidth = 3;
+    innhold.strokeStyle = "#000000";
+    innhold.stroke();
+    innhold.closePath();
   };
 
   //Gir ballen fart og oppdaterer farten for hver ramme, og når rekkertene treffer den
@@ -257,7 +271,8 @@ function pong(spillere) {
   };
 
   //Når man trykker på en knapp, enten for å bevege paddlen, pause spillet eller pause musikk/lydeffekter
-  window.addEventListener("keydown", function(event){
+  window.addEventListener("keydown", trykkKnapp);
+  function trykkKnapp(event) {
     keysDown[event.keyCode] = true;
     var value = event.keyCode;
     //27 = ESC, 80 = p
@@ -271,12 +286,13 @@ function pong(spillere) {
     if (value === 78) {
       pauseSFX();
     }
-  });
+  }
 
   //Sletter knappetrykket så paddlene ikke fortsetter å bevege seg etter å ha sluppet knappen
-  window.addEventListener("keyup", function(event){
+  window.addEventListener("keyup", slippKnapp);
+  function slippKnapp(event) {
     delete keysDown[event.keyCode];
-  });
+  }
 
   //Forteller hvordan spiller 1 skal bevege seg og med hvilke knapper
   //(38 = opp-pil, 40 = ned-pil)
@@ -469,36 +485,21 @@ function pong(spillere) {
     console.log("\\|/Dette er en hyggelig error, bare ignorer :)");
     //Sletter hele diven som spillet ligger inni når du avslutter spillet
     document.getElementById("spillDiv").outerHTML = "";
-    document.getElementById("musikk").outerHTML = "";
+    document.getElementById("spillMusikk").outerHTML = "";
+    window.removeEventListener("keydown", trykkKnapp);
+    window.removeEventListener("keyup", slippKnapp);
     visDiv("knappeDiv");
+    var menyMusikk = new sound('musikk/Meny.wav', "true", 0.8, "menyMusikk");
+    if (!pausetMusikk) {
+      menyMusikk.play();
+    }
   }
 
-  function sound(src, gjenta, volum) {
-      this.sound = document.createElement("audio");
-      this.sound.id="musikk";
-      this.sound.src = src;
-      this.sound.setAttribute("preload", "auto");
-      this.sound.setAttribute("controls", "none");
-      this.sound.loop = gjenta;
-      this.sound.volume = volum;
-      this.sound.style.display = "none";
-      document.body.appendChild(this.sound);
-      this.play = function(){
-          this.sound.play();
-      };
-      this.stop = function(){
-          this.sound.pause();
-      };
-  }
-
-  function startMusikk(){
-    spillMusikk = new sound("musikk/Spillmusikk.wav", "true", 0.5);
-    spillMusikk.play();
-  }
+  spillMusikk = new sound("musikk/Spillmusikk.wav", "true", 0.5, "spillMusikk");
+  spillMusikk.play();
 
   //Aktiverer spiller 1, spiller 2 og ballen
   var spiller1 = new Spiller1();
   var spiller2 = new Spiller2();
   var ball = new Ball(bredde/2, hoyde/2);
-  startMusikk();
 }
