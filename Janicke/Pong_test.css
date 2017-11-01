@@ -56,7 +56,7 @@ button:hover {
 #spiller1{
   position: relative;
   right: 120px;
-  top: 43px;
+  top: 113px;
   width: 20%;
   margin-left: auto;
   margin-right: auto;
@@ -65,18 +65,26 @@ button:hover {
 #spiller2{
   position: relative;
   left: 120px;
-  bottom: 15px;
+  top: 55px;
   width: 20%;
   margin-left: auto;
   margin-right: auto;
 }
 #pause{
   position: relative;
-  top: 50px;
+  top: 100px;
+}
+#musikk{
+  position: relative;
+  top: 120px;
+}
+#lyd{
+  position: relative;
+  top: 140px;
 }
 #instruksjonTilbakeMeny{
   position: relative;
-  top: 100px;
+  top: 180px;
 }
 
 #innstillingDiv{
@@ -95,15 +103,15 @@ button:hover {
   border: white;
   border-style: solid;
   border-width: 1px;
+  margin-top: 100px;
 }
 #venstreBakgrunn{
-  position: relative;
-  top: 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 #venstrePaddle{
-  position: relative;
-  top: 40px;
+  margin-bottom: 15px;
 }
 
 #hoyre{
@@ -117,13 +125,12 @@ button:hover {
 }
 
 #hoyreBakgrunn{
-  position: relative;
-  top: 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 
 #hoyrePaddle{
-  position: relative;
-  top: -40px;
+  margin-bottom: 15px;
 }
 
 .fargevalg{
@@ -144,9 +151,7 @@ button:hover {
 .pink{
   background-color: pink;
 }
-select:hover{
-  opacity: 0.8;
-}
+
 #innstillingTilbakeMeny{
   position: relative;
   top: 30px;
