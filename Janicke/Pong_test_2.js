@@ -305,7 +305,7 @@ function pong(spillere) {
     innhold.rect(bredde/4-2,hoyde*1/2-2,bredde/5+4,hoyde/5+4);
     innhold.rect(bredde*3/4-bredde/5-2,hoyde*1/2-2,bredde/5+4,hoyde/5+4);
     innhold.stroke();
-    innhold.fillStyle = "rgb(255, 255, 255, 0.4)";
+    innhold.fillStyle = "rgba(255, 255, 255, 0.4)";
     innhold.fillRect(bredde/4,hoyde*1/2,bredde/5,hoyde/5);
     innhold.fillRect(bredde*3/4-bredde/5,hoyde*1/2,bredde/5,hoyde/5);
     innhold.fillStyle = "#000000";
