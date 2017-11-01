@@ -42,11 +42,6 @@ function pong(spillere) {
   var musY;
   var myMusic;
 
-
-
-
-
-
   startMusic();
   //Gir rammen farge og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
@@ -190,7 +185,7 @@ function pong(spillere) {
     else if (spillere == 2){
       if (poeng_spiller_1 === 7 || poeng_spiller_2 === 7) {
         vinnSpill();
-        if (!pausetmusikk) {  
+        if (!pausetmusikk) {
         var vinnMusikk = new Audio('winner.wav');
         vinnMusikk.play();
       }

@@ -8,12 +8,28 @@ function visDiv(divId) {
   div.style.display = "initial";
 }
 
-var myMusic
 
-function startMusic(){
-  myMusic = new sound("BeepBox-Song (2).wav");
-  myMusic.play();
+
+
+function sound(src, gjenta, volum) {
+    this.sound = document.createElement("audio");
+    this.sound.id="musikk";
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.loop = gjenta;
+    this.sound.volume = volum;
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }
 }
+
+
 
 //Menyfunksjonene
 document.addEventListener('DOMContentLoaded',domloaded,false);
@@ -48,4 +64,6 @@ function domloaded() {
     gjemDiv("innstillingDiv");
     visDiv("knappeDiv");
   };
+  var menyMusikk = new sound('Meny.wav', "true", 0.8);
+  menyMusikk.play();
 }
