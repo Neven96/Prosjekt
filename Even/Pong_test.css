@@ -2,9 +2,11 @@
   font-family: font1;
   src: url(font/PressStart2P.ttf);
 }
+
 body{
   background-image: url(bilde/bakgrunn.jpg);
 }
+
 canvas{
   border:inset;
   border-width:10px;
@@ -12,15 +14,16 @@ canvas{
 #overskrift{
   font-family: font1;
   font-size: 40px;
-  color: #C0C0C0;
-  margin-top: 70px;
-  /*margin-bottom: 70px;*/
+  color: #c0c0c0;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
-.meny{
 
-}
 #menyDiv{
   text-align:center;
+}
+#enSpiller{
+  margin-top: 100px;
 }
 button{
   display: block;
@@ -39,24 +42,33 @@ button{
 }
 button:hover {
 	text-decoration: none;
-	color: #C0C0C0;
+	color: #c0c0c0;
 }
 
 #instruksjonDiv{
   display:none;
   color: white;
   font-family: font1;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #spiller1{
   position: relative;
-  right: 150px;
-  top: 30px;
+  right: 120px;
+  top: 43px;
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 #spiller2{
   position: relative;
-  left: 150px;
-  bottom: 30px;
+  left: 120px;
+  bottom: 15px;
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
 }
 #pause{
   position: relative;
@@ -114,6 +126,27 @@ button:hover {
   top: -40px;
 }
 
+.fargevalg{
+  position: relative;
+  left: 40px;
+  height: 30px;
+}
+
+.red{
+  background-color: red;
+}
+.lightblue{
+  background-color: lightblue;
+}
+.yellow{
+  background-color: yellow;
+}
+.pink{
+  background-color: pink;
+}
+select:hover{
+  opacity: 0.8;
+}
 #innstillingTilbakeMeny{
   position: relative;
   top: 30px;
