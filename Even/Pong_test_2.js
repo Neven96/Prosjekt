@@ -479,7 +479,7 @@ function pong(spillere) {
     }
     if (spillere == 1 && poeng_spiller_1 == vinner_poeng) {
       //Gjør spillet litt vanskeligere for hver runde man vinner
-      bonus += 2.5;
+      bonus = 2.5*level;
       bonus_fart += Math.pow(bonus,2)/100;
       level++;
     }
