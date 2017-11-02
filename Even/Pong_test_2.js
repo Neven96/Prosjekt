@@ -74,13 +74,13 @@ function pong(spillere) {
   //Gir rammen farge med gradvis overgang til hvit og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
     var gradientVenstre = innhold.createLinearGradient(-bredde/3, hoyde/2, bredde/2, hoyde/2);
-    gradientVenstre.addColorStop(0, 'rgba(255,255,255,0.1)');
+    gradientVenstre.addColorStop(0, 'rgba(255,255,255,0)');
     gradientVenstre.addColorStop(1, s2_farge_bane);
     innhold.fillStyle = gradientVenstre;
     innhold.fillRect(0,0,bredde/2,hoyde);
     var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/3, hoyde/2);
     gradientHoyre.addColorStop(0, s1_farge_bane);
-    gradientHoyre.addColorStop(1, 'rgba(255,255,255,0.1)');
+    gradientHoyre.addColorStop(1, 'rgba(255,255,255,0)');
     innhold.fillStyle = gradientHoyre;
     innhold.fillRect(bredde/2,0,bredde/2,hoyde);
     //Poengscore og level
