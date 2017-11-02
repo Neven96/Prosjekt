@@ -33,7 +33,7 @@ function pong(spillere) {
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
   var poeng_spiller_1 = 0;
   var poeng_spiller_2 = 0;
-  var vinner_poeng = 1;
+  var vinner_poeng = 5;
   var level = 1;
   //Størrelse- og posisjonsvariabler, endre disse for endringer på paddler og ball
   var rekkert_bredde = 15;
@@ -55,12 +55,12 @@ function pong(spillere) {
   var s2_farge_paddle_valg = document.getElementById("paddleSpiller2");
   var s1_farge_bane_valg = document.getElementById("baneSpiller1");
   var s2_farge_bane_valg = document.getElementById("baneSpiller2");
-  var bane_farge = {'Rød': '#FF3333',
-                    'Blå': '#3333FF',
-                    'Grønn': '#33FF33',
-                    'Lilla': '#7339AC',
-                    'Spaceblå': '#6047EB',
-                    'Spacegrå': '#778899'};
+  var bane_farge = {'Rød': 'rgba(255,51,51,0.5)',
+                    'Blå': 'rgba(51,51,255,0.5)',
+                    'Grønn': 'rgba(51,255,51,0.5)',
+                    'Lilla': 'rgba(115,57,172,0.5)',
+                    'Spaceblå': 'rgba(96,71,235,0.5)',
+                    'Spacegrå': 'rgba(119,136,153,0.5)'};
   var paddle_farge = {'Rød': '#8B0000',
                       'Blå': '#00008B',
                       'Grønn': '#008B00',
@@ -74,21 +74,21 @@ function pong(spillere) {
   //Gir rammen farge med gradvis overgang til hvit og plasserer rekkertene og ballen innenfor rammen
   var render = function(){
     var gradientVenstre = innhold.createLinearGradient(-bredde/3, hoyde/2, bredde/2, hoyde/2);
-    gradientVenstre.addColorStop(0, "#FFFFFF");
+    gradientVenstre.addColorStop(0, 'rgba(255,255,255,0.1)');
     gradientVenstre.addColorStop(1, s2_farge_bane);
     innhold.fillStyle = gradientVenstre;
-    innhold.fillRect(0,0,bredde,hoyde);
+    innhold.fillRect(0,0,bredde/2,hoyde);
     var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/3, hoyde/2);
     gradientHoyre.addColorStop(0, s1_farge_bane);
-    gradientHoyre.addColorStop(1, "#FFFFFF");
+    gradientHoyre.addColorStop(1, 'rgba(255,255,255,0.1)');
     innhold.fillStyle = gradientHoyre;
-    innhold.fillRect(bredde/2,0,bredde,hoyde);
+    innhold.fillRect(bredde/2,0,bredde/2,hoyde);
     //Poengscore og level
     innhold.fillStyle = "#000000";
     innhold.font = "20px font1";
     innhold.fillText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
-    innhold.fillText("Level: " + level,(bredde/2)-57,25);
+    innhold.fillText("Level:"+level,(bredde/2)-57,25);
     //Henter fram knapper for pausemeny, og seier/tap
     if (poeng_spiller_1 == vinner_poeng || poeng_spiller_2 == vinner_poeng || pauset) {
       sluttKnapper();
