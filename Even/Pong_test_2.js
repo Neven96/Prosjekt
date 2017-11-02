@@ -41,9 +41,6 @@ function pong(spillere) {
   var s2_rekkert_pos_x = 10;
   var radius = 9;
   var pauset = false;
-  var pausetMusikk = false;
-  var pausetSFX = false;
-  var spillMusikk;
   var vinnerMusikk;
   var taperMusikk;
   var sprett1;
@@ -56,12 +53,17 @@ function pong(spillere) {
   var s2_farge_paddle_valg = document.getElementById("paddleSpiller2");
   var s1_farge_bane_valg = document.getElementById("baneSpiller1");
   var s2_farge_bane_valg = document.getElementById("baneSpiller2");
-  var bane_farge = {'Red': '#FF3333',
-                    'Blue': '#3333FF',
-                    'Green': '#33FF33',};
-  var paddle_farge = {'Red': '#8B0000',
-                      'Blue': '#00008B',
-                      'Green': '#008B00',};
+  var bane_farge = {'Rød': '#FF3333',
+                    'Blå': '#3333FF',
+                    'Grønn': '#33FF33',
+                    'Lilla': '#7339AC',
+                    'Spaceblå': '#6047EB',
+                    'Spacegrå': '#778899'};
+  var paddle_farge = {'Rød': '#8B0000',
+                      'Blå': '#00008B',
+                      'Grønn': '#008B00',
+                      'Lilla': '#402060',
+                      'Spacegrå': '#374049'};
   var s1_farge_paddle = paddle_farge[s1_farge_paddle_valg.value];
   var s2_farge_paddle = paddle_farge[s2_farge_paddle_valg.value];
   var s1_farge_bane = bane_farge[s1_farge_bane_valg.value];
@@ -82,8 +84,8 @@ function pong(spillere) {
     //Poengscore
     innhold.fillStyle = "#000000";
     innhold.font = "30px Comic Sans MS";
-    innhold.fillText(poeng_spiller_2,(bredde/2)-25,25);
-    innhold.fillText(poeng_spiller_1,(bredde/2)+5,25);
+    innhold.fillText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
+    innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
     //Henter fram knapper for pausemeny, og seier/tap
     if (poeng_spiller_1 == 7 || poeng_spiller_2 == 7 || pauset) {
       sluttKnapper();
@@ -278,6 +280,13 @@ function pong(spillere) {
       this.y_fart = 0;
     }
   };
+
+  //Hindrer siderulling ved piltaster
+  window.addEventListener("keydown", function(e) {
+    if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+    }
+  }, false);
 
   //Når man trykker på en knapp, enten for å bevege paddlen, pause spillet eller pause musikk/lydeffekter
   window.addEventListener("keydown", trykkKnapp);
@@ -498,17 +507,20 @@ function pong(spillere) {
     window.removeEventListener("keydown", trykkKnapp);
     window.removeEventListener("keyup", slippKnapp);
     visDiv("knappeDiv");
-    var menyMusikk = new sound('musikk/Meny.wav', "true", 0.8, "menyMusikk");
-    if (!pausetMusikk) {
-      menyMusikk.play();
-    }
+    startMusikk();
   }
 
   spillMusikk = new sound("musikk/Spillmusikk.wav", "true", 0.5, "spillMusikk");
-  spillMusikk.play();
+  if (!pausetMusikk) {
+    spillMusikk.play();
+  }
 
   //Aktiverer spiller 1, spiller 2 og ballen
   var spiller1 = new Spiller1();
   var spiller2 = new Spiller2();
   var ball = new Ball(bredde/2, hoyde/2);
 }
+
+var spillMusikk;
+var pausetMusikk = false;
+var pausetSFX = false;

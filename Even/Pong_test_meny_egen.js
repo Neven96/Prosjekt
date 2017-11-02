@@ -8,12 +8,14 @@ function visDiv(divId) {
   div.style.display = "initial";
 }
 
+var menyMusikk;
+var pausetMusikk = false;
+
 //Menyfunksjonene
 document.addEventListener('DOMContentLoaded',domloaded,false);
 function domloaded() {
   var historieLesing = new Audio('musikk/Historie.mp3');
-  var menyMusikk = new sound('musikk/Meny.wav', "true", 0.8, "menyMusikk");
-  var pausetMusikk = false;
+  menyMusikk = new sound('musikk/Meny.wav', "true", 0.8, "menyMusikk");
   menyMusikk.play();
 
   document.getElementById("enSpiller").onclick = function() {spiller_tall(1);};
@@ -75,4 +77,11 @@ function sound(src, gjenta, volum, id) {
   this.stop = function(){
       this.sound.pause();
   };
+}
+
+function startMusikk() {
+  menyMusikk = new sound('musikk/Meny.wav', "true", 0.8, "menyMusikk");
+  if (!pausetMusikk) {
+    menyMusikk.play();
+  }
 }
