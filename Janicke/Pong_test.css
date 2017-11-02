@@ -4,6 +4,13 @@
   src: url(font/PressStart2P.ttf);
 }
 
+/*setter størrelse på html og velger pil for siden*/
+html{
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
 /* Bakgrunnsbildet legges inn i body, slik at det gjelder for hele siden*/
 body{
   background-image: url(bilde/bakgrunn.jpg);
@@ -49,12 +56,16 @@ button{
   border-width: 1px;
   border-style: solid;
   margin-top: 30px;
+  cursor: pointer;
 }
 
 /*Kode for når man har pila over knappene, slik at de endrer farge*/
 button:hover {
 	text-decoration: none;
-	color: #c0c0c0;
+	color: red;
+  height: 70px;
+  width: 230px;
+  font-size: 16px;
 }
 
 /*Utseende på teksten til "Hvordan spille"*/
@@ -69,45 +80,47 @@ button:hover {
 /*Plassering til instruksjoner til spiller 1*/
 #spiller1{
   position: relative;
-  right: 120px;
-  top: 75px;
+  left: 32%;
+  top: 90px;
   width: 20%;
   margin-left: auto;
   margin-right: auto;
+  float: left;
 }
 
 /*Plassering til instruksjoner til spiller 2*/
 #spiller2{
   position: relative;
-  left: 120px;
-  top: -5px;
+  right: 32%;
+  top: 90px;
   width: 20%;
   margin-left: auto;
   margin-right: auto;
+  float: right;
 }
 
 /*Plassering til instruksjoner for pause*/
 #pause{
   position: relative;
-  top: 100px;
+  top: 250px;
 }
 
 /*Plassering til instruksjoner for å skru av musikk*/
 #musikk{
   position: relative;
-  top: 120px;
+  top: 280px;
 }
 
 /*Plassering til instruksjoner for å skru av lydeffekter*/
 #lyd{
   position: relative;
-  top: 140px;
+  top: 310px;
 }
 
 /*Plassering av tilbake-knappen på "Hvordan spille"*/
 #instruksjonTilbakeMeny{
   position: relative;
-  top: 180px;
+  top: 350px;
 }
 
 /*Font og farge for instillinger*/
@@ -169,8 +182,17 @@ button:hover {
   position: relative;
   left: 40px;
   height: 30px;
+  color: white;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 16px;
 }
 
+/*velger farge og størrelse på alle fargevalgene*/
+option{
+  color: black;
+  font-size: 16px;
+}
 /*Bakgrunnsfarge til optionene*/
 .red{
   background-color: red;
