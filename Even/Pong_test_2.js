@@ -71,7 +71,7 @@ function pong(spillere) {
   var s1_farge_bane = bane_farge[s1_farge_bane_valg.value];
   var s2_farge_bane = bane_farge[s2_farge_bane_valg.value];
 
-  //Gir rammen farge med gradvis overgang til hvit og plasserer rekkertene og ballen innenfor rammen
+  //Gir rammen farge med gradvis overgang til gjennomsiktig og plasserer paddlene og ballen innenfor rammen
   var render = function(){
     var gradientVenstre = innhold.createLinearGradient(-bredde/3, hoyde/2, bredde/2, hoyde/2);
     gradientVenstre.addColorStop(0, 'rgba(255,255,255,0)');
@@ -89,7 +89,7 @@ function pong(spillere) {
     innhold.fillText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
     innhold.fillText("Level:"+level,(bredde/2)-57,25);
-    //Henter fram knapper for pausemeny, og seier/tap
+    //Henter fram knapper for pausemeny og seier/tap
     if (poeng_spiller_1 == vinner_poeng || poeng_spiller_2 == vinner_poeng || pauset) {
       sluttKnapper();
     }
