@@ -33,6 +33,8 @@ function pong(spillere) {
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
   var poeng_spiller_1 = 0;
   var poeng_spiller_2 = 0;
+  var vinner_poeng = 1;
+  var level = 1;
   //Størrelse- og posisjonsvariabler, endre disse for endringer på paddler og ball
   var rekkert_bredde = 15;
   var rekkert_hoyde = 75;
@@ -81,13 +83,14 @@ function pong(spillere) {
     gradientHoyre.addColorStop(1, "#FFFFFF");
     innhold.fillStyle = gradientHoyre;
     innhold.fillRect(bredde/2,0,bredde,hoyde);
-    //Poengscore
+    //Poengscore og level
     innhold.fillStyle = "#000000";
-    innhold.font = "30px Comic Sans MS";
+    innhold.font = "20px font1";
     innhold.fillText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
+    innhold.fillText("Level: " + level,(bredde/2)-57,25);
     //Henter fram knapper for pausemeny, og seier/tap
-    if (poeng_spiller_1 == 7 || poeng_spiller_2 == 7 || pauset) {
+    if (poeng_spiller_1 == vinner_poeng || poeng_spiller_2 == vinner_poeng || pauset) {
       sluttKnapper();
     }
     spiller1.render();
@@ -217,13 +220,13 @@ function pong(spillere) {
     }
     //Når en av spillerne/computeren vinner
     if (spillere == 1) {
-      if (poeng_spiller_1 === 7) {
+      if (poeng_spiller_1 === vinner_poeng) {
         vinnSpill();
         if (!pausetMusikk) {
           vinnerMusikk = new Audio('musikk/Vinner.wav');
           vinnerMusikk.play();
         }
-      } else if (poeng_spiller_2 === 7) {
+      } else if (poeng_spiller_2 === vinner_poeng) {
         vinnSpill();
         if (!pausetMusikk) {
           taperMusikk = new Audio('musikk/Taper.wav');
@@ -231,7 +234,7 @@ function pong(spillere) {
         }
       }
     } else if (spillere == 2) {
-        if (poeng_spiller_1 === 7 || poeng_spiller_2 === 7) {
+        if (poeng_spiller_1 === vinner_poeng || poeng_spiller_2 === vinner_poeng) {
           vinnSpill();
           if (!pausetMusikk) {
             vinnerMusikk = new Audio('musikk/Vinner.wav');
@@ -418,7 +421,7 @@ function pong(spillere) {
     innhold.fillStyle = "#000000";
     innhold.font = "14px font1";
     //Hvis du spiller enspiller skal du kunne gå videre, men i tospiller skal du bare starte på nytt
-    if (spillere == 1 && poeng_spiller_1 == 7) {
+    if (spillere == 1 && poeng_spiller_1 == vinner_poeng) {
       innhold.fillText("Videre", bredde/4+bredde/20, hoyde/2);
     } else if (spillere == 2 || pauset) {
       innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde/2);
@@ -426,15 +429,15 @@ function pong(spillere) {
     innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde/2);
     innhold.font = "24px font1";
     if (spillere == 1) {
-      if (poeng_spiller_1 == 7) {
+      if (poeng_spiller_1 == vinner_poeng) {
         innhold.fillText("Gratulerer du vant!", bredde*1/4, hoyde*1/3);
-      } else if (poeng_spiller_2 == 7) {
+      } else if (poeng_spiller_2 == vinner_poeng) {
         innhold.fillText("Du tapte...", bredde*2/5, hoyde*1/3);
       }
     } else if (spillere == 2) {
-      if (poeng_spiller_1 == 7) {
+      if (poeng_spiller_1 == vinner_poeng) {
         innhold.fillText("Gratulerer spiller 1 vant!", bredde*1/4, hoyde*1/3);
-      } else if (poeng_spiller_2 == 7) {
+      } else if (poeng_spiller_2 == vinner_poeng) {
         innhold.fillText("Gratulerer spiller 2 vant!", bredde*1/4, hoyde*1/3);
       }
     }
@@ -474,12 +477,14 @@ function pong(spillere) {
     if(!pausetMusikk){
       spillMusikk.play();
     }
-    poeng_spiller_1 = 0;
-    poeng_spiller_2 = 0;
-    if (spillere == 1 && poeng_spiller_1 == 7) {
+    if (spillere == 1 && poeng_spiller_1 == vinner_poeng) {
+      //Gjør spillet litt vanskeligere for hver runde man vinner
       bonus += 2.5;
       bonus_fart += Math.pow(bonus,2)/100;
+      level++;
     }
+    poeng_spiller_1 = 0;
+    poeng_spiller_2 = 0;
     x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
     random_fart_x = Math.floor(Math.random()*x_fart_array.length);
     spiller1 = new Spiller1();
@@ -494,6 +499,7 @@ function pong(spillere) {
     pauseSpill();
     poeng_spiller_1 = 0;
     poeng_spiller_2 = 0;
+    level = 1;
     bonus = 0;
     bonus_fart = 0;
     //Denne delete biten vil lage en error, men den erroren er ikke farlig og gjør ikke noe for videre spilling
