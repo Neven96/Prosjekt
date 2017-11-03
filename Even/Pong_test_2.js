@@ -20,12 +20,13 @@ function pong(spillere) {
   var innhold = bane.getContext("2d");
   document.getElementById("spillDiv").appendChild(bane);
 
-  //Variabler for fart, størrelse og bevegelse
+  //Variabler for fart, størrelse, bevegelse og level
   var spiller_fart = 4;
   var computer_fart = 3;
   var ball_fart_x = 5;
-  var bonus = 0;
-  var bonus_fart = 0;
+  var level = Number(document.getElementById("level").value);
+  var bonus = 4*level-4;
+  var bonus_fart = Math.pow(bonus,2)/100;
   //Arrays for å få en tilfeldig rettning på ballen ved starten av spillet
   var x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
   var y_fart_array = [-1,-0.75,-0.5,-0.25,0,0,0.25,0.5,0.75,1];
@@ -33,8 +34,7 @@ function pong(spillere) {
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
   var poeng_spiller_1 = 0;
   var poeng_spiller_2 = 0;
-  var vinner_poeng = 5;
-  var level = 1;
+  var vinner_poeng = Number(document.getElementById("sluttScore").value);
   //Størrelse- og posisjonsvariabler, endre disse for endringer på paddler og ball
   var rekkert_bredde = 15;
   var rekkert_hoyde = 75;
@@ -497,8 +497,8 @@ function pong(spillere) {
     }
     if (spillere == 1 && poeng_spiller_1 == vinner_poeng) {
       //Gjør spillet litt vanskeligere for hver runde man vinner
-      bonus = 2.5*level;
-      bonus_fart += Math.pow(bonus,2)/100;
+      bonus = 4*level;
+      bonus_fart = Math.pow(bonus,2)/100;
       level++;
     }
     poeng_spiller_1 = 0;

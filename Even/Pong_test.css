@@ -61,7 +61,6 @@ button{
 
 /*Kode for når man har pila over knappene, slik at de endrer farge*/
 button:hover {
-	text-decoration: none;
 	color: red;
   height: 70px;
   width: 230px;
@@ -132,31 +131,30 @@ button:hover {
 }
 
 /*Plassering og ramme for boks med fargevalg for spiller 1*/
-#venstre{
+#hoyre{
   width: 600px;
   height: 100px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px;
   border: white;
   border-style: solid;
   border-width: 1px;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 /*Plassering av fargevalg av bakrunn til spiller 1*/
-#venstreBakgrunn{
+#hoyreBakgrunn{
   margin-top: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 /*Plassering av fargevalg av paddle til spiller 1*/
-#venstrePaddle{
+#hoyrePaddle{
   margin-bottom: 15px;
 }
 
 /*Plassering og ramme for boks med fargevalg for spiller 2*/
-#hoyre{
+#venstre{
   width: 600px;
   height: 100px;
   margin-left: auto;
@@ -167,13 +165,13 @@ button:hover {
 }
 
 /*Plassering av fargevalg til bakgrunn for spiller 2*/
-#hoyreBakgrunn{
+#venstreBakgrunn{
   margin-top: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 /*Plassering av fargevalg for paddle til spiller 2*/
-#hoyrePaddle{
+#venstrePaddle{
   margin-bottom: 15px;
 }
 
@@ -182,6 +180,7 @@ button:hover {
   position: relative;
   left: 10px;
   height: 30px;
+  width: 85px;
   color: white;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.1);
@@ -193,6 +192,7 @@ option{
   color: black;
   font-size: 16px;
 }
+
 /*Bakgrunnsfarge til optionene*/
 .redBane{
   background-color: rgba(255,51,51,0.7);
@@ -229,10 +229,65 @@ option{
   background-color: #374049;
 }
 
+#poengValg{
+  width: 600px;
+  height: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  border: white;
+  border-style: solid;
+  border-width: 1px;
+  text-align: left;
+  text-indent: 75px;
+}
+
+input.nummer{
+  position: relative;
+  left: 233px;
+  height: 25px;
+  width: 80px;
+  color: white;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 16px;
+}
+
+input.modusRadio{
+
+}
+
+#level{
+  margin-bottom: -10px;
+}
+
+#sluttScore{
+  margin-bottom: 0px;
+}
+
+#modusValg{
+  width: 600px;
+  height: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  border: white;
+  border-style: solid;
+  border-width: 1px;
+}
+
 /*Plassering av tilbake-knapp*/
 #innstillingTilbakeMeny{
   position: relative;
   top: 0px;
+}
+
+#muteKnapp{
+  position:fixed !important;
+  bottom: 20px !important;
+  top: auto !important;
+  left: 20px !important;
+  right: auto !important;
+  width: 125px !important;
+  height: 50px !important;
 }
 
 #kreditDiv{

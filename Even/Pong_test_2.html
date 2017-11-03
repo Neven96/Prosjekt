@@ -37,32 +37,9 @@
         <button id="instruksjonTilbakeMeny">Tilbake</button>
       </div>
       <div id="innstillingDiv" class="meny">
-        <div id="venstre">
-          <div id="venstreBakgrunn">
-            Velg farge på venstre bakgrunn:
-            <select id="baneSpiller2" class="fargevalg">
-              <option class="redBane">Rød</option>
-              <option class="blueBane">Blå</option>
-              <option class="greenBane">Grønn</option>
-              <option class="purpleBane">Lilla</option>
-              <option class="spaceblueBane">Spaceblå</option>
-              <option class="spacegreyBane">Spacegrå</option>
-            </select>
-          </div>
-          <div id="venstrePaddle">
-          Velg farge på venstre paddle:
-            <select id="paddleSpiller2" class="fargevalg">
-              <option class="redPaddle">Rød</option>
-              <option class="bluePaddle">Blå</option>
-              <option class="greenPaddle">Grønn</option>
-              <option class="purplePaddle">Lilla</option>
-              <option class="spacegreyPaddle">Spacegrå</option>
-            </select>
-          </div>
-        </div>
         <div id="hoyre">
           <div id="hoyreBakgrunn">
-          Velg farge på høyre bakgrunn:
+            Spiller 1 bakgrunnsfarge:
             <select id="baneSpiller1" class="fargevalg">
               <option class="redBane">Rød</option>
               <option class="blueBane">Blå</option>
@@ -73,7 +50,7 @@
             </select>
           </div>
           <div id="hoyrePaddle">
-          Velg farge på høyre paddle:
+          Spiller 1 paddle farge: &nbsp;
             <select id="paddleSpiller1" class="fargevalg">
               <option class="redPaddle">Rød</option>
               <option class="bluePaddle">Blå</option>
@@ -83,10 +60,41 @@
             </select>
           </div>
         </div>
-        <input type="radio" name="modus" id="normalModus" checked>Normal modus<br>
-        <input type="radio" name="modus" id="spaceModus">Space modus
-        <button id="muteKnapp">Demp musikk</button>
+        <div id="venstre">
+          <div id="venstreBakgrunn">
+          Spiller 2 bakgrunnsfarge:
+            <select id="baneSpiller2" class="fargevalg">
+              <option class="redBane">Rød</option>
+              <option class="blueBane">Blå</option>
+              <option class="greenBane">Grønn</option>
+              <option class="purpleBane">Lilla</option>
+              <option class="spaceblueBane">Spaceblå</option>
+              <option class="spacegreyBane">Spacegrå</option>
+            </select>
+          </div>
+          <div id="venstrePaddle">
+          Spiller 2 paddle farge: &nbsp;
+            <select id="paddleSpiller2" class="fargevalg">
+              <option class="redPaddle">Rød</option>
+              <option class="bluePaddle">Blå</option>
+              <option class="greenPaddle">Grønn</option>
+              <option class="purplePaddle">Lilla</option>
+              <option class="spacegreyPaddle">Spacegrå</option>
+            </select>
+          </div>
+        </div>
+        <div id="poengValg">
+          <p>Level: &nbsp; &nbsp;<input type="number" id="level" class="nummer" value="1" min="1"></p>
+          <p>Max poeng:<input type="number" id="sluttScore" class="nummer" value="5" min="1"></p>
+        </div>
+        <div id="modusValg">
+          <p><label for="normalModus" class="modusLabel">Normalmodus</label>
+          <input type="radio" name="modus" id="normalModus" class="modusRadio" checked></p>
+          <p><label for="spaceModus" class="modusLabel">Spacemodus</label>
+          <input type="radio" name="modus" id="spaceModus" class="modusRadio"></p>
+        </div>
         <button id="innstillingTilbakeMeny">Tilbake</button>
+        <button id="muteKnapp">Demp musikk</button>
       </div>
       <div id="kreditDiv">
         <p>Alexander Le Hovdahl</p>
