@@ -180,7 +180,7 @@ button:hover {
 /*Plassering av dropdownboks med fargevalgene*/
 .fargevalg{
   position: relative;
-  left: 40px;
+  left: 10px;
   height: 30px;
   color: white;
   cursor: pointer;
@@ -194,26 +194,82 @@ option{
   font-size: 16px;
 }
 /*Bakgrunnsfarge til optionene*/
-.red{
-  background-color: red;
+.redBane{
+  background-color: rgba(255,51,51,0.7);
 }
-.lightblue{
-  background-color: lightblue;
+.blueBane{
+  background-color: rgba(51,51,255,0.7);
 }
-.yellow{
-  background-color: yellow;
+.greenBane{
+  background-color: rgba(51,255,51,0.7);
 }
-.pink{
-  background-color: pink;
+.purpleBane{
+  background-color: rgba(115,57,172,0.7);
+}
+.spaceblueBane{
+  background-color: rgba(96,71,235,0.7);
+}
+.spacegreyBane{
+  background-color: rgba(119,136,153,0.7);
+}
+
+.redPaddle{
+  background-color: #8B0000;
+}
+.bluePaddle{
+  background-color: #00008B;
+}
+.greenPaddle{
+  background-color: #008B00;
+}
+.purplePaddle{
+  background-color: #402060;
+}
+.spacegreyPaddle{
+  background-color: #374049;
 }
 
 /*Plassering av tilbake-knapp*/
 #innstillingTilbakeMeny{
   position: relative;
-  top: 30px;
+  top: 0px;
+}
+
+#kreditDiv{
+  display:none;
+  color: white;
+  font-family: font1;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /*Midtstilling av spillet*/
 #spillDiv{
   text-align:center;
+}
+
+/*Styling av rulletekst*/
+#fade{
+  text-align:center;
+  min-width: 500px;
+  margin-left: 400px;
+
+}
+
+ul {
+	background:none;
+	color:#fff;
+	padding:10px 20px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+  -o-border-radius:10px;
+	width:100px;
+  line-height: 120%;
+}
+
+ul li {
+	list-style:none;
+	font-family:font1;
+	font-size:11px;
+  opacity: 1.0;
 }

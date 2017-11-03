@@ -51,6 +51,9 @@ function pong(spillere) {
   var musX;
   var musY;
   var keysDown = {};
+  //Banefarge og bilde for bakgrunnen i banen
+  var bane_bilde = new Image(bredde/2,hoyde);
+  bane_bilde.src = "bilde/bakgrunn.jpg";
   var s1_farge_paddle_valg = document.getElementById("paddleSpiller1");
   var s2_farge_paddle_valg = document.getElementById("paddleSpiller2");
   var s1_farge_bane_valg = document.getElementById("baneSpiller1");
@@ -73,22 +76,37 @@ function pong(spillere) {
 
   //Gir rammen farge med gradvis overgang til gjennomsiktig og plasserer paddlene og ballen innenfor rammen
   var render = function(){
-    var gradientVenstre = innhold.createLinearGradient(-bredde/3, hoyde/2, bredde/2, hoyde/2);
-    gradientVenstre.addColorStop(0, 'rgba(255,255,255,0)');
-    gradientVenstre.addColorStop(1, s2_farge_bane);
-    innhold.fillStyle = gradientVenstre;
-    innhold.fillRect(0,0,bredde/2,hoyde);
-    var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/3, hoyde/2);
-    gradientHoyre.addColorStop(0, s1_farge_bane);
-    gradientHoyre.addColorStop(1, 'rgba(255,255,255,0)');
-    innhold.fillStyle = gradientHoyre;
-    innhold.fillRect(bredde/2,0,bredde/2,hoyde);
+    //Setter banen til å være et bilde
+    if (document.getElementById("spaceModus").checked) {
+      innhold.save();
+      innhold.globalAlpha = 0.3;
+      innhold.drawImage(bane_bilde,0,0);
+      innhold.drawImage(bane_bilde,bredde/2,0);
+      innhold.restore();
+    } else if (document.getElementById("normalModus").checked) {
+      var gradientVenstre = innhold.createLinearGradient(-bredde/2, hoyde/2, bredde/2, hoyde/2);
+      gradientVenstre.addColorStop(0, 'rgba(255,255,255,0)');
+      gradientVenstre.addColorStop(1, s2_farge_bane);
+      innhold.fillStyle = gradientVenstre;
+      innhold.fillRect(0,0,bredde/2,hoyde);
+      var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/2, hoyde/2);
+      gradientHoyre.addColorStop(0, s1_farge_bane);
+      gradientHoyre.addColorStop(1, 'rgba(255,255,255,0)');
+      innhold.fillStyle = gradientHoyre;
+      innhold.fillRect(bredde/2,0,bredde/2,hoyde);
+    }
     //Poengscore og level
-    innhold.fillStyle = "#000000";
+    innhold.strokeStyle = "#000000";
+    innhold.lineWidth = 1;
+    innhold.fillStyle = "#FFFFFF";
     innhold.font = "20px font1";
-    innhold.fillText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
-    innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
     innhold.fillText("Level:"+level,(bredde/2)-57,25);
+    innhold.strokeText("Level:"+level,(bredde/2)-57,25);
+    innhold.fillText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
+    innhold.strokeText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
+    innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
+    innhold.strokeText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
+
     //Henter fram knapper for pausemeny og seier/tap
     if (poeng_spiller_1 == vinner_poeng || poeng_spiller_2 == vinner_poeng || pauset) {
       sluttKnapper();
@@ -487,6 +505,7 @@ function pong(spillere) {
     poeng_spiller_2 = 0;
     x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
     random_fart_x = Math.floor(Math.random()*x_fart_array.length);
+    random_fart_y = Math.floor(Math.random()*y_fart_array.length);
     spiller1 = new Spiller1();
     spiller2 = new Spiller2();
     ball = new Ball(bredde/2, hoyde/2);
@@ -518,6 +537,7 @@ function pong(spillere) {
 
   spillMusikk = new sound("musikk/Spillmusikk.wav", "true", 0.5, "spillMusikk");
   if (!pausetMusikk) {
+    pausetSFX = false;
     spillMusikk.play();
   }
 
@@ -529,4 +549,4 @@ function pong(spillere) {
 
 var spillMusikk;
 var pausetMusikk = false;
-var pausetSFX = false;
+var pausetSFX = true;

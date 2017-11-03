@@ -8,9 +8,6 @@ function visDiv(divId) {
   div.style.display = "initial";
 }
 
-var menyMusikk;
-var pausetMusikk = false;
-
 //Menyfunksjonene
 document.addEventListener('DOMContentLoaded',domloaded,false);
 function domloaded() {
@@ -23,6 +20,8 @@ function domloaded() {
   function spiller_tall(spiller) {
     var spillere = spiller;
     gjemDiv("knappeDiv");
+    gjemDiv("tekstDiv");
+    historieLesing.pause();
     document.getElementById("menyMusikk").outerHTML = "";
     pong(spillere);
   }
@@ -31,13 +30,11 @@ function domloaded() {
   document.getElementById("instruksjonKnapp").onclick = function() {
     gjemDiv("knappeDiv");
     visDiv("instruksjonDiv");
-    historieLesing.currentTime = 0;
-    historieLesing.play();
   };
   document.getElementById("instruksjonTilbakeMeny").onclick = function() {
     gjemDiv("instruksjonDiv");
     visDiv("knappeDiv");
-    historieLesing.pause();
+
   };
 
   //Innstillingsmenyen
@@ -50,16 +47,31 @@ function domloaded() {
     visDiv("knappeDiv");
   };
 
+  document.getElementById("kreditKnapp").onclick = function() {
+    gjemDiv("knappeDiv");
+    visDiv("kreditDiv");
+  };
+  document.getElementById("kreditTilbakeMeny").onclick = function() {
+    gjemDiv("kreditDiv");
+    visDiv("knappeDiv");
+  };
+
   document.getElementById("muteKnapp").onclick = function() {
     if (!pausetMusikk) {
       menyMusikk.stop();
+      historieLesing.pause();
+      gjemDiv("tekstDiv");
       pausetMusikk = true;
   } else if (pausetMusikk) {
       menyMusikk.play();
       pausetMusikk = false;
     }
   };
+  historieLesing.play();
 }
+
+var menyMusikk;
+var pausetMusikk = false;
 
 function sound(src, gjenta, volum, id) {
   this.sound = document.createElement("audio");
@@ -85,3 +97,14 @@ function startMusikk() {
     menyMusikk.play();
   }
 }
+
+// Funksjon for å få liste til å rulle
+$(document).ready(function(){
+  $('#fade').list_ticker({
+    speed:5000,
+    effect:'fade'
+  });
+});
+setTimeout(function(){
+gjemDiv("tekstDiv");
+}, 25000);

@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Pong</title>
+    <script type="text/javascript" src="jquery_files/jquery00.js"></script>
+    <script type="text/javascript" src="jquery_files/ticker00.js"></script>
     <script src="Pong_test_meny_egen.js" charset="utf-8"></script>
     <script src="Pong_test_2.js" charset="utf-8"></script>
     <link rel="stylesheet" href="Pong_test.css">
@@ -15,6 +17,16 @@
         <button id="toSpiller">Tospiller</button>
         <button id="instruksjonKnapp">Hvordan spille</button>
         <button id="innstillingKnapp">Innstillinger</button>
+        <div id="tekstDiv">
+          <ul id="fade">
+            <li>In the year 2222 the Earth was invaded by nefarious aliens who called themselves </li>
+          	<li>“The Pongians”. They called upon Earths greatest warriors to do combat 1v1. </li>
+          	<li>After everyone else failed, the Earths government called upon you.</li>
+          	<li>The only person capable of defeating “The Pongians”. You answered </li>
+          	<li>the call and challenged the aliens to a game of Pong – to the death! </li>
+          </ul>
+        </div>
+        <button id="kreditKnapp">Kredit</button>
       </div>
       <div id="instruksjonDiv" class="meny">
         <div id="spiller1">Spiller 1: <p>&uarr;</p> <p>&darr;</p></div>
@@ -28,51 +40,61 @@
         <div id="venstre">
           <div id="venstreBakgrunn">
             Velg farge på venstre bakgrunn:
-            <select id="baneSpiller2">
-              <option>Rød</option>
-              <option>Blå</option>
-              <option>Grønn</option>
-              <option>Lilla</option>
-              <option>Spaceblå</option>
-              <option>Spacegrå</option>
+            <select id="baneSpiller2" class="fargevalg">
+              <option class="redBane">Rød</option>
+              <option class="blueBane">Blå</option>
+              <option class="greenBane">Grønn</option>
+              <option class="purpleBane">Lilla</option>
+              <option class="spaceblueBane">Spaceblå</option>
+              <option class="spacegreyBane">Spacegrå</option>
             </select>
           </div>
           <div id="venstrePaddle">
           Velg farge på venstre paddle:
-            <select id="paddleSpiller2">
-              <option>Rød</option>
-              <option>Blå</option>
-              <option>Grønn</option>
-              <option>Lilla</option>
-              <option>Spacegrå</option>
+            <select id="paddleSpiller2" class="fargevalg">
+              <option class="redPaddle">Rød</option>
+              <option class="bluePaddle">Blå</option>
+              <option class="greenPaddle">Grønn</option>
+              <option class="purplePaddle">Lilla</option>
+              <option class="spacegreyPaddle">Spacegrå</option>
             </select>
           </div>
         </div>
         <div id="hoyre">
           <div id="hoyreBakgrunn">
           Velg farge på høyre bakgrunn:
-            <select id="baneSpiller1">
-              <option>Rød</option>
-              <option>Blå</option>
-              <option>Grønn</option>
-              <option>Lilla</option>
-              <option>Spaceblå</option>
-              <option>Spacegrå</option>
+            <select id="baneSpiller1" class="fargevalg">
+              <option class="redBane">Rød</option>
+              <option class="blueBane">Blå</option>
+              <option class="greenBane">Grønn</option>
+              <option class="purpleBane">Lilla</option>
+              <option class="spaceblueBane">Spaceblå</option>
+              <option class="spacegreyBane">Spacegrå</option>
             </select>
           </div>
           <div id="hoyrePaddle">
           Velg farge på høyre paddle:
-            <select id="paddleSpiller1">
-              <option>Rød</option>
-              <option>Blå</option>
-              <option>Grønn</option>
-              <option>Lilla</option>
-              <option>Spacegrå</option>
+            <select id="paddleSpiller1" class="fargevalg">
+              <option class="redPaddle">Rød</option>
+              <option class="bluePaddle">Blå</option>
+              <option class="greenPaddle">Grønn</option>
+              <option class="purplePaddle">Lilla</option>
+              <option class="spacegreyPaddle">Spacegrå</option>
             </select>
           </div>
         </div>
+        <input type="radio" name="modus" id="normalModus" checked>Normal modus<br>
+        <input type="radio" name="modus" id="spaceModus">Space modus
         <button id="muteKnapp">Demp musikk</button>
         <button id="innstillingTilbakeMeny">Tilbake</button>
+      </div>
+      <div id="kreditDiv">
+        <p>Alexander Le Hovdahl</p>
+        <p>Janicke Strand Strøm</p>
+        <p>Even Trosterud Holmen</p>
+        <p>Siril Skipperø</p>
+        <p>Trym Skogseth</p>
+        <button id="kreditTilbakeMeny">Tilbake</button>
       </div>
     </div>
   </body>
