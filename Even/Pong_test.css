@@ -243,6 +243,16 @@ option{
   margin-right: auto;
 }
 
+#kreditKnapp{
+  position:fixed !important;
+  bottom: 20px !important;
+  top: auto !important;
+  left: 20px !important;
+  right: auto !important;
+  width: 125px !important;
+  height: 30px !important;
+}
+
 /*Midtstilling av spillet*/
 #spillDiv{
   text-align:center;
@@ -250,10 +260,14 @@ option{
 
 /*Styling av rulletekst*/
 #fade{
+  position:fixed;
+  top: auto;
+  bottom: 10px;
+  right: auto;
+  left: auto;
   text-align:center;
   min-width: 500px;
   margin-left: 400px;
-
 }
 
 ul {
