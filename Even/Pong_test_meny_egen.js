@@ -68,6 +68,15 @@ function domloaded() {
     }
   };
   historieLesing.play();
+
+  // Funksjon for å få liste til å rulle
+  $('#fade').list_ticker({
+      speed:5000,
+      effect:'fade'
+  });
+  setTimeout(function(){
+  gjemDiv("tekstDiv");
+  }, 25000);
 }
 
 var menyMusikk;
@@ -97,14 +106,3 @@ function startMusikk() {
     menyMusikk.play();
   }
 }
-
-// Funksjon for å få liste til å rulle
-$(document).ready(function(){
-  $('#fade').list_ticker({
-    speed:5000,
-    effect:'fade'
-  });
-});
-setTimeout(function(){
-gjemDiv("tekstDiv");
-}, 25000);

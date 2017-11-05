@@ -13,41 +13,51 @@ function pong(spillere) {
 
   //Lager rammen og gir den bredde og høyde
   var bane = document.createElement("canvas");
+  //Variabler som kan endres\\
   var bredde = 1000;
   var hoyde = 500;
+  //------------------------\\
   bane.width = bredde;
   bane.height = hoyde;
   var innhold = bane.getContext("2d");
   document.getElementById("spillDiv").appendChild(bane);
 
   //Variabler for fart, størrelse, bevegelse og level
-  var spiller_fart = 4;
-  var computer_fart = 3;
-  var ball_fart_x = 5;
+  //Variabler som kan endres\\
+  var spiller_fart = 4.0;
+  var computer_fart = 3.0;
+  var ball_fart_x = 5.0;
+  var bonus_tall = 4.0;
+  //------------------------\\
   var level = Number(document.getElementById("level").value);
-  var bonus = 4*level-4;
+  var bonus = bonus_tall*level-bonus_tall;
   var bonus_fart = Math.pow(bonus,2)/100;
   //Arrays for å få en tilfeldig rettning på ballen ved starten av spillet
   var x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
-  var y_fart_array = [-1,-0.75,-0.5,-0.25,0,0,0.25,0.5,0.75,1];
+  var y_fart_array = [-1.0,-0.75,-0.5,-0.25,0.0,0.0,0.25,0.5,0.75,1.0];
   var random_fart_x = Math.floor(Math.random()*x_fart_array.length);
   var random_fart_y = Math.floor(Math.random()*y_fart_array.length);
   var poeng_spiller_1 = 0;
   var poeng_spiller_2 = 0;
   var vinner_poeng = Number(document.getElementById("sluttScore").value);
   //Størrelse- og posisjonsvariabler, endre disse for endringer på paddler og ball
+  //Variabler som kan endres, men som egentlig ikke trengs\\
   var rekkert_bredde = 15;
   var rekkert_hoyde = 75;
-  var rekkert_pos_y = hoyde/2-rekkert_hoyde/2;
+  var s1_rekkert_pos_y = hoyde/2-rekkert_hoyde/2;
+  var s2_rekkert_pos_y = hoyde/2-rekkert_hoyde/2;
   var s1_rekkert_pos_x = bredde-rekkert_bredde-10;
   var s2_rekkert_pos_x = 10;
   var radius = 9;
+  //------------------------\\
+  //Variabler for pausing, musikk, musepekeren og tastaturknapper
   var pauset = false;
-  var vinnerMusikk;
-  var taperMusikk;
-  var sprett1;
-  var sprett2;
-  var eksplosjonGoal;
+  pausetSFX = true;
+  var vinnerMusikk = new Audio('musikk/Vinner.wav');
+  var taperMusikk = new Audio('musikk/Taper.wav');
+  var sprett1 = new Audio('musikk/Sprett1.wav');
+  var sprett2 = new Audio('musikk/Sprett2.wav');
+  var eksplosjonGoal = new Audio('musikk/Eksplosjon.wav');
   var musX;
   var musY;
   var keysDown = {};
@@ -64,17 +74,17 @@ function pong(spillere) {
                     'Lilla': 'rgba(115,57,172,0.5)',
                     'Spaceblå': 'rgba(96,71,235,0.5)',
                     'Spacegrå': 'rgba(119,136,153,0.5)'};
-  var paddle_farge = {'Rød': '#8B0000',
-                      'Blå': '#00008B',
-                      'Grønn': '#008B00',
-                      'Lilla': '#402060',
-                      'Spacegrå': '#374049'};
+  var paddle_farge = {'Rød': 'rgb(139,0,0)',
+                      'Blå': 'rgb(0,0,139)',
+                      'Grønn': 'rgb(0,139,0)',
+                      'Lilla': 'rgb(64,32,96)',
+                      'Spacegrå': 'rgb(55,64,73)'};
   var s1_farge_paddle = paddle_farge[s1_farge_paddle_valg.value];
   var s2_farge_paddle = paddle_farge[s2_farge_paddle_valg.value];
   var s1_farge_bane = bane_farge[s1_farge_bane_valg.value];
   var s2_farge_bane = bane_farge[s2_farge_bane_valg.value];
 
-  //Gir rammen farge med gradvis overgang til gjennomsiktig og plasserer paddlene og ballen innenfor rammen
+  //Gir banen enten et bilde eller en farge og plasserer paddlene og ballen innenfor banen
   var render = function(){
     //Setter banen til å være et bilde
     if (document.getElementById("spaceModus").checked) {
@@ -83,6 +93,7 @@ function pong(spillere) {
       innhold.drawImage(bane_bilde,0,0);
       innhold.drawImage(bane_bilde,bredde/2,0);
       innhold.restore();
+    //Setter banen til å ha en farge med gradvis overgang til gjennomsiktig
     } else if (document.getElementById("normalModus").checked) {
       var gradientVenstre = innhold.createLinearGradient(-bredde/2, hoyde/2, bredde/2, hoyde/2);
       gradientVenstre.addColorStop(0, 'rgba(255,255,255,0)');
@@ -95,7 +106,7 @@ function pong(spillere) {
       innhold.fillStyle = gradientHoyre;
       innhold.fillRect(bredde/2,0,bredde/2,hoyde);
     }
-    //Poengscore og level
+    //Lager poengscore og level
     innhold.strokeStyle = "#000000";
     innhold.lineWidth = 1;
     innhold.fillStyle = "#FFFFFF";
@@ -106,7 +117,6 @@ function pong(spillere) {
     innhold.strokeText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
     innhold.strokeText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
-
     //Henter fram knapper for pausemeny og seier/tap
     if (poeng_spiller_1 == vinner_poeng || poeng_spiller_2 == vinner_poeng || pauset) {
       sluttKnapper();
@@ -155,12 +165,12 @@ function pong(spillere) {
 
   //Lager paddlen til Spiller 1, som er spilleren til høyre
   function Spiller1() {
-    this.paddle = new Paddle(s1_rekkert_pos_x, rekkert_pos_y, rekkert_bredde, rekkert_hoyde, s1_farge_paddle);
+    this.paddle = new Paddle(s1_rekkert_pos_x, s1_rekkert_pos_y, rekkert_bredde, rekkert_hoyde, s1_farge_paddle);
   }
 
   //Lager paddlen til Spiller 2, som er spilleren til venstre, eller computeren
   function Spiller2() {
-    this.paddle = new Paddle(s2_rekkert_pos_x, rekkert_pos_y, rekkert_bredde, rekkert_hoyde, s2_farge_paddle);
+    this.paddle = new Paddle(s2_rekkert_pos_x, s2_rekkert_pos_y, rekkert_bredde, rekkert_hoyde, s2_farge_paddle);
   }
 
   //Lager et ballobjekt, gir den størrelse og gir den fart
@@ -198,10 +208,10 @@ function pong(spillere) {
   Ball.prototype.update = function(paddle1, paddle2){
     this.x += this.x_fart;
     this.y += this.y_fart;
-    var topp_x = this.x -radius;
-    var topp_y = this.y -radius;
-    var bunn_x = this.x + radius;
-    var bunn_y = this.y + radius;
+    var maks_x = this.x -radius;
+    var maks_y = this.y -radius;
+    var min_x = this.x + radius;
+    var min_y = this.y + radius;
 
     //Hva som skjer når ballen treffer en av kantene oppe og nede på banen
     if (this.y - radius < 0) {
@@ -221,7 +231,6 @@ function pong(spillere) {
       this.y = hoyde/2;
       poeng_spiller_1++;
       if (!pausetSFX) {
-        eksplosjonGoal = new Audio('musikk/Eksplosjon.wav');
         eksplosjonGoal.play();
       }
     } else if (this.x > bredde) {
@@ -232,7 +241,6 @@ function pong(spillere) {
       this.y = hoyde/2;
       poeng_spiller_2++;
       if (!pausetSFX) {
-        eksplosjonGoal = new Audio('musikk/Eksplosjon.wav');
         eksplosjonGoal.play();
       }
     }
@@ -241,21 +249,19 @@ function pong(spillere) {
       if (poeng_spiller_1 === vinner_poeng) {
         vinnSpill();
         if (!pausetMusikk) {
-          vinnerMusikk = new Audio('musikk/Vinner.wav');
           vinnerMusikk.play();
         }
       } else if (poeng_spiller_2 === vinner_poeng) {
         vinnSpill();
         if (!pausetMusikk) {
-          taperMusikk = new Audio('musikk/Taper.wav');
           taperMusikk.play();
         }
       }
+    //Bare vinnersang for tospillermodus
     } else if (spillere == 2) {
         if (poeng_spiller_1 === vinner_poeng || poeng_spiller_2 === vinner_poeng) {
           vinnSpill();
           if (!pausetMusikk) {
-            vinnerMusikk = new Audio('musikk/Vinner.wav');
             vinnerMusikk.play();
         }
       }
@@ -263,24 +269,22 @@ function pong(spillere) {
 
     //Hvordan ballen treffer paddlene og hva som defineres som treffområde på paddlene
     //Når ballen treffer spiller 1
-    if (topp_x > bredde/2) {
-      if (topp_x < (paddle1.x + paddle1.width) && bunn_x > paddle1.x && topp_y < (paddle1.y + paddle1.height) && bunn_y > paddle1.y) {
+    if (maks_x > bredde/2) {
+      if (maks_x < (paddle1.x + paddle1.width) && min_x > paddle1.x && maks_y < (paddle1.y + paddle1.height) && min_y > paddle1.y) {
         this.x_fart = -ball_fart_x-bonus_fart;
         this.y_fart += (paddle1.y_fart / 2);
         this.x += this.x_fart;
         if (!pausetSFX) {
-          sprett1 = new Audio('musikk/Sprett1.wav');
           sprett1.play();
         }
       }
     //Når ballen treffer spiller 2
     } else {
-      if (topp_x < (paddle2.x + paddle2.width) && bunn_x > paddle2.x && topp_y < (paddle2.y + paddle2.height) && bunn_y > paddle2.y) {
+      if (maks_x < (paddle2.x + paddle2.width) && min_x > paddle2.x && maks_y < (paddle2.y + paddle2.height) && min_y > paddle2.y) {
         this.x_fart = ball_fart_x+bonus_fart;
         this.y_fart += (paddle2.y_fart / 2);
         this.x += this.x_fart;
         if (!pausetSFX) {
-          sprett2 = new Audio('musikk/Sprett2.wav');
           sprett2.play();
         }
       }
@@ -497,7 +501,7 @@ function pong(spillere) {
     }
     if (spillere == 1 && poeng_spiller_1 == vinner_poeng) {
       //Gjør spillet litt vanskeligere for hver runde man vinner
-      bonus = 4*level;
+      bonus = bonus+bonus_tall;
       bonus_fart = Math.pow(bonus,2)/100;
       level++;
     }
@@ -518,7 +522,7 @@ function pong(spillere) {
     pauseSpill();
     poeng_spiller_1 = 0;
     poeng_spiller_2 = 0;
-    level = 1;
+    document.getElementById("level").value = 1;
     bonus = 0;
     bonus_fart = 0;
     //Denne delete biten vil lage en error, men den erroren er ikke farlig og gjør ikke noe for videre spilling
@@ -526,15 +530,17 @@ function pong(spillere) {
     //Enten en error i koden som ikke ødelegger for noe, eller at spillet ikke fungerer ordentlig
     delete Ball.prototype.update;
     console.log("\\|/Dette er en hyggelig error, bare ignorer :)");
-    //Sletter hele diven som spillet ligger inni når du avslutter spillet
+    //Sletter hele div-en som spillet ligger inni når du avslutter spillet, og sletter musikkobjektet i HTML
     document.getElementById("spillDiv").outerHTML = "";
     document.getElementById("spillMusikk").outerHTML = "";
+    //Fjerner lytte-elementene for tastetrykk, så disse ikke skal fungere på menyen
     window.removeEventListener("keydown", trykkKnapp);
     window.removeEventListener("keyup", slippKnapp);
     visDiv("knappeDiv");
     startMusikk();
   }
 
+  //Lager musikken og setter den til å spille hvis spillet ikke er dempet
   spillMusikk = new sound("musikk/Spillmusikk.wav", "true", 0.5, "spillMusikk");
   if (!pausetMusikk) {
     pausetSFX = false;
@@ -547,6 +553,7 @@ function pong(spillere) {
   var ball = new Ball(bredde/2, hoyde/2);
 }
 
+//Disse må stå utenfor funksjonen for å kunne interakte med menyfunksjonene
 var spillMusikk;
 var pausetMusikk = false;
-var pausetSFX = true;
+var pausetSFX;

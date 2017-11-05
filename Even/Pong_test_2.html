@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Pong</title>
-    <script type="text/javascript" src="jquery_files/jquery00.js"></script>
-    <script type="text/javascript" src="jquery_files/ticker00.js"></script>
+    <script type="text/javascript" src="jquery_files/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="jquery_files/ticker.js"></script>
     <script src="Pong_test_meny_egen.js" charset="utf-8"></script>
     <script src="Pong_test_2.js" charset="utf-8"></script>
     <link rel="stylesheet" href="Pong_test.css">
@@ -52,8 +52,8 @@
           <div id="hoyrePaddle">
           Spiller 1 paddle farge: &nbsp;
             <select id="paddleSpiller1" class="fargevalg">
-              <option class="redPaddle">Rød</option>
               <option class="bluePaddle">Blå</option>
+              <option class="redPaddle">Rød</option>
               <option class="greenPaddle">Grønn</option>
               <option class="purplePaddle">Lilla</option>
               <option class="spacegreyPaddle">Spacegrå</option>
@@ -64,8 +64,8 @@
           <div id="venstreBakgrunn">
           Spiller 2 bakgrunnsfarge:
             <select id="baneSpiller2" class="fargevalg">
-              <option class="redBane">Rød</option>
               <option class="blueBane">Blå</option>
+              <option class="redBane">Rød</option>
               <option class="greenBane">Grønn</option>
               <option class="purpleBane">Lilla</option>
               <option class="spaceblueBane">Spaceblå</option>
@@ -84,7 +84,7 @@
           </div>
         </div>
         <div id="poengValg">
-          <p>Level: &nbsp; &nbsp;<input type="number" id="level" class="nummer" value="1" min="1"></p>
+          <p>Level: &nbsp; &nbsp;<input type="number" id="level" class="nummer" value="1" min="1" max="16"></p>
           <p>Max poeng:<input type="number" id="sluttScore" class="nummer" value="5" min="1"></p>
         </div>
         <div id="modusValg">
