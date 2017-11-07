@@ -25,9 +25,9 @@ function pong(spillere) {
   //Variabler for fart, størrelse, bevegelse og level
   //Variabler som kan endres\\
   var spiller_fart = 4.0;
-  var computer_fart = 0.0;
+  var computer_fart = 3.0;
   var ball_fart_x = 5.0;
-  var bonus_tall = 4.0;
+  var bonus_tall = 3.75;
   //------------------------\\
   var level = Number(document.getElementById("level").value);
   var bonus = bonus_tall*level-bonus_tall;
@@ -61,7 +61,9 @@ function pong(spillere) {
   var musX;
   var musY;
   var keysDown = {};
-  var pongian_navn_array = ["blarg", "rarg", "marg"];
+  var pongian_navn_array = ["Urmiundt","Iaskena","Uggatt","Foher-Tuzatt","Unzor","Caulkax","Yarvyq'tah",
+  "M’rahcc","Graw","Blazeck","Pingori","Ballort","Zirog","Velmot","Callara","Banguz","Zyral","Uxi","Nylarx",
+  "Mangorini","Plasarin","Weraz","Izzix","Mafax","Pongazic","Leozordi","Zorrono","Izalippo","Qwork"];
   var pongian_navn = Math.floor(Math.random()*pongian_navn_array.length);
   //Banefarge og bilde for bakgrunnen i banen
   var bane_bilde = new Image(bredde/2,hoyde);
@@ -122,6 +124,13 @@ function pong(spillere) {
     if (spillere == 1) {
       innhold.fillText(pongian_navn_array[pongian_navn],10,25);
       innhold.strokeText(pongian_navn_array[pongian_navn],10,25);
+      innhold.fillText("Spiller",bredde-150,25);
+      innhold.strokeText("Spiller",bredde-150,25);
+    } else if (spillere == 2) {
+      innhold.fillText("Spiller 2",10,25);
+      innhold.strokeText("Spiller 2",10,25);
+      innhold.fillText("Spiller 1",bredde-190,25);
+      innhold.strokeText("Spiller 1",bredde-190,25);
     }
     //Henter fram knapper for pausemeny og seier/tap
     if (poeng_spiller_1 == vinner_poeng || poeng_spiller_2 == vinner_poeng || pauset) {
@@ -440,37 +449,42 @@ function pong(spillere) {
   function sluttKnapper() {
     innhold.lineWidth = "1";
     innhold.strokeStyle = "#000000";
-    innhold.rect(bredde/4-2,hoyde/2-hoyde/15-2,bredde/5+4,hoyde/10+4);
-    innhold.rect(bredde*3/4-bredde/5-2,hoyde/2-hoyde/15-2,bredde/5+4,hoyde/10+4);
+    innhold.rect(bredde/4-2,hoyde*3/5-hoyde/15-2,bredde/5+4,hoyde/10+2);
+    innhold.rect(bredde*3/4-bredde/5-2,hoyde*3/5-hoyde/15-2,bredde/5+4,hoyde/10+2);
     innhold.stroke();
     innhold.fillStyle = "rgba(255, 255, 255, 0.4)";
-    innhold.fillRect(bredde/4,hoyde/2-hoyde/15,bredde/5,hoyde/10);
-    innhold.fillRect(bredde*3/4-bredde/5,hoyde/2-hoyde/15,bredde/5,hoyde/10);
-    innhold.fillStyle = "#000000";
+    innhold.fillRect(bredde/4,hoyde*3/5-hoyde/15,bredde/5,hoyde/10);
+    innhold.fillRect(bredde*3/4-bredde/5,hoyde*3/5-hoyde/15,bredde/5,hoyde/10);
+    innhold.fillStyle = "#FFFFFF";
     innhold.font = "14px font1";
     //Hvis du spiller enspiller skal du kunne gå videre, men i tospiller skal du bare starte på nytt
     if (spillere == 1 && poeng_spiller_1 == vinner_poeng) {
-      innhold.fillText("Videre", bredde/4+bredde/20, hoyde/2);
+      innhold.fillText("Neste level", bredde/4+bredde/50, hoyde*3/5);
     } else if (spillere == 2 || pauset) {
-      innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde/2);
+      innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde*3/5);
     }
-    innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde/2);
+    innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde*3/5);
     innhold.font = "24px font1";
+    innhold.fillStyle = "#FFFFFF";
     if (spillere == 1) {
       if (poeng_spiller_1 == vinner_poeng) {
-        innhold.fillText("Gratulerer du slo "+pongian_navn_array[pongian_navn]+"!", bredde/4, hoyde/3);
-        innhold.strokeText("Gratulerer du slo "+pongian_navn_array[pongian_navn]+"!", bredde/4, hoyde/3);
+        innhold.fillText("Gratulerer du slo", bredde/4+bredde/20, hoyde/3);
+        innhold.strokeText("Gratulerer du slo", bredde/4+bredde/20, hoyde/3);
+        innhold.fillText(pongian_navn_array[pongian_navn]+"!", bredde*2/5, hoyde/2-hoyde/20);
+        innhold.strokeText(pongian_navn_array[pongian_navn]+"!", bredde*2/5, hoyde/2-hoyde/20);
       } else if (poeng_spiller_2 == vinner_poeng) {
         innhold.fillText("Du tapte...", bredde*2/5, hoyde/3);
         innhold.strokeText("Du tapte...", bredde*2/5, hoyde/3);
       }
     } else if (spillere == 2) {
+      innhold.fillText("Gratulerer!", bredde*3/8, hoyde/3);
+      innhold.strokeText("Gratulerer!", bredde*3/8, hoyde/3);
       if (poeng_spiller_1 == vinner_poeng) {
-        innhold.fillText("Gratulerer spiller 1 vant!", bredde/4, hoyde/3);
-        innhold.strokeText("Gratulerer spiller 1 vant!", bredde/4, hoyde/3);
+        innhold.fillText("Spiller 1 vant!", bredde/3, hoyde/2-hoyde/20);
+        innhold.strokeText("Spiller 1 vant!", bredde/3, hoyde/2-hoyde/20);
       } else if (poeng_spiller_2 == vinner_poeng) {
-        innhold.fillText("Gratulerer spiller 2 vant!", bredde/4, hoyde/3);
-        innhold.strokeText("Gratulerer spiller 2 vant!", bredde/4, hoyde/3);
+        innhold.fillText("Spiller 2 vant!", bredde/3, hoyde/2-hoyde/20);
+        innhold.strokeText("Spiller 2 vant!", bredde/3, hoyde/2-hoyde/20);
       }
     }
   }
@@ -491,13 +505,13 @@ function pong(spillere) {
 
   //Sjekker om du trykker med musa, og om du er innenfor posisjonen til knappene i canvasen
   function sjekkKlikk(mouseEvent) {
-    if (musX >= bredde/4 && musX <= bredde/4 + bredde/5) {
-      if (musY >= hoyde/2-hoyde/15 && musY <= hoyde/2-hoyde/15 + hoyde/10) {
+    if (musX >= bredde/4-2 && musX <= bredde/4 + bredde/5+4) {
+      if (musY >= hoyde*3/5-hoyde/15 && musY <= hoyde*3/5-hoyde/15 + hoyde/10) {
         restartSpill();
       }
     }
-    if (musX >= bredde*3/4-bredde/5 && musX <= bredde*3/4 + bredde/5) {
-      if (musY >= hoyde/2-hoyde/15 && musY <= hoyde/2-hoyde/15 + hoyde/10) {
+    if (musX >= bredde*3/4-bredde/5-2 && musX <= bredde*3/4 + bredde/5+4) {
+      if (musY >= hoyde*3/5-hoyde/15 && musY <= hoyde*3/5-hoyde/15 + hoyde/10) {
         sluttSpill();
       }
     }

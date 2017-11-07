@@ -11,6 +11,8 @@ function visDiv(divId) {
 //Menyfunksjonene
 document.addEventListener('DOMContentLoaded',domloaded,false);
 function domloaded() {
+
+  var timer_slutt = 25000;
   var historieLesing = new Audio('musikk/Historie.mp3');
   menyMusikk = new sound('musikk/Meny.wav', "true", 0.8, "menyMusikk");
   menyMusikk.play();
@@ -20,7 +22,9 @@ function domloaded() {
   function spiller_tall(spiller) {
     var spillere = spiller;
     gjemDiv("knappeDiv");
-    gjemDiv("tekstDiv");
+    if (document.getElementById("tekstDiv")) {
+      gjemDiv("tekstDiv");
+    }
     historieLesing.pause();
     document.getElementById("menyMusikk").outerHTML = "";
     pong(spillere);
@@ -60,7 +64,9 @@ function domloaded() {
     if (!pausetMusikk) {
       menyMusikk.stop();
       historieLesing.pause();
-      gjemDiv("tekstDiv");
+      if (document.getElementById("tekstDiv")) {
+        gjemDiv("tekstDiv");
+      }
       pausetMusikk = true;
   } else if (pausetMusikk) {
       menyMusikk.play();
@@ -75,7 +81,7 @@ function domloaded() {
       effect:'fade'
   });
   setTimeout(function(){
-  gjemDiv("tekstDiv");
+    document.getElementById("tekstDiv").outerHTML = "";
   }, 25000);
 }
 
