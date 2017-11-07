@@ -314,31 +314,34 @@ input.modusRadio{
 }
 
 /*Styling av rulletekst*/
+#tekstDiv{
+  right: auto;
+  left: auto;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
 #fade{
   position:fixed;
   top: auto;
   bottom: 10px;
   right: auto;
   left: auto;
-  text-align:center;
-  min-width: 500px;
-  margin-left: 400px;
-}
-
-ul {
 	background:none;
 	color:#fff;
-	padding:10px 20px;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-  -o-border-radius:10px;
-	width:100px;
+	/*padding:10px 20px;*/
+	width: 100%;
   line-height: 120%;
+  margin-left: 0px;
 }
 
-ul li {
+li {
 	list-style:none;
 	font-family:font1;
 	font-size:11px;
   opacity: 1.0;
+  width:500px;
+  margin-left: auto;
+  margin-right: auto;
 }

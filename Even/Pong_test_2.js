@@ -25,7 +25,7 @@ function pong(spillere) {
   //Variabler for fart, størrelse, bevegelse og level
   //Variabler som kan endres\\
   var spiller_fart = 4.0;
-  var computer_fart = 3.0;
+  var computer_fart = 0.0;
   var ball_fart_x = 5.0;
   var bonus_tall = 4.0;
   //------------------------\\
@@ -50,7 +50,7 @@ function pong(spillere) {
   var s2_rekkert_pos_x = 10;
   var radius = 9;
   //------------------------\\
-  //Variabler for pausing, musikk, musepekeren og tastaturknapper
+  //Variabler for pausing, musikk, musepekeren, tastaturknapper og Pongian-navn
   var pauset = false;
   pausetSFX = true;
   var vinnerMusikk = new Audio('musikk/Vinner.wav');
@@ -61,6 +61,8 @@ function pong(spillere) {
   var musX;
   var musY;
   var keysDown = {};
+  var pongian_navn_array = ["blarg", "rarg", "marg"];
+  var pongian_navn = Math.floor(Math.random()*pongian_navn_array.length);
   //Banefarge og bilde for bakgrunnen i banen
   var bane_bilde = new Image(bredde/2,hoyde);
   bane_bilde.src = "bilde/bakgrunn.jpg";
@@ -117,6 +119,10 @@ function pong(spillere) {
     innhold.strokeText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
     innhold.strokeText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
+    if (spillere == 1) {
+      innhold.fillText(pongian_navn_array[pongian_navn],10,25);
+      innhold.strokeText(pongian_navn_array[pongian_navn],10,25);
+    }
     //Henter fram knapper for pausemeny og seier/tap
     if (poeng_spiller_1 == vinner_poeng || poeng_spiller_2 == vinner_poeng || pauset) {
       sluttKnapper();
@@ -230,7 +236,7 @@ function pong(spillere) {
       this.x = bredde/2;
       this.y = hoyde/2;
       poeng_spiller_1++;
-      if (!pausetSFX) {
+      if (!pausetSFX && poeng_spiller_1 < vinner_poeng) {
         eksplosjonGoal.play();
       }
     } else if (this.x > bredde) {
@@ -240,7 +246,7 @@ function pong(spillere) {
       this.x = bredde/2;
       this.y = hoyde/2;
       poeng_spiller_2++;
-      if (!pausetSFX) {
+      if (!pausetSFX && poeng_spiller_2 < vinner_poeng) {
         eksplosjonGoal.play();
       }
     }
@@ -452,15 +458,19 @@ function pong(spillere) {
     innhold.font = "24px font1";
     if (spillere == 1) {
       if (poeng_spiller_1 == vinner_poeng) {
-        innhold.fillText("Gratulerer du vant!", bredde*1/4, hoyde*1/3);
+        innhold.fillText("Gratulerer du slo "+pongian_navn_array[pongian_navn]+"!", bredde/4, hoyde/3);
+        innhold.strokeText("Gratulerer du slo "+pongian_navn_array[pongian_navn]+"!", bredde/4, hoyde/3);
       } else if (poeng_spiller_2 == vinner_poeng) {
-        innhold.fillText("Du tapte...", bredde*2/5, hoyde*1/3);
+        innhold.fillText("Du tapte...", bredde*2/5, hoyde/3);
+        innhold.strokeText("Du tapte...", bredde*2/5, hoyde/3);
       }
     } else if (spillere == 2) {
       if (poeng_spiller_1 == vinner_poeng) {
-        innhold.fillText("Gratulerer spiller 1 vant!", bredde*1/4, hoyde*1/3);
+        innhold.fillText("Gratulerer spiller 1 vant!", bredde/4, hoyde/3);
+        innhold.strokeText("Gratulerer spiller 1 vant!", bredde/4, hoyde/3);
       } else if (poeng_spiller_2 == vinner_poeng) {
-        innhold.fillText("Gratulerer spiller 2 vant!", bredde*1/4, hoyde*1/3);
+        innhold.fillText("Gratulerer spiller 2 vant!", bredde/4, hoyde/3);
+        innhold.strokeText("Gratulerer spiller 2 vant!", bredde/4, hoyde/3);
       }
     }
   }
@@ -510,6 +520,7 @@ function pong(spillere) {
     x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
     random_fart_x = Math.floor(Math.random()*x_fart_array.length);
     random_fart_y = Math.floor(Math.random()*y_fart_array.length);
+    pongian_navn = Math.floor(Math.random()*pongian_navn_array.length);
     spiller1 = new Spiller1();
     spiller2 = new Spiller2();
     ball = new Ball(bredde/2, hoyde/2);
