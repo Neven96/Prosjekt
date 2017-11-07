@@ -169,7 +169,11 @@ function pong(spillere) {
     this.height = hoyde;
     this.x_fart = 0;
     this.y_fart = 0;
-    this.farge = farge;
+    if (document.getElementById("spaceModus").checked) {
+      this.farge = "rgb(96,71,235)";
+    } else if (document.getElementById("normalModus").checked) {
+      this.farge = farge;
+    }
   }
 
   //Gir paddlene farge og gjør dem klare for å bli laget
@@ -211,7 +215,11 @@ function pong(spillere) {
   Ball.prototype.render = function() {
     innhold.beginPath();
     innhold.arc(this.x, this.y, this.radius, 2*Math.PI, false);
-    innhold.fillStyle = "#FFFFFF";
+    if (document.getElementById("spaceModus").checked) {
+      innhold.fillStyle = "#FF4500";
+    } else if (document.getElementById("normalModus").checked) {
+      innhold.fillStyle = "#FFFFFF";
+    }
     innhold.fill();
     innhold.lineWidth = 3;
     innhold.strokeStyle = "#000000";
@@ -458,31 +466,38 @@ function pong(spillere) {
     innhold.fillStyle = "#FFFFFF";
     innhold.font = "14px font1";
     //Hvis du spiller enspiller skal du kunne gå videre, men i tospiller skal du bare starte på nytt
-    if (spillere == 1 && poeng_spiller_1 == vinner_poeng) {
+    if (spillere == 1 && poeng_spiller_1 == vinner_poeng && level != 10) {
       innhold.fillText("Neste level", bredde/4+bredde/50, hoyde*3/5);
-    } else if (spillere == 2 || pauset) {
+    } else if (spillere == 2 || pauset || level == 10) {
       innhold.fillText("Start på nytt", bredde/4+bredde/100, hoyde*3/5);
     }
     innhold.fillText("Gå til menyen", bredde*3/4-bredde/5+bredde/100, hoyde*3/5);
     innhold.font = "24px font1";
     innhold.fillStyle = "#FFFFFF";
     if (spillere == 1) {
-      if (poeng_spiller_1 == vinner_poeng) {
+      if (poeng_spiller_1 == vinner_poeng && level != 10) {
         innhold.fillText("Gratulerer du slo", bredde/4+bredde/20, hoyde/3);
         innhold.strokeText("Gratulerer du slo", bredde/4+bredde/20, hoyde/3);
         innhold.fillText(pongian_navn_array[pongian_navn]+"!", bredde*2/5, hoyde/2-hoyde/20);
         innhold.strokeText(pongian_navn_array[pongian_navn]+"!", bredde*2/5, hoyde/2-hoyde/20);
+      } else if (poeng_spiller_1 == vinner_poeng && level == 10) {
+        innhold.fillText("Gratulerer!", bredde*3/8, hoyde/3);
+        innhold.strokeText("Gratulerer!", bredde*3/8, hoyde/3);
+        innhold.fillText("Du vant krigen!", bredde/3, hoyde/2-hoyde/20);
+        innhold.strokeText("Du vant krigen!", bredde/3, hoyde/2-hoyde/20);
       } else if (poeng_spiller_2 == vinner_poeng) {
         innhold.fillText("Du tapte...", bredde*2/5, hoyde/3);
         innhold.strokeText("Du tapte...", bredde*2/5, hoyde/3);
       }
     } else if (spillere == 2) {
-      innhold.fillText("Gratulerer!", bredde*3/8, hoyde/3);
-      innhold.strokeText("Gratulerer!", bredde*3/8, hoyde/3);
       if (poeng_spiller_1 == vinner_poeng) {
+        innhold.fillText("Gratulerer!", bredde*3/8, hoyde/3);
+        innhold.strokeText("Gratulerer!", bredde*3/8, hoyde/3);
         innhold.fillText("Spiller 1 vant!", bredde/3, hoyde/2-hoyde/20);
         innhold.strokeText("Spiller 1 vant!", bredde/3, hoyde/2-hoyde/20);
       } else if (poeng_spiller_2 == vinner_poeng) {
+        innhold.fillText("Gratulerer!", bredde*3/8, hoyde/3);
+        innhold.strokeText("Gratulerer!", bredde*3/8, hoyde/3);
         innhold.fillText("Spiller 2 vant!", bredde/3, hoyde/2-hoyde/20);
         innhold.strokeText("Spiller 2 vant!", bredde/3, hoyde/2-hoyde/20);
       }
@@ -523,11 +538,15 @@ function pong(spillere) {
     if(!pausetMusikk){
       spillMusikk.play();
     }
-    if (spillere == 1 && poeng_spiller_1 == vinner_poeng) {
+    if (spillere == 1 && poeng_spiller_1 == vinner_poeng && level != 10) {
       //Gjør spillet litt vanskeligere for hver runde man vinner
       bonus = bonus+bonus_tall;
       bonus_fart = Math.pow(bonus,2)/100;
       level++;
+    } else if (spillere == 1 && poeng_spiller_1 == vinner_poeng && level == 10) {
+      bonus = 0;
+      bonus_fart = 0;
+      level = 1;
     }
     poeng_spiller_1 = 0;
     poeng_spiller_2 = 0;

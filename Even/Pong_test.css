@@ -215,18 +215,23 @@ option{
 
 .redPaddle{
   background-color: #8B0000;
+  color: white;
 }
 .bluePaddle{
   background-color: #00008B;
+  color: white;
 }
 .greenPaddle{
   background-color: #008B00;
+  color: white;
 }
 .purplePaddle{
   background-color: #402060;
+  color: white;
 }
 .spacegreyPaddle{
   background-color: #374049;
+  color: white;
 }
 
 #poengValg{
@@ -252,16 +257,21 @@ input.nummer{
   font-size: 16px;
 }
 
-input.modusRadio{
-
-}
-
 #level{
   margin-bottom: -10px;
 }
 
 #sluttScore{
   margin-bottom: 0px;
+}
+
+.modusRadio{
+  display: none;
+}
+
+.modusRadio{
+  width: 15px;
+  height: 15px;
 }
 
 #modusValg{
@@ -272,6 +282,14 @@ input.modusRadio{
   border: white;
   border-style: solid;
   border-width: 1px;
+}
+
+label:hover{
+  color: grey;
+}
+
+input[type="radio"]:checked + label{
+  color: red;
 }
 
 /*Plassering av tilbake-knapp*/
@@ -296,6 +314,11 @@ input.modusRadio{
   font-family: font1;
   margin-left: auto;
   margin-right: auto;
+}
+
+#navn{
+  margin-top: 150px;
+  margin-bottom: 150px;
 }
 
 #kreditKnapp{
@@ -326,22 +349,20 @@ input.modusRadio{
   position:fixed;
   top: auto;
   bottom: 10px;
-  right: auto;
-  left: auto;
 	background:none;
 	color:#fff;
-	/*padding:10px 20px;*/
 	width: 100%;
   line-height: 120%;
-  margin-left: 0px;
+  text-align: center;
+  margin-left: -2.8%;
 }
 
 li {
 	list-style:none;
 	font-family:font1;
-	font-size:11px;
+	font-size: 11px;
   opacity: 1.0;
-  width:500px;
+  width: 500px;
   margin-left: auto;
   margin-right: auto;
 }
