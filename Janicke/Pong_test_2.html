@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Pong</title>
+    <script type="text/javascript" src="jquery_files/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="jquery_files/ticker.js"></script>
     <script src="Pong_test_meny_egen.js" charset="utf-8"></script>
     <script src="Pong_test_2.js" charset="utf-8"></script>
     <link rel="stylesheet" href="Pong_test.css">
@@ -15,65 +17,98 @@
         <button id="toSpiller">Tospiller</button>
         <button id="instruksjonKnapp">Hvordan spille</button>
         <button id="innstillingKnapp">Innstillinger</button>
-        <button id="kredit">Kredit</button>
+        <div id="tekstDiv">
+          <ul id="fade">
+            <li>In the year 2222 the Earth was invaded by nefarious aliens who called themselves </li>
+          	<li>“The Pongians”. They called upon Earths greatest warriors to do combat 1v1. </li>
+          	<li>After everyone else failed, the Earths government called upon you.</li>
+          	<li>The only person capable of defeating “The Pongians”. You answered </li>
+          	<li>the call and challenged the aliens to a game of Pong – to the death! </li>
+          </ul>
+        </div>
+        <button id="kreditKnapp">Kredit</button>
       </div>
       <div id="instruksjonDiv" class="meny">
-        <div id='spiller1'>Spiller 1: <br><br> &uarr;<br><br>&darr;</div>
-        <div id='spiller2'>Spiller 2: <br><br> W<br><br>S </div>
-        <div id='pause'>Trykk på P for å pause spillet</div>
-        <div id='musikk'>Trykk på M for å skru av musikk</div>
-        <div id='lyd'>Trykk på N for å skru av lydeffekter</div>
+        <div id="spiller1">Spiller 1: <p>&uarr;</p> <p>&darr;</p></div>
+        <div id="spiller2">Spiller 2: <p>W</p> <p>S</p> </div>
+        <div id="pause">Trykk på P for å pause spillet</div>
+        <div id="musikk">Trykk på M for å skru av musikk</div>
+        <div id="lyd">Trykk på N for å skru av lydeffekter</div>
         <button id="instruksjonTilbakeMeny">Tilbake</button>
       </div>
       <div id="innstillingDiv" class="meny">
-      <div id='venstre'>
-        <div id='venstreBakgrunn'>
-          Farge 1 player bakgrunn:
-        <select class="fargevalg">
-          <option class='red'>Rød</option>
-          <option class="lightblue">Lyseblå</option>
-          <option class='yellow'>Gul</option>
-          <option class='pink'>Rosa</option>
-        </select>
-      </div>
-
-        <div id='venstrePaddle'>
-        Farge 1 player paddle: &nbsp;
-        <select class="fargevalg">
-          <option class='red'>Rød</option>
-          <option class="lightblue">Lyseblå</option>
-          <option class='yellow'>Gul</option>
-          <option class='pink'>Rosa</option>
-        </select>
-      </div>
-    </div>
-
-      <div id="hoyre">
-        <div id="hoyreBakgrunn">
-        Farge 2 player bakgrunn:
-        <select class="fargevalg">
-          <option class='red'>Rød</option>
-          <option class="lightblue">Lyseblå</option>
-          <option class='yellow'>Gul</option>
-          <option class='pink'>Rosa</option>
-        </select>
-      </div>
-
-        <div id="hoyrePaddle">
-        Farge 2 player paddle: &nbsp;
-        <select class="fargevalg">
-          <option class='red'>Rød</option>
-          <option class="lightblue">Lyseblå</option>
-          <option class='yellow'>Gul</option>
-          <option class='pink'>Rosa</option>
-        </select>
-      </div>
-      </div>
-      <div id="poeng">
-        Vanskelighetsgrad: <input type="number" id="level"><br>
-        Max poeng:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<input type="number" id="sluttscore">
-    </div>
+        <div id="hoyre">
+          <div id="hoyreBakgrunn">
+            Spiller 1 bakgrunnsfarge:
+            <select id="baneSpiller1" class="fargevalg">
+              <option class="redBane">Rød</option>
+              <option class="blueBane">Blå</option>
+              <option class="greenBane">Grønn</option>
+              <option class="purpleBane">Lilla</option>
+              <option class="spaceblueBane">Spaceblå</option>
+              <option class="spacegreyBane">Spacegrå</option>
+            </select>
+          </div>
+          <div id="hoyrePaddle">
+          Spiller 1 paddle farge: &nbsp;
+            <select id="paddleSpiller1" class="fargevalg">
+              <option class="bluePaddle">Blå</option>
+              <option class="redPaddle">Rød</option>
+              <option class="greenPaddle">Grønn</option>
+              <option class="purplePaddle">Lilla</option>
+              <option class="spacegreyPaddle">Spacegrå</option>
+            </select>
+          </div>
+        </div>
+        <div id="venstre">
+          <div id="venstreBakgrunn">
+          Spiller 2 bakgrunnsfarge:
+            <select id="baneSpiller2" class="fargevalg">
+              <option class="blueBane">Blå</option>
+              <option class="redBane">Rød</option>
+              <option class="greenBane">Grønn</option>
+              <option class="purpleBane">Lilla</option>
+              <option class="spaceblueBane">Spaceblå</option>
+              <option class="spacegreyBane">Spacegrå</option>
+            </select>
+          </div>
+          <div id="venstrePaddle">
+          Spiller 2 paddle farge: &nbsp;
+            <select id="paddleSpiller2" class="fargevalg">
+              <option class="redPaddle">Rød</option>
+              <option class="bluePaddle">Blå</option>
+              <option class="greenPaddle">Grønn</option>
+              <option class="purplePaddle">Lilla</option>
+              <option class="spacegreyPaddle">Spacegrå</option>
+            </select>
+          </div>
+        </div>
+        <div id="poengValg">
+          <p>Level: &nbsp; &nbsp;<input type="number" id="level" class="nummer" value="1" min="1" max="16"></p>
+          <p>Max poeng:<input type="number" id="sluttScore" class="nummer" value="5" min="1"></p>
+        </div>
+        <div id="modusValg">
+          <p>
+          <input type="radio" name="modus" id="normalModus" class="modusRadio" checked>
+          <label for="normalModus" class="modusLabel">Normalmodus</label>
+          </p>
+          <p>
+            <input type="radio" name="modus" id="spaceModus" class="modusRadio">
+            <label for="spaceModus" class="modusLabel">Spacemodus</label>
+          </p>
+        </div>
         <button id="innstillingTilbakeMeny">Tilbake</button>
+        <button id="muteKnapp">Demp musikk</button>
+      </div>
+      <div id="kreditDiv">
+        <div id="navn">
+        <p>Alexander Le Hovdahl</p>
+        <p>Janicke Strand Strøm</p>
+        <p>Even Trosterud Holmen</p>
+        <p>Siril Skipperø</p>
+        <p>Trym Skogseth</p>
+      </div>
+        <button id="kreditTilbakeMeny">Tilbake</button>
       </div>
     </div>
   </body>

@@ -67,24 +67,6 @@ button:hover {
   font-size: 16px;
 }
 
-/*Utseende og plassering av kredit-knappen*/
-#kredit{
-  float: left;
-  position: fixed;
-  left: 2%;
-  top: 85%;
-  width: 130px;
-  height: 30px;
-  font-size: 12px;
-}
-
-/*Kode for størrelse på kredit-knapp når man har pila over*/
-#kredit:hover{
-  height: 50px;
-  width: 150px;
-  font-size: 14px;
-}
-
 /*Utseende på teksten til "Hvordan spille"*/
 #instruksjonDiv{
   display:none;
@@ -149,30 +131,6 @@ button:hover {
 }
 
 /*Plassering og ramme for boks med fargevalg for spiller 1*/
-#venstre{
-  width: 600px;
-  height: 100px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 20px;
-  border: white;
-  border-style: solid;
-  border-width: 1px;
-  margin-top: 50px;
-}
-
-/*Plassering av fargevalg av bakrunn til spiller 1*/
-#venstreBakgrunn{
-  margin-top: 15px;
-  margin-bottom: 10px;
-}
-
-/*Plassering av fargevalg av paddle til spiller 1*/
-#venstrePaddle{
-  margin-bottom: 15px;
-}
-
-/*Plassering og ramme for boks med fargevalg for spiller 2*/
 #hoyre{
   width: 600px;
   height: 100px;
@@ -181,26 +139,48 @@ button:hover {
   border: white;
   border-style: solid;
   border-width: 1px;
-  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+/*Plassering av fargevalg av bakrunn til spiller 1*/
+#hoyreBakgrunn{
+  margin-top: 15px;
+  margin-bottom: 7px;
+}
+
+/*Plassering av fargevalg av paddle til spiller 1*/
+#hoyrePaddle{
+  margin-bottom: 15px;
+}
+
+/*Plassering og ramme for boks med fargevalg for spiller 2*/
+#venstre{
+  width: 600px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  border: white;
+  border-style: solid;
+  border-width: 1px;
 }
 
 /*Plassering av fargevalg til bakgrunn for spiller 2*/
-#hoyreBakgrunn{
+#venstreBakgrunn{
   margin-top: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 /*Plassering av fargevalg for paddle til spiller 2*/
-#hoyrePaddle{
+#venstrePaddle{
   margin-bottom: 15px;
 }
 
 /*Plassering av dropdownboks med fargevalgene*/
 .fargevalg{
   position: relative;
-  left: 40px;
+  left: 10px;
   height: 30px;
-  width: 85px;
+  width: 90px;
   color: white;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.1);
@@ -212,24 +192,91 @@ option{
   color: black;
   font-size: 16px;
 }
+
 /*Bakgrunnsfarge til optionene*/
-.red{
-  background-color: red;
+.redBane{
+  background-color: rgba(255,51,51,0.7);
 }
-.lightblue{
-  background-color: lightblue;
+.blueBane{
+  background-color: rgba(51,51,255,0.7);
 }
-.yellow{
-  background-color: yellow;
+.greenBane{
+  background-color: rgba(51,255,51,0.7);
 }
-.pink{
-  background-color: pink;
+.purpleBane{
+  background-color: rgba(115,57,172,0.7);
+}
+.spaceblueBane{
+  background-color: rgba(96,71,235,0.7);
+}
+.spacegreyBane{
+  background-color: rgba(119,136,153,0.7);
 }
 
-/*Ramme på levelvalg og poengscorevalg*/
-#poeng{
+.redPaddle{
+  background-color: #8B0000;
+  color: white;
+}
+.bluePaddle{
+  background-color: #00008B;
+  color: white;
+}
+.greenPaddle{
+  background-color: #008B00;
+  color: white;
+}
+.purplePaddle{
+  background-color: #402060;
+  color: white;
+}
+.spacegreyPaddle{
+  background-color: #374049;
+  color: white;
+}
+
+#poengValg{
   width: 600px;
-  height: 100px;
+  height: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  border: white;
+  border-style: solid;
+  border-width: 1px;
+  text-align: left;
+  text-indent: 75px;
+}
+
+input.nummer{
+  position: relative;
+  left: 233px;
+  height: 25px;
+  width: 83px;
+  color: white;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-size: 16px;
+}
+
+#level{
+  margin-bottom: -10px;
+}
+
+#sluttScore{
+  margin-bottom: 0px;
+}
+
+.modusRadio{
+  display: none;
+}
+
+.modusRadio{
+  width: 15px;
+  height: 15px;
+}
+
+#modusValg{
+  width: 600px;
+  height: 75px;
   margin-left: auto;
   margin-right: auto;
   border: white;
@@ -237,36 +284,84 @@ option{
   border-width: 1px;
 }
 
-/*Stil på inputbokser*/
-input{
-  position: relative;
-  left: 80px;
-  height: 25px;
-  width: 80px;
-  color: white;
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.1);
-  font-size: 16px;
+label:hover{
+  color: grey;
 }
 
-/*Plassering av level input*/
-#level{
-  margin-top: 15px;
-  margin-bottom: 10px;
-}
-
-/*Plassering av sluttscore input*/
-#sluttscore{
-  margin-bottom: 15px;
+input[type="radio"]:checked + label{
+  color: red;
 }
 
 /*Plassering av tilbake-knapp*/
 #innstillingTilbakeMeny{
   position: relative;
-  top: 30px;
+  top: 0px;
+}
+
+#muteKnapp{
+  position:fixed !important;
+  bottom: 20px !important;
+  top: auto !important;
+  left: 20px !important;
+  right: auto !important;
+  width: 125px !important;
+  height: 50px !important;
+}
+
+#kreditDiv{
+  display:none;
+  color: white;
+  font-family: font1;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#navn{
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+
+#kreditKnapp{
+  position:fixed !important;
+  bottom: 20px !important;
+  top: auto !important;
+  left: 20px !important;
+  right: auto !important;
+  width: 125px !important;
+  height: 30px !important;
 }
 
 /*Midtstilling av spillet*/
 #spillDiv{
   text-align:center;
+}
+
+/*Styling av rulletekst*/
+#tekstDiv{
+  right: auto;
+  left: auto;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+#fade{
+  position:fixed;
+  top: auto;
+  bottom: 10px;
+	background:none;
+	color:#fff;
+	width: 100%;
+  line-height: 120%;
+  text-align: center;
+}
+
+li {
+	list-style:none;
+	font-family:font1;
+	font-size: 11px;
+  opacity: 1.0;
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
