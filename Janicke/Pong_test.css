@@ -234,6 +234,7 @@ option{
   color: white;
 }
 
+/*Størrelse, plassering og ramme på på div med level- og score-valg*/
 #poengValg{
   width: 600px;
   height: 90px;
@@ -246,6 +247,7 @@ option{
   text-indent: 75px;
 }
 
+/*Plassering på tallbokser, farge og størrelse på tekst, og valg av pil*/
 input.nummer{
   position: relative;
   left: 233px;
@@ -257,23 +259,22 @@ input.nummer{
   font-size: 16px;
 }
 
+/*Margin topp på levelvalg*/
 #level{
   margin-bottom: -10px;
 }
 
+/*Margin bunn poengvalg*/
 #sluttScore{
   margin-bottom: 0px;
 }
 
+/*Skjuler radio-knappene*/
 .modusRadio{
   display: none;
 }
 
-.modusRadio{
-  width: 15px;
-  height: 15px;
-}
-
+/*Størrelse, ramme og plassering av spillemodus-valg*/
 #modusValg{
   width: 600px;
   height: 75px;
@@ -284,10 +285,12 @@ input.nummer{
   border-width: 1px;
 }
 
+/*Farge på spillemodusknapp når pil er over*/
 label:hover{
   color: grey;
 }
 
+/*Farge på valgt spillemodus*/
 input[type="radio"]:checked + label{
   color: red;
 }
@@ -298,6 +301,7 @@ input[type="radio"]:checked + label{
   top: 0px;
 }
 
+/*Plassering og størrelse på muteknappen*/
 #muteKnapp{
   position:fixed !important;
   bottom: 20px !important;
@@ -308,6 +312,7 @@ input[type="radio"]:checked + label{
   height: 50px !important;
 }
 
+/*Valg av font og farge på navneliste*/
 #kreditDiv{
   display:none;
   color: white;
@@ -316,11 +321,13 @@ input[type="radio"]:checked + label{
   margin-right: auto;
 }
 
+/*Plassering av navneliste på kreditside*/
 #navn{
   margin-top: 150px;
   margin-bottom: 150px;
 }
 
+/*Plassering av kreditknapp*/
 #kreditKnapp{
   position:fixed !important;
   bottom: 20px !important;
@@ -343,8 +350,10 @@ input[type="radio"]:checked + label{
   align-items: center;
   text-align: center;
   width: 100%;
+  margin-left: -2.85%;
 }
 
+/*Plassering av rulletekst*/
 #fade{
   position:fixed;
   top: auto;
@@ -356,6 +365,7 @@ input[type="radio"]:checked + label{
   text-align: center;
 }
 
+/*Stil på font og størrelse på rulletekst*/
 li {
 	list-style:none;
 	font-family:font1;
