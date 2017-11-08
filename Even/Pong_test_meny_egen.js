@@ -11,8 +11,6 @@ function visDiv(divId) {
 //Menyfunksjonene
 document.addEventListener('DOMContentLoaded',domloaded,false);
 function domloaded() {
-
-  var timer_slutt = 25000;
   var historieLesing = new Audio('musikk/Historie.mp3');
   menyMusikk = new sound('musikk/Meny.wav', "true", 0.8, "menyMusikk");
   menyMusikk.play();
