@@ -88,28 +88,24 @@ function pong(spillere) {
   var s1_farge_bane = bane_farge[s1_farge_bane_valg.value];
   var s2_farge_bane = bane_farge[s2_farge_bane_valg.value];
 
+  //If setninger for render funksjonen
+  var baneModus;
+  if (document.getElementById("spaceModus").checked) {
+    baneModus = renderSpaceModus;
+  } else if (document.getElementById("normalModus").checked) {
+    baneModus = renderNormalModus;
+  }
+  var spillerModus;
+  if (spillere == 1) {
+    spillerModus = renderEnspillerModus;
+  } else if (spillere == 2) {
+    spillerModus = renderTospillerModus;
+  }
+
   //Gir banen enten et bilde eller en farge og plasserer paddlene og ballen innenfor banen
   var render = function(){
-    //Setter banen til å være et bilde
-    if (document.getElementById("spaceModus").checked) {
-      innhold.save();
-      innhold.globalAlpha = 0.3;
-      innhold.drawImage(bane_bilde,0,0);
-      innhold.drawImage(bane_bilde,bredde/2,0);
-      innhold.restore();
-    //Setter banen til å ha en farge med gradvis overgang til gjennomsiktig
-    } else if (document.getElementById("normalModus").checked) {
-      var gradientVenstre = innhold.createLinearGradient(-bredde/2, hoyde/2, bredde/2, hoyde/2);
-      gradientVenstre.addColorStop(0, 'rgba(255,255,255,0)');
-      gradientVenstre.addColorStop(1, s2_farge_bane);
-      innhold.fillStyle = gradientVenstre;
-      innhold.fillRect(0,0,bredde/2,hoyde);
-      var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/2, hoyde/2);
-      gradientHoyre.addColorStop(0, s1_farge_bane);
-      gradientHoyre.addColorStop(1, 'rgba(255,255,255,0)');
-      innhold.fillStyle = gradientHoyre;
-      innhold.fillRect(bredde/2,0,bredde/2,hoyde);
-    }
+    //Enkel funksjon for enten banebilde eller banefarger
+    baneModus();
     //Lager poengscore og level
     innhold.strokeStyle = "#000000";
     innhold.lineWidth = 1;
@@ -121,17 +117,8 @@ function pong(spillere) {
     innhold.strokeText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
     innhold.strokeText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
-    if (spillere == 1) {
-      innhold.fillText(pongian_navn_array[pongian_navn],10,25);
-      innhold.strokeText(pongian_navn_array[pongian_navn],10,25);
-      innhold.fillText("Spiller",bredde-150,25);
-      innhold.strokeText("Spiller",bredde-150,25);
-    } else if (spillere == 2) {
-      innhold.fillText("Spiller 2",10,25);
-      innhold.strokeText("Spiller 2",10,25);
-      innhold.fillText("Spiller 1",bredde-190,25);
-      innhold.strokeText("Spiller 1",bredde-190,25);
-    }
+    //Enkel funksjon for spillernavn i en- og tospiller
+    spillerModus();
     //Henter fram knapper for pausemeny og seier/tap
     if (poeng_spiller_1 == vinner_poeng || poeng_spiller_2 == vinner_poeng || pauset) {
       sluttKnapper();
@@ -140,6 +127,45 @@ function pong(spillere) {
     spiller2.render();
     ball.render();
   };
+
+  //Setter banen til å være et bilde
+  function renderSpaceModus() {
+    innhold.save();
+    innhold.globalAlpha = 0.3;
+    innhold.drawImage(bane_bilde,0,0);
+    innhold.drawImage(bane_bilde,bredde/2,0);
+    innhold.restore();
+  }
+
+  //Setter banen til å ha en farge med gradvis overgang til gjennomsiktig
+  function renderNormalModus() {
+    var gradientVenstre = innhold.createLinearGradient(-bredde/2, hoyde/2, bredde/2, hoyde/2);
+    gradientVenstre.addColorStop(0, 'rgba(255,255,255,0)');
+    gradientVenstre.addColorStop(1, s2_farge_bane);
+    innhold.fillStyle = gradientVenstre;
+    innhold.fillRect(0,0,bredde/2,hoyde);
+    var gradientHoyre = innhold.createLinearGradient(bredde/2, hoyde/2, bredde+bredde/2, hoyde/2);
+    gradientHoyre.addColorStop(0, s1_farge_bane);
+    gradientHoyre.addColorStop(1, 'rgba(255,255,255,0)');
+    innhold.fillStyle = gradientHoyre;
+    innhold.fillRect(bredde/2,0,bredde/2,hoyde);
+  }
+
+  //Navnene for spiller og Pogians i enspillermodus
+  function renderEnspillerModus() {
+    innhold.fillText(pongian_navn_array[pongian_navn],10,25);
+    innhold.strokeText(pongian_navn_array[pongian_navn],10,25);
+    innhold.fillText("Spiller",bredde-150,25);
+    innhold.strokeText("Spiller",bredde-150,25);
+  }
+
+  //Navnene for spillere i tospillermodus
+  function renderTospillerModus() {
+    innhold.fillText("Spiller 2",10,25);
+    innhold.strokeText("Spiller 2",10,25);
+    innhold.fillText("Spiller 1",bredde-190,25);
+    innhold.strokeText("Spiller 1",bredde-190,25);
+  }
 
   //Oppdaterer rekkertene og ballen
   var update = function(){
@@ -597,7 +623,7 @@ function pong(spillere) {
   var ball = new Ball(bredde/2, hoyde/2);
 }
 
-//Disse må stå utenfor funksjonen for å kunne interakte med menyfunksjonene
+//Disse må stå utenfor funksjonen for å kunne samhandle med menyfunksjonene
 var spillMusikk;
 var pausetMusikk = false;
 var pausetSFX;
