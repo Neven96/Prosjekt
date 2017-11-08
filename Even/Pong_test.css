@@ -13,7 +13,7 @@ html{
 
 /* Bakgrunnsbildet legges inn i body, slik at det gjelder for hele siden*/
 body{
-  background-image: url(bilde/bakgrunn.jpg);
+  background-image: url(bilder/bakgrunn.jpg);
 }
 
 /* Dette er kode for rammen på selve spillet*/
