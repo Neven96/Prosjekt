@@ -67,7 +67,7 @@ function pong(spillere) {
   var pongian_navn = Math.floor(Math.random()*pongian_navn_array.length);
   //Banefarge og bilde for bakgrunnen i banen
   var bane_bilde = new Image(bredde/2,hoyde);
-  bane_bilde.src = "bilde/bakgrunn.jpg";
+  bane_bilde.src = "bilder/bakgrunn.jpg";
   var s1_farge_paddle_valg = document.getElementById("paddleSpiller1");
   var s2_farge_paddle_valg = document.getElementById("paddleSpiller2");
   var s1_farge_bane_valg = document.getElementById("baneSpiller1");
