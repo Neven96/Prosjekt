@@ -353,6 +353,18 @@ input[type="radio"]:checked + label{
   margin-left: -2.85%;
 }
 
+/*Styling av versjonen*/
+#versjon{
+  color: white;
+  font-family: font1;
+  font-size: 12px;
+  position:fixed !important;
+  bottom: 20px !important;
+  top: auto !important;
+  left: auto !important;
+  right: 40px !important;
+}
+
 /*Plassering av rulletekst*/
 #fade{
   position:fixed;

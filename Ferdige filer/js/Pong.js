@@ -475,6 +475,8 @@ function pong(spillere) {
     render();
     pauseSpill();
     spillMusikk.stop();
+    window.removeEventListener("keydown", trykkKnapp);
+    window.removeEventListener("keyup", slippKnapp);
     bane.addEventListener("mousemove", sjekkPos);
     bane.addEventListener("mouseup", sjekkKlikk);
   }
@@ -583,6 +585,8 @@ function pong(spillere) {
     spiller1 = new Spiller1();
     spiller2 = new Spiller2();
     ball = new Ball(bredde/2, hoyde/2);
+    window.addEventListener("keydown", trykkKnapp);
+    window.addEventListener("keyup", slippKnapp);
     bane.removeEventListener("mousemove", sjekkPos);
     bane.removeEventListener("mouseup", sjekkKlikk);
   }
