@@ -36,7 +36,6 @@ function domloaded() {
   document.getElementById("instruksjonTilbakeMeny").onclick = function() {
     gjemDiv("instruksjonDiv");
     visDiv("knappeDiv");
-
   };
 
   //Innstillingsmenyen
@@ -49,6 +48,7 @@ function domloaded() {
     visDiv("knappeDiv");
   };
 
+  //Kreditmenyen
   document.getElementById("kreditKnapp").onclick = function() {
     gjemDiv("knappeDiv");
     visDiv("kreditDiv");
@@ -58,6 +58,17 @@ function domloaded() {
     visDiv("knappeDiv");
   };
 
+  //Versjonsmenyen
+  document.getElementById("versjon").onclick = function() {
+    gjemDiv("knappeDiv");
+    visDiv("versjonDiv");
+  };
+  document.getElementById("versjonTilbakeMeny").onclick = function() {
+    gjemDiv("versjonDiv");
+    visDiv("knappeDiv");
+  };
+
+  //Muteknappen
   document.getElementById("muteKnapp").onclick = function() {
     if (!pausetMusikk) {
       menyMusikk.stop();

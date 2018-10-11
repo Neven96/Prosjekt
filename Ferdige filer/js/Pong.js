@@ -52,6 +52,7 @@ function pong(spillere) {
   //------------------------\\
   //Variabler for pausing, musikk, musepekeren, tastaturknapper og Pongian-navn
   var pauset = false;
+  var startetSpill = false;
   pausetSFX = true;
   var vinnerMusikk = new Audio('musikk/Vinner.wav');
   var taperMusikk = new Audio('musikk/Taper.wav');
@@ -117,6 +118,11 @@ function pong(spillere) {
     innhold.strokeText(poeng_spiller_2,(bredde/2)-25,hoyde-7.5);
     innhold.fillText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
     innhold.strokeText(poeng_spiller_1,(bredde/2)+5,hoyde-7.5);
+    //Tekst før spillet har startet
+    if (!startetSpill) {
+      innhold.fillText("Klar",(bredde/2)-40,hoyde/2-10);
+      innhold.strokeText("Klar",(bredde/2)-40,hoyde/2-10);
+    }
     //Enkel funksjon for spillernavn i en- og tospiller
     spillerModus();
     //Henter fram knapper for pausemeny og seier/tap
@@ -177,11 +183,19 @@ function pong(spillere) {
   //Oppdaterer hver ramme
   this.step = function(){
     render();
-    if (!pauset) {
+    //Pauser spillet ved starten og ved pause
+    if (!pauset && startetSpill) {
       update();
     }
     animate(step);
   };
+
+  //Timeout før starten av spillet
+  function spillStart() {
+    startetSpill = false;
+    setTimeout(function(){ startetSpill = true;}, 500);
+  }
+  spillStart();
 
   //Veldig viktig linje som må stå akkurat her, og som sørger for at hele canvasen faktisk dukker opp
   //https://stackoverflow.com/questions/6065169/requestanimationframe-with-this-keyword er hvorfor den fungerer
@@ -576,6 +590,7 @@ function pong(spillere) {
       bonus_fart = 0;
       level = 1;
     }
+    spillStart();
     poeng_spiller_1 = 0;
     poeng_spiller_2 = 0;
     x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];

@@ -67,10 +67,10 @@ button:hover {
   font-size: 16px;
 }
 
-/*Utseende på teksten til "Hvordan spille"*/
-#instruksjonDiv{
-  display:none;
+/* Utseende på menyene for innstillinger, instruksjoner, kredit og versjon */
+.gjemtMeny{
   color: white;
+  display:none;
   font-family: font1;
   margin-left: auto;
   margin-right: auto;
@@ -120,14 +120,6 @@ button:hover {
 #instruksjonTilbakeMeny{
   position: relative;
   top: 350px;
-}
-
-/*Font og farge for instillinger*/
-#innstillingDiv{
-  display:none;
-  font-family: font1;
-  color: white;
-  font-size: 14px;
 }
 
 /*Plassering og ramme for boks med fargevalg for spiller 1*/
@@ -266,7 +258,7 @@ input.nummer{
 
 /*Margin bunn poengvalg*/
 #sluttScore{
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 /*Skjuler radio-knappene*/
@@ -298,7 +290,7 @@ input[type="radio"]:checked + label{
 /*Plassering av tilbake-knapp*/
 #innstillingTilbakeMeny{
   position: relative;
-  top: 0px;
+  top: 0;
 }
 
 /*Plassering og størrelse på muteknappen*/
@@ -310,15 +302,6 @@ input[type="radio"]:checked + label{
   right: auto !important;
   width: 125px !important;
   height: 50px !important;
-}
-
-/*Valg av font og farge på navneliste*/
-#kreditDiv{
-  display:none;
-  color: white;
-  font-family: font1;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /*Plassering av navneliste på kreditside*/
