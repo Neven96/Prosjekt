@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <meta charset="utf-8">
   <title>Pong</title>
@@ -12,12 +11,10 @@
   <link rel="shortcut icon" href="bilder/pongikon.ico" type="image/x-icon">
   <link rel="icon" href="bilder/pongikon.ico" type="image/x-icon">
 </head>
-
 <body>
   <div id="menyDiv">
-    <div id="versjon">V.1.0.2</div>
     <h2 id="overskrift">Pong!</h2>
-
+    <div id="versjon">V.1.0.4</div>
     <div id="knappeDiv" class="meny">
       <button id="enSpiller">Enspiller</button>
       <button id="toSpiller">Tospiller</button>
@@ -29,7 +26,7 @@
           <li>“The Pongians”. They called upon Earths greatest warriors to do combat 1v1. </li>
           <li>After everyone else failed, the Earths government called upon you.</li>
           <li>The only person capable of defeating “The Pongians”. You answered </li>
-          <li>the call and challenged the aliens to a game of Pong – to the death! </li>
+          <li>the call and challenged the aliens to a game of Pong - to the death! </li>
         </ul>
       </div>
       <button id="kreditKnapp">Kredit</button>
@@ -96,7 +93,7 @@
         </div>
       </div>
       <div id="poengValg">
-        <p>Level: &nbsp; &nbsp;<input type="number" id="level" class="nummer" value="1" min="1" max="16"></p>
+        <p>Level: &nbsp; &nbsp;<input type="number" id="level" class="nummer" value="1" min="1"></p>
         <p>Max poeng:<input type="number" id="sluttScore" class="nummer" value="5" min="1"></p>
       </div>
       <div id="modusValg">
@@ -124,6 +121,11 @@
     <div id="versjonDiv" class="meny gjemtMeny">
       <button id="versjonTilbakeMeny">Tilbake</button>
       <div id="versjoner">
+        <h3>1.0.4</h3>
+        <p>- Endret fartskalkulasjonene for leveler høyere enn 10,</p>
+        <p>de vil nå ikke ødelegge spillet</p>
+        <h3>1.0.3</h3>
+        <p>- Fikset at versjonsopplysninger var tilgjenlig i spill</p>
         <h3>1.0.2</h3>
         <p>- La til en pause før starten av spillet</p>
         <p>- La til en versjonsmeny</p>
@@ -136,5 +138,4 @@
     </div>
   </div>
 </body>
-
 </html>

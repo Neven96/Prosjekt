@@ -28,9 +28,15 @@ function pong(spillere) {
   var computer_fart = 3.0;
   var ball_fart_x = 5.0;
   var bonus_tall = 3.75;
+  var bonus_tall2 = 0.090;
   //------------------------\\
   var level = Number(document.getElementById("level").value);
-  var bonus = bonus_tall*level-bonus_tall;
+  var bonus; 
+  if (level <= 10) {
+    bonus = bonus_tall * level - bonus_tall;
+  } else {
+    bonus = bonus_tall2 * level + 33;
+  }
   var bonus_fart = Math.pow(bonus,2)/100;
   //Arrays for å få en tilfeldig rettning på ballen ved starten av spillet
   var x_fart_array = [-ball_fart_x-bonus_fart,ball_fart_x+bonus_fart];
@@ -63,7 +69,7 @@ function pong(spillere) {
   var musY;
   var keysDown = {};
   var pongian_navn_array = ["Urmiundt","Iaskena","Uggatt","Foher-Tuzatt","Unzor","Caulkax","Yarvyq'tah",
-  "M’rahcc","Graw","Blazeck","Pingori","Ballort","Zirog","Velmot","Callara","Banguz","Zyral","Uxi","Nylarx",
+  "M'rahcc","Graw","Blazeck","Pingori","Ballort","Zirog","Velmot","Callara","Banguz","Zyral","Uxi","Nylarx",
   "Mangorini","Plasarin","Weraz","Izzix","Mafax","Pongazic","Leozordi","Zorrono","Izalippo","Qwork"];
   var pongian_navn = Math.floor(Math.random()*pongian_navn_array.length);
   //Banefarge og bilde for bakgrunnen i banen
@@ -177,6 +183,7 @@ function pong(spillere) {
   var update = function(){
     spiller1.update();
     spiller2.update(ball);
+    //Denne lager en error, av en eller annen grunn når spillet avsluttes. Vet ikke hvorfor...
     ball.update(spiller1.paddle, spiller2.paddle);
   };
 
@@ -617,6 +624,7 @@ function pong(spillere) {
     //Denne delete biten vil lage en error, men den erroren er ikke farlig og gjør ikke noe for videre spilling
     //Uten denne delete biten vil alle objekter i canvasen bevege seg dobbelt så fort hver gang man går inn og ut av menyen
     //Enten en error i koden som ikke ødelegger for noe, eller at spillet ikke fungerer ordentlig
+    //Sletter ballen og hindrer at den øker hastigheten til spillet ved nytt spill
     delete Ball.prototype.update;
     console.log("\\|/Dette er en hyggelig error, bare ignorer :)");
     //Sletter hele div-en som spillet ligger inni når du avslutter spillet, og sletter musikkobjektet i HTML
@@ -626,6 +634,7 @@ function pong(spillere) {
     window.removeEventListener("keydown", trykkKnapp);
     window.removeEventListener("keyup", slippKnapp);
     visDiv("knappeDiv");
+    document.getElementById("versjon").addEventListener("click", versjonFunksjon, true);
     startMusikk();
   }
 

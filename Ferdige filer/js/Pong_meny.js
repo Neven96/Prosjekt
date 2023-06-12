@@ -25,6 +25,7 @@ function domloaded() {
     }
     historieLesing.pause();
     document.getElementById("menyMusikk").outerHTML = "";
+    document.getElementById("versjon").removeEventListener("click", versjonFunksjon, true);
     pong(spillere);
   }
 
@@ -59,14 +60,8 @@ function domloaded() {
   };
 
   //Versjonsmenyen
-  document.getElementById("versjon").onclick = function() {
-    gjemDiv("knappeDiv");
-    visDiv("versjonDiv");
-  };
-  document.getElementById("versjonTilbakeMeny").onclick = function() {
-    gjemDiv("versjonDiv");
-    visDiv("knappeDiv");
-  };
+  document.getElementById("versjon").addEventListener("click", versjonFunksjon, true);
+  document.getElementById("versjonTilbakeMeny").addEventListener("click", versjonTilbakeFunksjon, true);
 
   //Muteknappen
   document.getElementById("muteKnapp").onclick = function() {
@@ -92,6 +87,16 @@ function domloaded() {
   setTimeout(function(){
     document.getElementById("tekstDiv").outerHTML = "";
   }, 25000);
+}
+
+//Versjonsfunksjon
+function versjonFunksjon() {
+  gjemDiv("knappeDiv");
+  visDiv("versjonDiv");
+}
+function versjonTilbakeFunksjon() {
+  gjemDiv("versjonDiv");
+  visDiv("knappeDiv");
 }
 
 var menyMusikk;
